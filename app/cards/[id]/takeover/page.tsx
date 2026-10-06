@@ -11,16 +11,16 @@ export default async function TakeoverPage({ params }: { params: Promise<{ id: s
   if (!d || d.card.hidden) notFound();
   if (!canTakeOver(d.status)) {
     return (
-      <div className="mx-auto max-w-[720px] space-y-4">
+      <div className="mx-auto max-w-[800px] space-y-4 px-4 py-6 sm:px-8">
         <p className="text-ink-2">보류·중단·정체된 카드만 이어받을 수 있어요.</p>
         <ButtonLink href={`/cards/${id}`} variant="secondary">카드로 돌아가기</ButtonLink>
       </div>
     );
   }
   return (
-    <div className="mx-auto max-w-[720px] space-y-6">
+    <div className="mx-auto max-w-[800px] space-y-6 px-4 py-6 sm:px-8">
       <div>
-        <p className="mb-2 font-mono text-[12px] uppercase tracking-wider text-ink-3">Take over</p>
+        <p className="mb-2 font-mono text-[12px] uppercase tracking-wider text-ink-3">이전 기록과 연결</p>
         <h1 className="text-[26px] font-semibold tracking-[-0.03em]">멈춘 아이디어 이어받기</h1>
       </div>
       <div className="rounded-lg bg-subtle p-5 ring-line">
@@ -30,7 +30,7 @@ export default async function TakeoverPage({ params }: { params: Promise<{ id: s
             {DECISION_LABELS[d.latest.decision as Decision]} · {d.latest.reasonTags.join(", ")} — {d.latest.reason}
           </p>
         )}
-        <p className="tnum mt-2 font-mono text-[12px] text-ink-3">이전 반응 {d.reactions.length}건 · 의견 {d.opinions.length}건은 원본 카드에 그대로 남고, 새 카드에 연결돼요.</p>
+        <p className="tnum mt-2 font-mono text-[12px] text-ink-3">이전 반응 {d.reactionCount}건 · 의견 {d.opinions.length}건은 원본 카드에 그대로 남고, 새 카드에 연결돼요.</p>
       </div>
       <NewCardForm parent={{ id: d.card.id, title: d.card.title, body: d.card.body, target: d.card.target, place: d.card.place, effect: d.card.effect }} />
     </div>

@@ -62,6 +62,18 @@ class NoticeServiceTest {
                 .isInstanceOf(NotFoundException.class);
     }
 
+    @Test
+    void 가려진_카드의_알림은_읽음_API로도_노출되지_않는다() {
+        Card card = saveCard("가려진 카드");
+        Notice notice = noticeRepository.save(new Notice(newId(), "d_hidden_notice", card.getId(), NoticeKind.CONCLUSION));
+        card.hide();
+        cardRepository.save(card);
+        assertThat(noticeService.list("d_hidden_notice")).isEmpty();
+        assertThatThrownBy(() -> noticeService.markRead(notice.getId(), "d_hidden_notice"))
+                .isInstanceOf(NotFoundException.class);
+        assertThat(noticeRepository.findById(notice.getId()).orElseThrow().getReadAt()).isNull();
+    }
+
     private Card saveCard(String title) {
         Instant now = Instant.now();
         return cardRepository.save(new Card(newId(), title, "알림 테스트용 카드입니다.", "", "", "",

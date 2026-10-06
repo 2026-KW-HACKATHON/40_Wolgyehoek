@@ -44,7 +44,7 @@ public class TakeoverService {
 
     @Transactional
     public TakeoverResponse takeOver(String parentId, DeviceInfo actor, TakeoverRequest request) {
-        Card parent = cardRepository.findById(parentId)
+        Card parent = cardRepository.findLockedById(parentId)
                 .orElseThrow(() -> new CardNotFoundException(parentId));
         if (parent.isHidden()) {
             throw new CardNotFoundException(parentId);
@@ -56,7 +56,7 @@ public class TakeoverService {
         }
 
         Optional<Card> alive = cardRepository.findByParentId(parentId).stream()
-                .filter(child -> !child.status(now).canTakeOver())
+                .filter(child -> !child.isHidden() && !child.status(now).canTakeOver())
                 .findFirst();
         if (alive.isPresent()) {
             throw new ConflictException("이미 이어받아 진행 중인 카드가 있어요: " + alive.get().getId());

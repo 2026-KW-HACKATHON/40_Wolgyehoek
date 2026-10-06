@@ -1,7 +1,3 @@
 import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  serverExternalPackages: ["@electric-sql/pglite"],
-};
-
+const nextConfig: NextConfig = { output: "standalone" };
 export default nextConfig;

@@ -12,6 +12,15 @@ public class TestDatabaseConfig {
     @Bean
     public FlywayMigrationStrategy cleanThenMigrate() {
         return flyway -> {
+            String url;
+            try (var connection = flyway.getConfiguration().getDataSource().getConnection()) {
+                url = connection.getMetaData().getURL();
+            } catch (java.sql.SQLException e) {
+                throw new IllegalStateException("Cannot verify test database", e);
+            }
+            if (!url.matches("jdbc:postgresql://[^/]+/dongnae_test(?:\\?.*)?")) {
+                throw new IllegalStateException("Refusing to clean non-test database: " + url);
+            }
             flyway.clean();
             flyway.migrate();
         };

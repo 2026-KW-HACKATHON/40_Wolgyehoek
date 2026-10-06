@@ -55,11 +55,16 @@ public class NoticeService {
                 .filter(n -> n.getDeviceId().equals(deviceId))
                 .orElseThrow(() -> new NotFoundException("알림을 찾을 수 없어요: " + noticeId));
 
+        Card card = cardRepository.findById(notice.getCardId())
+                .filter(c -> !c.isHidden())
+                .orElseThrow(() -> new NotFoundException("카드를 찾을 수 없어요: " + notice.getCardId()));
         Instant now = Instant.now();
         notice.markRead(now);
-
-        Card card = cardRepository.findById(notice.getCardId())
-                .orElseThrow(() -> new NotFoundException("카드를 찾을 수 없어요: " + notice.getCardId()));
         return NoticeResponse.of(notice, card, now);
+    }
+    @Transactional
+    public void markAllRead(String deviceId) {
+        Instant now = Instant.now();
+        noticeRepository.findByDeviceIdOrderByCreatedAtDesc(deviceId).forEach(n -> n.markRead(now));
     }
 }

@@ -26,7 +26,7 @@ public class ReactionService {
 
     @Transactional
     public ReactionResponse react(String cardId, String deviceId, ReactRequest request) {
-        Card card = cardRepository.findById(cardId)
+        Card card = cardRepository.findLockedById(cardId)
                 .orElseThrow(() -> new CardNotFoundException(cardId));
 
         if (card.isHidden()) {

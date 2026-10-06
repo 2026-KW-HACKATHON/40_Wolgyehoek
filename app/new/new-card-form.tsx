@@ -1,4 +1,7 @@
 "use client";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 
 import Link from "next/link";
 import { useActionState, useState, useTransition } from "react";
@@ -34,11 +37,11 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
       {!parent && (
         <section className="ring-card rounded-lg bg-white p-5">
           <label htmlFor="text" className="mb-2 block text-sm font-medium">1. 아이디어를 자유롭게 적어 주세요</label>
-          <textarea id="text" value={text} onChange={(e) => setText(e.target.value)} rows={5} placeholder="예) 광운로 공터에서 주말마다 주민 플리마켓을 열면 좋겠어요." className={inputCls} />
+          <Textarea id="text" value={text} onChange={(e) => setText(e.target.value)} rows={5} placeholder="예) 광운로 공터에서 주말마다 주민 플리마켓을 열면 좋겠어요." className={inputCls} />
           <div className="mt-3 flex items-center gap-3">
-            <button type="button" onClick={runDraft} disabled={pending || text.trim().length < 10} className={btnSecondary}>
+            <Button type="button" onClick={runDraft} disabled={pending || text.trim().length < 10} className={btnSecondary}>
               {pending ? "정리하는 중…" : "초안으로 정리하기"}
-            </button>
+            </Button>
             {draftError && <p className="text-sm text-[var(--stop-fg)]">{draftError}</p>}
           </div>
         </section>
@@ -64,13 +67,13 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
         <form onSubmit={onSubmit} className="ring-featured space-y-5 rounded-lg bg-white p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium">{parent ? "이어받을 카드 내용" : "2. 정리된 초안을 확인하고 고쳐 주세요"}</h2>
-            <span className="font-mono text-[11px] uppercase tracking-wider text-ink-3">{draft.source === "llm" ? "AI draft" : draft.source === "rule" ? "auto draft" : "takeover"}</span>
+            <span className="font-mono text-[11px] uppercase tracking-wider text-ink-3">{draft.source === "llm" ? "AI 초안 · 확인 필요" : draft.source === "rule" ? "자동 정리 · 확인 필요" : "원본 연결"}</span>
           </div>
           {parent && <input type="hidden" name="parentId" value={parent.id} />}
           <Field label="제목" name="title" defaultValue={draft.title} required />
           <div className="space-y-1.5">
             <label htmlFor="body" className="block text-sm font-medium">아이디어 원문</label>
-            <textarea id="body" name="body" defaultValue={text} rows={4} className={inputCls} required />
+            <Textarea id="body" name="body" defaultValue={text} rows={4} className={inputCls} required />
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             <Field label="대상" name="target" defaultValue={draft.target} />
@@ -80,7 +83,7 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
           {parent && (
             <div className="space-y-1.5">
               <label htmlFor="takeoverNote" className="block text-sm font-medium">멈춘 사유에 대해 무엇이 달라졌나요? (필수)</label>
-              <textarea id="takeoverNote" name="takeoverNote" rows={2} placeholder="예) 광운대 학생팀이 운영을 맡습니다." className={inputCls} required />
+              <Textarea id="takeoverNote" name="takeoverNote" rows={2} placeholder="예) 광운대 학생팀이 운영을 맡습니다." className={inputCls} required />
             </div>
           )}
           <div className="space-y-1.5">
@@ -92,9 +95,9 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
             </select>
           </div>
           <FormMessage state={state} />
-          <button type="submit" disabled={publishing} className={`${btnPrimary} w-full sm:w-auto`}>
+          <Button type="submit" disabled={publishing} className={`${btnPrimary} w-full sm:w-auto`}>
             {publishing ? "게시하는 중…" : parent ? "이어받아 다시 검증 시작" : "검증 카드 게시"}
-          </button>
+          </Button>
         </form>
       )}
     </div>
@@ -105,7 +108,7 @@ function Field({ label, name, defaultValue, required }: { label: string; name: s
   return (
     <div className="space-y-1.5">
       <label htmlFor={name} className="block text-sm font-medium">{label}</label>
-      <input id={name} name={name} defaultValue={defaultValue} required={required} className={inputCls} />
+      <Input id={name} name={name} defaultValue={defaultValue} required={required} className={inputCls} />
     </div>
   );
 }

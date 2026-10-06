@@ -30,6 +30,10 @@ public class Device {
         this.createdAt = Instant.now();
     }
 
+    public void rename(String nickname) {
+        this.nickname = nickname;
+    }
+
     public void becomeOperator() {
         this.operator = true;
     }

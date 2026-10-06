@@ -1,3 +1,6 @@
+import { PageHeaderBar } from "@/components/PageHeaderBar";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import Link from "next/link";
 import { currentDevice } from "@/lib/device";
 import { openFlags } from "@/lib/queries";
@@ -9,8 +12,8 @@ export default async function AdminPage() {
   const me = await currentDevice();
   if (!me?.isOperator) {
     return (
-      <div className="mx-auto max-w-[480px] space-y-4">
-        <h1 className="text-[26px] font-semibold tracking-[-0.03em]">운영자 모드</h1>
+      <div className="mx-auto max-w-[560px] space-y-4 px-4 py-8 sm:px-8">
+        <PageHeaderBar title="운영" className="-mx-4 sm:-mx-8" />
         <p className="text-sm text-ink-2">운영 코드를 입력하면 이 기기에서 신고 처리와 검증 즉시 종료를 할 수 있어요.</p>
         <OperatorForm />
       </div>
@@ -18,8 +21,8 @@ export default async function AdminPage() {
   }
   const flags = await openFlags();
   return (
-    <div className="mx-auto max-w-[720px] space-y-8">
-      <h1 className="text-[26px] font-semibold tracking-[-0.03em]">운영자</h1>
+    <div className="mx-auto max-w-[800px] space-y-8 px-4 py-6 sm:px-8">
+      <PageHeaderBar title="운영" className="-mx-4 sm:-mx-8" />
       <section>
         <SectionTitle sub={`${flags.length}건`}>처리 대기 신고</SectionTitle>
         {flags.length === 0 ? (
@@ -35,9 +38,9 @@ export default async function AdminPage() {
                 </p>
                 {f.targetType === "card" && <Link href={`/cards/${f.targetId}`} className="text-sm underline">카드 보기</Link>}
                 <form className="flex flex-wrap gap-2">
-                  <input name="note" placeholder="처리 사유" className="rounded-md bg-white px-2 py-1.5 text-sm ring-line" />
-                  <button formAction={moderate.bind(null, f.id, "hide")} className="rounded-md bg-ink px-3 py-1.5 text-sm text-white">가리기</button>
-                  <button formAction={moderate.bind(null, f.id, "keep")} className="rounded-md bg-white px-3 py-1.5 text-sm ring-line">유지</button>
+                  <Input name="note" placeholder="처리 사유" className="rounded-md bg-white px-2 py-1.5 text-sm ring-line" />
+                  <Button type="submit" formAction={moderate.bind(null, f.id, "hide")} className="rounded-md bg-ink px-3 py-1.5 text-sm text-white">가리기</Button>
+                  <Button type="submit" formAction={moderate.bind(null, f.id, "keep")} className="rounded-md bg-white px-3 py-1.5 text-sm ring-line">유지</Button>
                 </form>
               </li>
             ))}

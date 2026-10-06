@@ -1,4 +1,4 @@
-export const DDL = `
+
 CREATE TABLE IF NOT EXISTS devices (
   id text PRIMARY KEY,
   nickname text NOT NULL,
@@ -88,4 +88,3 @@ CREATE INDEX IF NOT EXISTS idx_reactions_card ON reactions (card_id);
 CREATE INDEX IF NOT EXISTS idx_opinions_card ON opinions (card_id);
 CREATE INDEX IF NOT EXISTS idx_conclusions_card ON conclusions (card_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_notices_device ON notices (device_id, created_at);
-`;

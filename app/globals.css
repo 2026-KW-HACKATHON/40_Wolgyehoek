@@ -1,81 +1,45 @@
 @import "tailwindcss";
 
+/* Jangkki neutral palette, semantic colors, control sizes; see docs/UI-PORT.md. */
 :root {
-  --surface: #ffffff;
-  --surface-subtle: #fafafa;
-  --text: #171717;
-  --text-2: #4d4d4d;
-  --text-3: #666666;
-  --text-4: #808080;
-  --ring: rgba(0, 0, 0, 0.08);
-  --divider: #ebebeb;
-  --primary: #171717;
-  --primary-hover: #383838;
-  --link: #0072f5;
-  --focus: hsla(212, 100%, 48%, 1);
-  --badge-bg: #ebf5ff;
-  --badge-fg: #0068d6;
-  --go-bg: #e9f8ef;
-  --go-fg: #0a7f3f;
-  --hold-bg: #fff4d6;
-  --hold-fg: #8a5a00;
-  --stop-bg: #fdecea;
-  --stop-fg: #c42b1c;
-  --step-1: #808080;
-  --step-2: #0a72ef;
-  --step-3: #de1d8d;
-  --step-4: #ff5b4f;
-  --shadow-ring: 0 0 0 1px var(--ring);
-  --shadow-card: 0 0 0 1px var(--ring), 0 2px 2px rgba(0, 0, 0, 0.04), inset 0 0 0 1px #fafafa;
-  --shadow-featured: 0 0 0 1px var(--ring), 0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), inset 0 0 0 1px #fafafa;
+  --background: #fff; --foreground: #191f28; --card: #fff; --card-foreground: #191f28;
+  --border: #dde1e5; --muted: #f2f4f6; --muted-foreground: #4e5968; --field-bg: #f2f4f6;
+  --primary: #0b7688; --primary-foreground: #fff;
+  --primary-hover: color-mix(in oklab, var(--primary) 86%, black);
+  --accent: #f2f4f6; --accent-foreground: #191f28;
+  --input: #e5e8eb; --ring: #0b7688; --destructive: #c42b1c; --destructive-on-solid: #fff;
+  --destructive-surface: #fdecea; --destructive-foreground: #c42b1c;
+  --success: #e9f8ef; --success-foreground: #0a7f3f;
+  --warning: #fff4d6; --warning-foreground: #8a5a00; --info: #ebf5ff; --info-foreground: #0068d6;
+  --shell-frame-bg: rgb(239, 239, 240);
+  --surface: var(--background); --surface-subtle: var(--muted); --text: var(--foreground);
+  --text-2: var(--muted-foreground); --text-3: #6b7684; --text-4: #8b95a1;
+  --divider: var(--border); --link: #0b7688; --focus: var(--primary);
+  --badge-bg: var(--info); --badge-fg: var(--info-foreground);
+  --go-bg: var(--success); --go-fg: var(--success-foreground);
+  --hold-bg: var(--warning); --hold-fg: var(--warning-foreground);
+  --stop-bg: var(--destructive-surface); --stop-fg: var(--destructive-foreground);
+  --step-1: #6b7684; --step-2: #0068d6; --step-3: #8a5a00; --step-4: #0b7688;
+  --shadow-ring: 0 0 0 1px var(--border);
+  --shadow-card: var(--shadow-ring); --shadow-featured: var(--shadow-ring);
 }
-
 @theme inline {
-  --color-surface: var(--surface);
-  --color-subtle: var(--surface-subtle);
-  --color-ink: var(--text);
-  --color-ink-2: var(--text-2);
-  --color-ink-3: var(--text-3);
-  --color-ink-4: var(--text-4);
-  --color-divider: var(--divider);
-  --color-primary: var(--primary);
-  --color-link: var(--link);
-  --font-sans: var(--font-geist-sans), var(--font-pretendard), -apple-system, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-background: var(--background); --color-foreground: var(--foreground);
+  --color-card: var(--card); --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring);
+  --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
+  --color-destructive: var(--destructive);
+  --color-surface: var(--surface); --color-subtle: var(--surface-subtle);
+  --color-ink: var(--text); --color-ink-2: var(--text-2); --color-ink-3: var(--text-3); --color-ink-4: var(--text-4);
+  --color-divider: var(--divider); --color-link: var(--link);
+  --font-sans: var(--font-pretendard), -apple-system, system-ui, sans-serif;
+  --font-mono: var(--font-pretendard), -apple-system, system-ui, sans-serif;
 }
-
-html {
-  background: var(--surface);
-  color: var(--text);
-  font-feature-settings: "liga";
-  -webkit-text-size-adjust: 100%;
-}
-body {
-  font-family: var(--font-sans);
-  word-break: keep-all;
-  overflow-wrap: anywhere;
-}
-:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-.tnum {
-  font-variant-numeric: tabular-nums;
-}
-.ring-card {
-  box-shadow: var(--shadow-card);
-}
-.ring-featured {
-  box-shadow: var(--shadow-featured);
-}
-.ring-line {
-  box-shadow: var(--shadow-ring);
-}
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0ms !important;
-    animation-duration: 0ms !important;
-  }
-}
+html { background: var(--shell-frame-bg); color: var(--foreground); -webkit-text-size-adjust: 100%; }
+body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywhere; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.tnum { font-variant-numeric: tabular-nums; }
+.ring-card, .ring-featured, .ring-line { box-shadow: var(--shadow-ring); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; } }

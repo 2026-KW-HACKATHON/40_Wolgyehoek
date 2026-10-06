@@ -79,6 +79,18 @@ class TakeoverServiceTest {
         assertThat(takeoverService.takeovers(parent.getId())).hasSize(2);
     }
 
+    @Test
+    void 가려진_이어받기는_새로운_이어받기를_막지_않는다() {
+        Card parent = saveStoppedCard(null, Decision.HOLD);
+        TakeoverResponse first = takeoverService.takeOver(parent.getId(), STUDENT, request());
+        Card child = cardRepository.findById(first.card().id()).orElseThrow();
+        child.hide();
+        cardRepository.save(child);
+        TakeoverResponse second = takeoverService.takeOver(parent.getId(), STUDENT, request());
+        assertThat(second.card().id()).isNotEqualTo(first.card().id());
+        assertThat(takeoverService.takeovers(parent.getId())).hasSize(1);
+    }
+
     private TakeoverRequest request() {
         return new TakeoverRequest(
                 new CreateCardRequest("광운로 플리마켓 2", "학생팀이 운영하는 플리마켓을 다시 검증해요.", null, null, null, null),

@@ -5,12 +5,15 @@ spring:
     url: jdbc:postgresql://localhost:5432/dongnae
     username: dongnae
     password: dongnae
+  flyway:
+    baseline-version: 6
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
 dongnae:
+  demo-seed: ${DEMO_SEED:false}
   operator-code: ${OPERATOR_CODE:}
   ai:
     api-key: ${ANTHROPIC_API_KEY:}

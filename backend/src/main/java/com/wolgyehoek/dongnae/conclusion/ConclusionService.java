@@ -47,7 +47,7 @@ public class ConclusionService {
 
     @Transactional
     public RecordConclusionResponse record(String cardId, DeviceInfo actor, RecordConclusionRequest request) {
-        Card card = cardRepository.findById(cardId)
+        Card card = cardRepository.findLockedById(cardId)
                 .orElseThrow(() -> new CardNotFoundException(cardId));
 
         if (card.isHidden()) {

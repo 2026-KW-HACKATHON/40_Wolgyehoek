@@ -37,4 +37,8 @@ public class NoticeController {
                                    @RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String deviceId) {
         return noticeService.markRead(noticeId, deviceId);
     }
+    @PostMapping("/read-all")
+    public void markAllRead(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String deviceId) {
+        noticeService.markAllRead(deviceId);
+    }
 }

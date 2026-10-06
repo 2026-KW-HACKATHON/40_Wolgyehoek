@@ -22,4 +22,12 @@ public class MeController {
         DeviceInfo device = deviceService.getOrCreate(deviceId);
         return MeResponse.from(device);
     }
+    public record NicknameRequest(@jakarta.validation.constraints.NotBlank String nickname) {}
+
+    @org.springframework.web.bind.annotation.PatchMapping("/nickname")
+    public MeResponse rename(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String deviceId,
+                             @jakarta.validation.Valid @org.springframework.web.bind.annotation.RequestBody NicknameRequest request) {
+        DeviceInfo device = deviceService.rename(deviceId, request.nickname());
+        return new MeResponse(device.nickname(), device.operator());
+    }
 }

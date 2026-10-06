@@ -1,4 +1,7 @@
 "use client";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { addOpinion, flagTarget, publishReport, recordConclusion, upsertReaction, type ActionState } from "@/app/actions";
@@ -43,7 +46,7 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
             const s = i + 1;
             const on = step === s;
             return (
-              <label key={s} className={`relative flex min-h-[64px] cursor-pointer flex-col justify-between rounded-md bg-white p-3 text-sm transition-shadow ${on ? "shadow-[0_0_0_2px_#171717]" : "ring-line hover:bg-subtle"}`}>
+              <label key={s} className={`relative flex min-h-[64px] cursor-pointer flex-col justify-between rounded-md bg-white p-3 text-sm transition-shadow ${on ? "ring-2 ring-primary" : "ring-line hover:bg-subtle"}`}>
                 <input type="radio" name="step" value={s} checked={on} onChange={() => setStep(s)} className="sr-only" />
                 <span className="flex items-center gap-2 font-medium"><i className="block size-2 rounded-full" style={{ background: `var(--step-${s})` }} />{label}</span>
                 <span className="tnum font-mono text-[12px] text-ink-3">{counts[i]}명</span>
@@ -55,7 +58,7 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
       {step === 3 && (
         <div className="space-y-1.5">
           <label htmlFor="price" className="block text-sm font-medium">이 가격이면 쓰겠다 (원)</label>
-          <input id="price" name="price" inputMode="numeric" defaultValue={mine?.price ?? ""} placeholder="예) 5000" className={inputCls} />
+          <Input id="price" name="price" inputMode="numeric" defaultValue={mine?.price ?? ""} placeholder="예) 5000" className={inputCls} />
         </div>
       )}
       <fieldset>
@@ -69,14 +72,14 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
           ))}
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <button type="button" onClick={checkGeo} className="rounded-md bg-white px-3 py-1.5 text-xs font-medium ring-line hover:bg-subtle">위치로 확인(선택)</button>
+          <Button variant="outline" size="sm" type="button" onClick={checkGeo} className="rounded-md bg-white px-3 py-1.5 text-xs font-medium ring-line hover:bg-subtle">위치로 확인(선택)</Button>
           {geoMsg && <span className="text-xs text-ink-3">{geoMsg}</span>}
         </div>
         <input type="hidden" name="geoInside" value={geo} />
         <p className="mt-1 text-xs text-ink-3">구분과 위치 확인은 참고용이며 거주를 증명하지 않아요.</p>
       </fieldset>
       <FormMessage state={state} />
-      <button type="submit" disabled={pending || !step || !type} className={btnPrimary}>{pending ? "저장 중…" : mine ? "반응 수정" : "반응 남기기"}</button>
+      <Button type="submit" disabled={pending || !step || !type} className={btnPrimary}>{pending ? "저장 중…" : mine ? "반응 수정" : "반응 남기기"}</Button>
     </form>
   );
 }
@@ -87,7 +90,11 @@ export function OpinionForm({ cardId }: { cardId: string }) {
   const onSubmit = useFormSubmit(action);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
-    if (state.ok && state.message) formRef.current?.reset();
+    if (state.ok && state.message && formRef.current) {
+      for (const field of Array.from(formRef.current.elements)) {
+        if (field instanceof HTMLTextAreaElement || (field instanceof HTMLInputElement && field.type === "text")) field.value = "";
+      }
+    }
   }, [state]);
   return (
     <form ref={formRef} onSubmit={onSubmit} className="ring-card space-y-3 rounded-lg bg-white p-4">
@@ -99,10 +106,10 @@ export function OpinionForm({ cardId }: { cardId: string }) {
           </label>
         ))}
       </div>
-      <textarea name="body" rows={2} placeholder="의견을 남겨 주세요" className={inputCls} />
-      {stance === "conditional" && <input name="condition" placeholder="어떤 조건이면 찬성하나요? (필수)" className={inputCls} />}
+      <Textarea name="body" rows={2} placeholder="의견을 남겨 주세요" className={inputCls} />
+      {stance === "conditional" && <Input name="condition" placeholder="어떤 조건이면 찬성하나요? (필수)" className={inputCls} />}
       <FormMessage state={state} />
-      <button disabled={pending} className={btnSecondary}>{pending ? "저장 중…" : "의견 남기기"}</button>
+      <Button type="submit" disabled={pending} className={btnSecondary}>{pending ? "저장 중…" : "의견 남기기"}</Button>
     </form>
   );
 }
@@ -113,9 +120,9 @@ export function ReportPublishForm({ cardId }: { cardId: string }) {
   return (
     <form onSubmit={onSubmit} className="space-y-2 border-t border-divider pt-4">
       <label htmlFor="summary" className="block text-sm font-medium">의견 요약(확인 후 공개)</label>
-      <textarea id="summary" name="summary" rows={2} placeholder="예) 참여 의사는 높지만 운영 주체를 묻는 조건부 의견이 많았다." className={inputCls} />
+      <Textarea id="summary" name="summary" rows={2} placeholder="예) 참여 의사는 높지만 운영 주체를 묻는 조건부 의견이 많았다." className={inputCls} />
       <FormMessage state={state} />
-      <button disabled={pending} className={btnPrimary}>{pending ? "공개하는 중…" : "리포트 공개"}</button>
+      <Button type="submit" disabled={pending} className={btnPrimary}>{pending ? "공개하는 중…" : "리포트 공개"}</Button>
     </form>
   );
 }
@@ -143,9 +150,9 @@ export function ConclusionForm({ cardId }: { cardId: string }) {
           </label>
         ))}
       </div>
-      <textarea name="reason" rows={2} placeholder={decision === "go" ? "다음 단계를 적어 주세요(선택)" : "멈춘 사유를 적어 주세요(필수)"} className={inputCls} />
+      <Textarea name="reason" rows={2} placeholder={decision === "go" ? "다음 단계를 적어 주세요(선택)" : "멈춘 사유를 적어 주세요(필수)"} className={inputCls} />
       <FormMessage state={state} />
-      <button disabled={pending} className={btnPrimary}>{pending ? "저장 중…" : "결론 기록"}</button>
+      <Button type="submit" disabled={pending} className={btnPrimary}>{pending ? "저장 중…" : "결론 기록"}</Button>
     </form>
   );
 }
@@ -153,11 +160,11 @@ export function ConclusionForm({ cardId }: { cardId: string }) {
 export function FlagForm({ targetType, targetId, cardId, label = "신고" }: { targetType: "card" | "opinion"; targetId: string; cardId: string; label?: string }) {
   const [open, setOpen] = useState(false);
   const [state, action, pending] = useActionState<ActionState, FormData>(flagTarget.bind(null, targetType, targetId, cardId), init);
-  if (!open) return <button type="button" onClick={() => setOpen(true)} className="mt-2 text-xs text-ink-3 underline-offset-2 hover:underline">{label}</button>;
+  if (!open) return <Button variant="ghost" size="sm" type="button" onClick={() => setOpen(true)} className="mt-2 text-xs text-ink-3 underline-offset-2 hover:underline">{label}</Button>;
   return (
     <form action={action} className="mt-2 flex flex-wrap items-center gap-2">
-      <input name="reason" placeholder="신고 사유" className="rounded-md bg-white px-2 py-1 text-xs ring-line" />
-      <button disabled={pending} className="rounded-md bg-white px-2 py-1 text-xs ring-line">접수</button>
+      <Input name="reason" placeholder="신고 사유" className="rounded-md bg-white px-2 py-1 text-xs ring-line" />
+      <Button variant="outline" size="sm" type="submit" disabled={pending} className="rounded-md bg-white px-2 py-1 text-xs ring-line">접수</Button>
       <FormMessage state={state} />
     </form>
   );

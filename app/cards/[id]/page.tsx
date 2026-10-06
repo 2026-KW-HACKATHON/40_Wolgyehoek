@@ -1,8 +1,9 @@
+import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCard } from "@/lib/queries";
 import { currentDevice } from "@/lib/device";
-import { aggregateReport } from "@/lib/domain/report";
+import type { Report } from "@/lib/domain/report";
 import { canTakeOver } from "@/lib/domain/status";
 import { DECISION_LABELS, RESPONDENT_LABELS, STANCE_LABELS, STEP_LABELS, type Decision, type RespondentType, type Stance } from "@/lib/domain/types";
 import { closeNow } from "@/app/actions";
@@ -14,21 +15,23 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
   const [d, me] = await Promise.all([getCard(id), currentDevice()]);
   if (!d || (d.card.hidden && !me?.isOperator)) notFound();
   const { card, status } = d;
-  const isOwner = me?.id === card.proposerId;
-  const canManage = isOwner || !!me?.isOperator;
-  const report = aggregateReport(
-    d.reactions.map((r) => ({ step: r.step, price: r.price, respondentType: r.respondentType as RespondentType, geoInside: r.geoInside })),
-    d.opinions.map((o) => ({ stance: o.stance as Stance, hidden: o.hidden })),
-  );
-  const mine = d.reactions.find((r) => r.deviceId === me?.id) ?? null;
-  const reportVisible = status !== "open" && (!!card.reportPublishedAt || canManage);
+  const canManage = d.canManage;
+  const mine = d.mine;
+  const reportVisible = d.report !== null;
+  const report: Report = d.report ?? {
+    total: d.reactionCount, showRatio: false,
+    steps: d.stepCounts.map((count, index) => ({ step: index + 1, count, ratio: null })),
+    atLeast: [], price: { count: 0, median: null, min: null, max: null },
+    respondents: { resident: 0, work_study: 0, visitor: 0 }, geoInside: 0,
+    opinions: { pro: 0, con: 0, conditional: 0 },
+  };
 
   return (
-    <article className="mx-auto max-w-[720px] space-y-10">
+    <article className="mx-auto max-w-[800px] space-y-8 px-4 py-6 sm:px-8">
       <header className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={status} />
-          {card.isSeed && <Pill>예시 · 과거 공개 아이디어</Pill>}
+          {card.isSeed && <Pill>예시 카드</Pill>}
           <span className="tnum font-mono text-[12px] text-ink-3">{fmtDate(card.startsAt)} ~ {fmtDate(card.endsAt)}</span>
         </div>
         <h1 className="text-[26px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{card.title}</h1>
@@ -50,7 +53,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         )}
         {me?.isOperator && status === "open" && (
           <form action={closeNow.bind(null, card.id)}>
-            <button className="rounded-md bg-ink px-3 py-2 font-mono text-[12px] text-white">[운영자] 검증 즉시 종료</button>
+            <Button type="submit" className="rounded-md bg-ink px-3 py-2 font-mono text-[12px] text-white">[운영자] 검증 즉시 종료</Button>
           </form>
         )}
       </header>
@@ -75,7 +78,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
                 <div key={s.step} className="grid grid-cols-[120px_1fr_64px] items-center gap-3 text-sm">
                   <span className="flex items-center gap-2"><i className="block size-2 rounded-full" style={{ background: `var(--step-${s.step})` }} />{STEP_LABELS[s.step - 1]}</span>
                   <div className="h-2 overflow-hidden rounded-full bg-divider">
-                    <div className="h-full rounded-full" style={{ width: `${report.total ? (s.count / report.total) * 100 : 0}%`, background: `var(--step-${s.step})` }} />
+                    <div className="h-full rounded-full" style={{ width: `${report.showRatio && report.total ? (s.count / report.total) * 100 : 0}%`, background: `var(--step-${s.step})` }} />
                   </div>
                   <span className="tnum text-right font-mono text-[12px]">{s.count}명{s.ratio !== null && ` · ${Math.round(s.ratio * 100)}%`}</span>
                 </div>
@@ -94,7 +97,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         </section>
       )}
 
-      {(d.conclusions.length > 0 || (canManage && status !== "open")) && (
+      {(d.conclusions.length > 0 || canTakeOver(status) || (canManage && status !== "open")) && (
         <section>
           <SectionTitle>결론</SectionTitle>
           {d.conclusions.map((c) => (

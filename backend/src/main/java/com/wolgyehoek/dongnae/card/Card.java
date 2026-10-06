@@ -95,6 +95,8 @@ public class Card {
         this.reportPublishedAt = now;
     }
 
+    public void markSeed() { this.seed = true; }
+
     public void hide() {
         this.hidden = true;
     }

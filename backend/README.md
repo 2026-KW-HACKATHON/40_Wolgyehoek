@@ -1,39 +1,23 @@
-# 동네서랍 백엔드 (Spring Boot)
+# 동네서랍 Spring 백엔드
 
-월계1동 아이디어 수요 검증·기록 플랫폼 **동네서랍**의 백엔드입니다.
+Java 21, Spring Boot 4.1.1, Gradle wrapper 9.7.1, PostgreSQL 17을 사용한다. 프로젝트 루트의 [README](../README.md)와 [배포 문서](../docs/DEPLOYMENT.md)를 기준으로 Next와 함께 실행한다.
 
-## 환경
-| 항목 | 버전 |
-|---|---|
-| Java | **21** (Temurin 권장) |
-| Spring Boot | 4.1.1 |
-| Gradle | 9.7.1 (wrapper 포함, 설치 불필요) |
-| DB | PostgreSQL 17 (Docker) |
-
-## 실행
-```bash
-cd backend
-docker compose up -d                    # DB (dongnae, dongnae_test 자동 생성)
-OPERATOR_CODE=원하는값 ./gradlew bootRun  # http://localhost:8080
+```sh
+# backend 디렉터리에서, PostgreSQL 실행 후
+./gradlew bootRun
+# 테스트 전용 dongnae_test DB 설정 후
+./gradlew test bootJar
 ```
-- API 문서: http://localhost:8080/swagger-ui/index.html
-- 테스트: `./gradlew test` (테스트 전용 DB `dongnae_test`를 매번 비우고 실행, 개발 DB는 안 건드림)
-- 로컬 5432 포트를 이미 쓰는 Postgres가 있으면 충돌하니 먼저 꺼 주세요
 
-## 환경 변수
-| 이름 | 필수 | 기본값 | 설명 |
-|---|---|---|---|
-| `OPERATOR_CODE` | 운영자 기능 쓸 때 | 없음 (비우면 운영자 기능 꺼짐) | 운영자 진입 코드. 실제 값은 따로 전달 |
-| `ANTHROPIC_API_KEY` | 선택 | 없음 | 비우면 AI 대신 규칙 기반으로 카드 초안 생성 |
-| `ANTHROPIC_MODEL` | 선택 | `claude-haiku-4-5-20251001` | 초안 생성 모델 |
-| `SPRING_DATASOURCE_URL` | 배포 시 | `jdbc:postgresql://localhost:5432/dongnae` | DB 주소 |
-| `SPRING_DATASOURCE_USERNAME` | 배포 시 | `dongnae` | |
-| `SPRING_DATASOURCE_PASSWORD` | 배포 시 | `dongnae` | |
+`SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`로 DB를 지정한다. 테스트는 이름이 `dongnae_test`인 DB만 초기화한다. 개발/운영 DB를 테스트 URL로 지정하면 중단한다.
 
-## 기능
-카드 게시·조회, 기기 식별(`dn_device` 쿠키), 수요 반응(4단계·가격), 검증 리포트, 의견, 결론 기록 + 응답자 알림, 이어받기, 신고·운영자 가리기, 내 알림·참여, 유사 카드 검색, AI 카드 초안
+`OPERATOR_CODE`는 운영자 진입 코드이며 비어 있으면 운영자 기능을 끈다. `ANTHROPIC_API_KEY`는 선택 사항이고 없으면 규칙 기반 초안 생성으로 동작한다. `DEMO_SEED=true`는 빈 DB에만 반응 없는 예시 카드 세 개를 만든다. 실제 서비스에서는 false를 사용한다.
 
-## Next 연동 시 참고
-- 쿠키 이름·형식이 Next의 `proxy.ts`와 같습니다 (`dn_device`, `d_` + 16자리). Next 서버에서 Spring을 부를 때 쿠키 값을 그대로 넘기면 같은 기기로 인식됩니다
-- enum 값이 대문자입니다 (`PRO`, `HOLD`, `OPEN` 등)
-- 아직 없는 API: 닉네임 변경, 알림 모두 읽음, 카드 검색·탭 필터 → 연동 작업 때 추가 예정
+- API 문서: `/swagger-ui/index.html`
+- DB 연결 확인: `/api/health`
+- 화면 읽기 API: `/api/views/cards`, `/api/views/cards/{id}`, `/api/views/me`
+- 닉네임: `PATCH /api/me/nickname`
+- 알림 모두 읽음: `POST /api/me/notices/read-all`
+- 카드/반응/의견/리포트/결론/이어받기/운영 API는 OpenAPI 참고.
+
+Next 서버가 유효한 `dn_device` 쿠키를 전달한다. enum은 대문자이고 Next의 읽기 모델 변환에서 화면 도메인 값으로 바꾼다. V1–V6을 수정하지 않고 V7에서 기존 Next 데이터를 정규화한다. 이전 절차는 배포 문서에 명시되어 있다.
