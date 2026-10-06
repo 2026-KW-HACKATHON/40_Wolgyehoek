@@ -4,10 +4,11 @@ import { REASON_TAGS } from "./types";
 export const PRICE_MAX = 1_000_000;
 
 export function validatePrice(raw: unknown): { ok: true; value: number } | { ok: false; error: string } {
-  if (raw == null || String(raw).trim() === "") {
+  const clean = String(raw ?? "").replace(/[,\s원]/g, "");
+  if (clean === "") {
     return { ok: false, error: "가격을 입력해 주세요. 무료라면 0을 입력해 주세요." };
   }
-  const n = typeof raw === "number" ? raw : Number(String(raw ?? "").replace(/[,\s원]/g, ""));
+  const n = typeof raw === "number" ? raw : Number(clean);
   if (!Number.isInteger(n) || n < 0 || n > PRICE_MAX) {
     return { ok: false, error: "가격은 0원부터 1,000,000원 사이의 숫자로 입력해 주세요." };
   }

@@ -37,7 +37,8 @@ public class Notice {
 
     public void markRead(Instant now) {
         if (readAt == null) {
-            readAt = now;
+            // PostgreSQL timestamps store microseconds; return the same value before and after reload.
+            readAt = now.truncatedTo(java.time.temporal.ChronoUnit.MICROS);
         }
     }
 
