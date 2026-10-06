@@ -1,22 +1,15 @@
 import Link from "next/link";
+import { Button } from "./ui/Button";
+import { Badge, type BadgeProps } from "./ui/Badge";
 import { DISCLAIMER, STATUS_LABELS, type CardStatus } from "@/lib/domain/types";
 
-const STATUS_STYLE: Record<CardStatus, string> = {
-  open: "bg-[var(--badge-bg)] text-[var(--badge-fg)]",
-  closed: "bg-subtle text-ink-2 ring-line",
-  go: "bg-[var(--go-bg)] text-[var(--go-fg)]",
-  hold: "bg-[var(--hold-bg)] text-[var(--hold-fg)]",
-  stop: "bg-[var(--stop-bg)] text-[var(--stop-fg)]",
-  stale: "bg-subtle text-ink-3 ring-line",
+const STATUS_VARIANT: Record<CardStatus, BadgeProps["variant"]> = {
+  open: "info", closed: "outline", go: "success", hold: "warning", stop: "destructive", stale: "default",
 };
-
 export function StatusBadge({ status }: { status: CardStatus }) {
-  return <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLE[status]}`}>{STATUS_LABELS[status]}</span>;
+  return <Badge variant={STATUS_VARIANT[status]} className="text-xs">{STATUS_LABELS[status]}</Badge>;
 }
-
-export function Pill({ children }: { children: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-full bg-subtle px-2.5 py-0.5 text-xs font-medium text-ink-2 ring-line">{children}</span>;
-}
+export function Pill({ children }: { children: React.ReactNode }) { return <Badge className="text-xs">{children}</Badge>; }
 
 export function Disclaimer({ total }: { total?: number }) {
   return (
@@ -28,23 +21,11 @@ export function Disclaimer({ total }: { total?: number }) {
 }
 
 export function ButtonLink({ href, children, variant = "primary" }: { href: string; children: React.ReactNode; variant?: "primary" | "secondary" }) {
-  const cls =
-    variant === "primary"
-      ? "bg-primary text-white hover:bg-[var(--primary-hover)]"
-      : "bg-white text-ink ring-line hover:bg-subtle";
-  return (
-    <Link href={href} className={`inline-flex h-11 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors ${cls}`}>
-      {children}
-    </Link>
-  );
+  return <Button asChild variant={variant === "primary" ? "default" : "outline"} size="lg" className="h-11 px-4 text-sm"><Link href={href}>{children}</Link></Button>;
 }
-
-export const btnPrimary =
-  "inline-flex h-11 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-white transition-colors hover:bg-[var(--primary-hover)] disabled:bg-divider disabled:text-ink-4";
-export const btnSecondary =
-  "inline-flex h-11 items-center justify-center rounded-md bg-white px-4 text-sm font-medium text-ink ring-line transition-colors hover:bg-subtle disabled:text-ink-4";
-export const inputCls =
-  "w-full rounded-md bg-white px-3 py-2.5 text-[15px] text-ink ring-line placeholder:text-ink-4 focus:outline-none focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
+export const btnPrimary = "h-11 px-4 text-sm";
+export const btnSecondary = "h-11 border border-input bg-background px-4 text-sm text-foreground hover:bg-accent";
+export const inputCls = "w-full min-h-11 rounded-md border border-input bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring";
 
 export function FormMessage({ state }: { state: { ok: boolean; error?: string; message?: string } | null }) {
   if (!state || (!state.error && !state.message)) return null;

@@ -65,6 +65,10 @@ describe("geo", () => {
 
 describe("validation", () => {
   it("가격 범위", () => {
+    expect(validatePrice("").ok).toBe(false);
+    expect(validatePrice(null).ok).toBe(false);
+    expect(validatePrice("원").ok).toBe(false);
+    expect(validatePrice(0)).toEqual({ ok: true, value: 0 });
     expect(validatePrice("5000")).toEqual({ ok: true, value: 5000 });
     expect(validatePrice("-1").ok).toBe(false);
     expect(validatePrice("1000001").ok).toBe(false);

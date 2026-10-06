@@ -1,97 +1,51 @@
 import "server-only";
-import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm";
-import { getDb, schema } from "./db";
-import { cardStatus } from "./domain/status";
-import type { CardStatus, Decision } from "./domain/types";
-import type { Card, Conclusion } from "./db/schema";
+import { api, ApiError } from "./api";
+import type { CardStatus, Decision, Stance, RespondentType } from "./domain/types";
+import type { Report } from "./domain/report";
 
-export interface CardSummary {
-  card: Card;
-  status: CardStatus;
-  reactionCount: number;
-  opinionCount: number;
-  latest: Conclusion | null;
+export interface Card {
+  id: string; title: string; body: string; target: string; place: string; effect: string;
+  proposerName: string; startsAt: Date; endsAt: Date; parentId: string | null; takeoverNote: string | null;
+  isSeed: boolean; hidden: boolean; reportPublishedAt: Date | null; reportSummary: string | null; createdAt: Date;
 }
-
-async function latestConclusions(cardIds: string[]) {
-  if (cardIds.length === 0) return new Map<string, Conclusion>();
-  const db = await getDb();
-  const rows = await db.select().from(schema.conclusions).where(inArray(schema.conclusions.cardId, cardIds)).orderBy(desc(schema.conclusions.createdAt));
-  const m = new Map<string, Conclusion>();
-  for (const r of rows) if (!m.has(r.cardId)) m.set(r.cardId, r);
-  return m;
+export interface Conclusion { id: string; decision: Decision; reasonTags: string[]; reason: string; createdAt: Date }
+export interface Opinion { id: string; stance: Stance; body: string; condition: string; authorName: string; createdAt: Date; hidden: boolean }
+export interface CardSummary { card: Card; status: CardStatus; reactionCount: number; opinionCount: number; latest: Conclusion | null }
+export interface Notice { id: string; kind: "conclusion" | "restart"; cardId: string; cardTitle: string; createdAt: Date; readAt: Date | null }
+interface RawSummary extends Omit<CardSummary, "card" | "latest"> { card: Card; latest: Conclusion | null }
+interface RawValidation {
+  stepCounts: number[]; canManage: boolean;
+  myReaction: { step: number; price: number | null; respondentType: RespondentType } | null;
+  report: { reactions: Omit<Report, "opinions" | "respondents"> & { respondents: { resident: number; workStudy: number; visitor: number } }; opinions: Report["opinions"] } | null;
 }
-
-async function counts(cardIds: string[]) {
-  const db = await getDb();
-  const rc = new Map<string, number>();
-  const oc = new Map<string, number>();
-  if (cardIds.length === 0) return { rc, oc };
-  const r = await db.select({ id: schema.reactions.cardId, n: sql<number>`count(*)::int` }).from(schema.reactions).where(inArray(schema.reactions.cardId, cardIds)).groupBy(schema.reactions.cardId);
-  const o = await db.select({ id: schema.opinions.cardId, n: sql<number>`count(*)::int` }).from(schema.opinions).where(and(inArray(schema.opinions.cardId, cardIds), eq(schema.opinions.hidden, false))).groupBy(schema.opinions.cardId);
-  for (const x of r) rc.set(x.id, Number(x.n));
-  for (const x of o) oc.set(x.id, Number(x.n));
-  return { rc, oc };
-}
-
-export async function summarize(cards: Card[], now = new Date()): Promise<CardSummary[]> {
-  const ids = cards.map((c) => c.id);
-  const [lat, { rc, oc }] = await Promise.all([latestConclusions(ids), counts(ids)]);
-  return cards.map((card) => {
-    const latest = lat.get(card.id) ?? null;
-    return { card, latest, status: cardStatus(card.endsAt, (latest?.decision as Decision) ?? null, now), reactionCount: rc.get(card.id) ?? 0, opinionCount: oc.get(card.id) ?? 0 };
-  });
-}
+const date = (v: Date | string) => new Date(v);
+const card = (c: Card): Card => ({ ...c, startsAt: date(c.startsAt), endsAt: date(c.endsAt), createdAt: date(c.createdAt), reportPublishedAt: c.reportPublishedAt ? date(c.reportPublishedAt) : null });
+const conclusion = (c: Conclusion): Conclusion => ({ ...c, decision: c.decision.toLowerCase() as Decision, createdAt: date(c.createdAt) });
+const summary = (s: RawSummary): CardSummary => ({ ...s, card: card(s.card), status: s.status.toLowerCase() as CardStatus, latest: s.latest ? conclusion(s.latest) : null });
 
 export async function listCards(opts: { q?: string; tab?: "open" | "done" | "all" }) {
-  const db = await getDb();
-  const q = opts.q?.trim();
-  const where = q ? and(eq(schema.cards.hidden, false), or(ilike(schema.cards.title, `%${q}%`), ilike(schema.cards.body, `%${q}%`), ilike(schema.cards.place, `%${q}%`))) : eq(schema.cards.hidden, false);
-  const cards = await db.select().from(schema.cards).where(where).orderBy(desc(schema.cards.createdAt)).limit(100);
-  const all = await summarize(cards);
-  if (opts.tab === "open") return all.filter((s) => s.status === "open");
-  if (opts.tab === "done") return all.filter((s) => s.status !== "open");
-  return all;
+  const query = new URLSearchParams({ q: opts.q ?? "", tab: opts.tab ?? "all" });
+  return (await api<RawSummary[]>(`/api/views/cards?${query}`)).map(summary);
 }
-
-export async function allVisibleCards() {
-  const db = await getDb();
-  return db.select().from(schema.cards).where(eq(schema.cards.hidden, false));
-}
-
 export async function getCard(id: string) {
-  const db = await getDb();
-  const [card] = await db.select().from(schema.cards).where(eq(schema.cards.id, id));
-  if (!card) return null;
-  const [summary] = await summarize([card]);
-  const [reactions, opinions, conclusionRows, parent, children] = await Promise.all([
-    db.select().from(schema.reactions).where(eq(schema.reactions.cardId, id)),
-    db.select().from(schema.opinions).where(eq(schema.opinions.cardId, id)).orderBy(desc(schema.opinions.createdAt)),
-    db.select().from(schema.conclusions).where(eq(schema.conclusions.cardId, id)).orderBy(desc(schema.conclusions.createdAt)),
-    card.parentId ? db.select().from(schema.cards).where(eq(schema.cards.id, card.parentId)) : Promise.resolve([] as Card[]),
-    db.select().from(schema.cards).where(eq(schema.cards.parentId, id)),
-  ]);
-  return { ...summary, reactions, opinions, conclusions: conclusionRows, parent: parent[0] ?? null, children };
+  try {
+    const d = await api<{ summary: RawSummary; validation: RawValidation; opinions: Opinion[]; conclusions: Conclusion[]; parent: Card | null; children: Card[] }>(`/api/views/cards/${encodeURIComponent(id)}`);
+    const r = d.validation.report;
+    const report: Report | null = r ? { ...r.reactions, opinions: r.opinions, respondents: { resident: r.reactions.respondents.resident, work_study: r.reactions.respondents.workStudy, visitor: r.reactions.respondents.visitor } } : null;
+    return { ...summary(d.summary), canManage: d.validation.canManage, mine: d.validation.myReaction, stepCounts: d.validation.stepCounts, report,
+      opinions: d.opinions.map(o => ({ ...o, stance: o.stance.toLowerCase() as Stance, createdAt: date(o.createdAt), hidden: false })),
+      conclusions: d.conclusions.map(conclusion), parent: d.parent ? card(d.parent) : null, children: d.children.map(card) };
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 404) return null;
+    throw e;
+  }
 }
-
-export async function myActivity(deviceId: string) {
-  const db = await getDb();
-  const mine = await db.select().from(schema.cards).where(eq(schema.cards.proposerId, deviceId)).orderBy(desc(schema.cards.createdAt));
-  const rIds = (await db.select({ id: schema.reactions.cardId }).from(schema.reactions).where(eq(schema.reactions.deviceId, deviceId))).map((x) => x.id);
-  const oIds = (await db.select({ id: schema.opinions.cardId }).from(schema.opinions).where(eq(schema.opinions.deviceId, deviceId))).map((x) => x.id);
-  const joinedIds = [...new Set([...rIds, ...oIds])];
-  const joined = joinedIds.length ? await db.select().from(schema.cards).where(inArray(schema.cards.id, joinedIds)) : [];
-  const notices = await db.select().from(schema.notices).where(eq(schema.notices.deviceId, deviceId)).orderBy(desc(schema.notices.createdAt));
-  return { mine: await summarize(mine), joined: await summarize(joined), notices };
+export async function myActivity() {
+  const a = await api<{ mine: RawSummary[]; joined: RawSummary[]; notices: Notice[] }>("/api/views/me");
+  return { mine: a.mine.map(summary), joined: a.joined.map(summary), notices: a.notices.map(n => ({ ...n, kind: n.kind.toUpperCase() === "CONCLUSION" ? "conclusion" as const : "restart" as const, createdAt: date(n.createdAt), readAt: n.readAt ? date(n.readAt) : null })) };
 }
-
-export async function unreadCount(deviceId: string) {
-  const db = await getDb();
-  const [r] = await db.select({ n: sql<number>`count(*)::int` }).from(schema.notices).where(and(eq(schema.notices.deviceId, deviceId), isNull(schema.notices.readAt)));
-  return Number(r?.n ?? 0);
-}
-
+export async function unreadCount() { return (await api<{ count: number }>("/api/me/notices/unread-count")).count; }
 export async function openFlags() {
-  const db = await getDb();
-  return db.select().from(schema.flags).where(eq(schema.flags.status, "open")).orderBy(desc(schema.flags.createdAt));
+  const flags = await api<{ id: string; targetType: string; targetId: string; reason: string; createdAt: Date }[]>("/api/operator/flags");
+  return flags.map(f => ({ ...f, targetType: f.targetType.toLowerCase(), createdAt: date(f.createdAt) }));
 }

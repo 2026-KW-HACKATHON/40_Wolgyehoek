@@ -1,72 +1,25 @@
-import Link from "next/link";
 import { listCards } from "@/lib/queries";
 import { CardItem } from "@/components/card-item";
 import { ButtonLink, Disclaimer } from "@/components/ui";
-
-const TABS = [
-  { key: "open", label: "검증 중" },
-  { key: "done", label: "결론·종료" },
-  { key: "all", label: "전체" },
-] as const;
+import { PageHeaderBar } from "@/components/PageHeaderBar";
+import { CardFilters } from "@/components/CardFilters";
+import { Archive, ArrowRight } from "lucide-react";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ tab?: string; q?: string }> }) {
   const sp = await searchParams;
-  const tab = (TABS.find((t) => t.key === sp.tab)?.key ?? "all") as "open" | "done" | "all";
+  const tab = sp.tab === "open" || sp.tab === "done" ? sp.tab : "all";
   const q = sp.q ?? "";
   const cards = await listCards({ tab, q });
-  return (
-    <div>
-      <section className="pb-10 pt-4">
-        <p className="mb-3 font-mono text-[12px] uppercase tracking-wider text-ink-3">Wolgye 1-dong · Demand check & archive</p>
-        <h1 className="max-w-[640px] text-[32px] font-semibold leading-[1.15] tracking-[-0.04em] sm:text-[40px]">
-          월계1동의 아이디어,
-          <br />
-          주민 반응으로 검증하고 서랍에 남깁니다.
-        </h1>
-        <p className="mt-4 max-w-[560px] text-[16px] leading-7 text-ink-2">
-          광운대 캡스톤, 지역연계 수업, 공모전, 주민 제안까지. 좋은 시도가 다음 단계로 가도록, 주민 수요를 단계별로 확인하고 결론을 응답자에게 돌려드려요.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-2">
-          <ButtonLink href="/new">아이디어 올리기</ButtonLink>
-          <ButtonLink href="/?tab=done" variant="secondary">
-            멈춘 아이디어 이어받기
-          </ButtonLink>
-        </div>
+  return <>
+    <PageHeaderBar title="기록 탐색" count={cards.length} meta="월계1동 아이디어 수요 검증·기록"><CardFilters tab={tab} q={q} /></PageHeaderBar>
+    <div className="mx-auto max-w-[1160px] space-y-7 px-4 py-6 sm:px-6 lg:px-8">
+      <section className="flex flex-col justify-between gap-5 rounded-lg border border-primary/15 bg-primary/[0.04] p-5 sm:flex-row sm:items-center sm:p-6">
+        <div><p className="mb-2 text-xs font-semibold text-primary">작은 아이디어가 다음 시도로 이어지도록</p><h2 className="text-xl font-semibold leading-snug tracking-tight sm:text-2xl">동네의 생각을 모으고,<br className="sm:hidden" /> 결론까지 함께 남겨요.</h2><p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">아이디어를 올리고 주민 반응을 확인해요. 멈춘 시도의 이유도 기록하면, 다음 팀이 이어갈 수 있어요.</p></div>
+        <ButtonLink href="/new">아이디어 올리기<ArrowRight className="size-4" /></ButtonLink>
       </section>
-
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex gap-1 rounded-lg bg-subtle p-1 ring-line" role="tablist">
-          {TABS.map((t) => (
-            <Link
-              key={t.key}
-              href={`/?tab=${t.key}${q ? `&q=${encodeURIComponent(q)}` : ""}`}
-              role="tab"
-              aria-selected={t.key === tab}
-              className={`rounded-md px-3 py-1.5 text-sm font-medium ${t.key === tab ? "bg-white text-ink ring-card" : "text-ink-3 hover:text-ink"}`}
-            >
-              {t.label}
-            </Link>
-          ))}
-        </div>
-        <form className="flex gap-2" action="/">
-          <input type="hidden" name="tab" value={tab} />
-          <input name="q" defaultValue={q} placeholder="플리마켓, 경춘선숲길…" aria-label="카드 검색" className="w-full rounded-md bg-white px-3 py-2 text-sm ring-line sm:w-64" />
-          <button className="shrink-0 whitespace-nowrap rounded-md bg-white px-3 text-sm font-medium ring-line hover:bg-subtle">검색</button>
-        </form>
-      </div>
-
-      {cards.length === 0 ? (
-        <p className="rounded-lg bg-subtle px-5 py-10 text-center text-sm text-ink-3 ring-line">조건에 맞는 카드가 없어요.</p>
-      ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {cards.map((s) => (
-            <CardItem key={s.card.id} s={s} />
-          ))}
-        </div>
-      )}
-      <div className="mt-8">
-        <Disclaimer />
-      </div>
+      <div className="flex items-center justify-between text-xs text-muted-foreground"><span>{q ? `“${q}” 검색 결과` : "우리 동네에 쌓이는 시도들"}</span><span>최신순</span></div>
+      {cards.length ? <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">{cards.map(s => <CardItem key={s.card.id} s={s} />)}</div> : <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed border-border py-16 text-center"><Archive className="size-8 text-muted-foreground" /><h2 className="font-semibold">{q ? "검색 결과가 없어요" : "아직 등록된 카드가 없어요"}</h2><p className="text-sm text-muted-foreground">{q ? "다른 검색어나 상태를 선택해 보세요." : "첫 아이디어를 올려 주민의 생각을 들어 보세요."}</p><ButtonLink href={q ? "/" : "/new"} variant="secondary">{q ? "전체 카드 보기" : "아이디어 올리기"}</ButtonLink></div>}
+      <Disclaimer />
     </div>
-  );
+  </>;
 }

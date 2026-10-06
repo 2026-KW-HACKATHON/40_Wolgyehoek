@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Card } from "./ui/Card";
 import type { CardSummary } from "@/lib/queries";
 import { DECISION_LABELS, type Decision } from "@/lib/domain/types";
 import { Pill, StatusBadge, fmtDate } from "./ui";
@@ -6,10 +7,11 @@ import { Pill, StatusBadge, fmtDate } from "./ui";
 export function CardItem({ s }: { s: CardSummary }) {
   const { card } = s;
   return (
-    <Link href={`/cards/${card.id}`} className="ring-card group block rounded-lg bg-white p-5 transition-shadow hover:shadow-[0_0_0_1px_rgba(0,0,0,0.14),0_4px_8px_rgba(0,0,0,0.06)]">
+    <Link href={`/cards/${card.id}`} className="group block rounded-lg focus-visible:ring-2 focus-visible:ring-primary">
+      <Card className="h-full p-5 transition-colors group-hover:border-primary/40 group-hover:bg-primary/[0.02]">
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <StatusBadge status={s.status} />
-        {card.isSeed && <Pill>예시 · 과거 공개 아이디어</Pill>}
+        {card.isSeed && <Pill>예시 카드</Pill>}
         {card.parentId && <Pill>이어받은 카드</Pill>}
       </div>
       <h3 className="text-lg font-semibold tracking-[-0.01em] group-hover:underline">{card.title}</h3>
@@ -26,6 +28,7 @@ export function CardItem({ s }: { s: CardSummary }) {
         <span>의견 {s.opinionCount}</span>
         <span className="ml-auto">{card.place || "월계1동"} · ~{fmtDate(card.endsAt)}</span>
       </div>
+      </Card>
     </Link>
   );
 }

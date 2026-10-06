@@ -1,0 +1,71 @@
+name: Verify
+on:
+  pull_request:
+  push:
+    branches: [main, feat/spring-backend]
+permissions:
+  contents: read
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test && pnpm typecheck && pnpm lint && pnpm build
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: dongnae_test
+          POSTGRES_USER: dongnae
+          POSTGRES_PASSWORD: ci-local-only
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U dongnae -d dongnae_test"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/dongnae_test
+      SPRING_DATASOURCE_USERNAME: dongnae
+      SPRING_DATASOURCE_PASSWORD: ci-local-only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew test bootJar --no-daemon
+        working-directory: backend
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-test-results
+          path: backend/build/reports/tests/test
+  containers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      POSTGRES_PASSWORD: ci-local-only
+      OPERATOR_CODE: ci-local-operator
+      DEMO_SEED: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up --build -d
+      - name: Verify database, API and rendered web
+        run: |
+          curl --retry 30 --retry-delay 2 --retry-connrefused --retry-all-errors --fail http://localhost:8080/api/health
+          curl --retry 30 --retry-delay 2 --retry-connrefused --retry-all-errors --fail http://localhost:3000/ > /tmp/home.html
+          python3 -c 'from pathlib import Path; s = Path("/tmp/home.html").read_text(); assert "광운로 주말 플리마켓" in s and "화면을 불러오지 못했어요" not in s'
+      - run: docker compose logs --tail 100
+        if: always()
+      - run: docker compose down
+        if: always()
