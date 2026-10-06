@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: dongnae
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dongnae
+    username: dongnae
+    password: dongnae
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+dongnae:
+  operator-code: ${OPERATOR_CODE:}
+  ai:
+    api-key: ${ANTHROPIC_API_KEY:}
+    model: ${ANTHROPIC_MODEL:claude-haiku-4-5-20251001}
