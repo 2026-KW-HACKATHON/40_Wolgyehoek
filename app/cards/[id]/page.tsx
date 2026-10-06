@@ -1,3 +1,5 @@
+import { ArrowLeft, MapPin, UserRound } from "lucide-react";
+import { RecordProgress } from "@/components/RecordProgress";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -27,16 +29,17 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
   };
 
   return (
-    <article className="mx-auto max-w-[800px] space-y-8 px-4 py-6 sm:px-8">
+    <article className="mx-auto max-w-[800px] space-y-8 px-4 py-7 sm:px-8 sm:py-10">
+      <Link href="/#ideas" className="inline-flex min-h-9 items-center gap-2 text-xs font-medium text-muted-foreground hover:text-primary"><ArrowLeft className="size-3.5" />동네 아이디어로 돌아가기</Link>
       <header className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={status} />
           {card.isSeed && <Pill>예시 카드</Pill>}
           <span className="tnum font-mono text-[12px] text-ink-3">{fmtDate(card.startsAt)} ~ {fmtDate(card.endsAt)}</span>
         </div>
-        <h1 className="text-[26px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{card.title}</h1>
+        <h1 className="text-[29px] font-semibold leading-[1.3] tracking-[-0.035em] sm:text-[38px]">{card.title}</h1>
         <p className="whitespace-pre-line text-[16px] leading-7 text-ink-2">{card.body}</p>
-        <dl className="ring-card grid grid-cols-3 divide-x divide-divider rounded-lg bg-white text-sm">
+        <dl className="grid grid-cols-3 divide-x divide-border/70 rounded-2xl border border-border/70 bg-[var(--brand-soft)] text-sm">
           {[["대상", card.target], ["장소", card.place], ["기대 효과", card.effect]].map(([k, v]) => (
             <div key={k} className="p-3">
               <dt className="font-mono text-[11px] uppercase tracking-wider text-ink-3">{k}</dt>
@@ -44,7 +47,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
             </div>
           ))}
         </dl>
-        <p className="text-xs text-ink-3">제안 · {card.proposerName}</p>
+        <p className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground"><span className="flex items-center gap-1.5"><UserRound className="size-3.5" />{card.proposerName}의 제안</span><span className="flex items-center gap-1.5"><MapPin className="size-3.5" />{card.place || "월계1동"}</span></p>
         {d.parent && (
           <p className="rounded-md bg-subtle px-3 py-2 text-sm ring-line">
             이어받은 카드예요. 원본: <Link href={`/cards/${d.parent.id}`} className="font-medium underline">{d.parent.title}</Link>
@@ -57,6 +60,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
           </form>
         )}
       </header>
+      <RecordProgress status={status} reactions={d.reactionCount} published={!!card.reportPublishedAt} concluded={d.conclusions.length > 0} />
 
       <section>
         <SectionTitle sub={<span className="tnum">반응 {report.total}</span>}>이 아이디어, 써보실 건가요?</SectionTitle>
@@ -71,7 +75,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
       {reportVisible && (
         <section>
           <SectionTitle sub={card.reportPublishedAt ? `공개 ${fmtDate(card.reportPublishedAt)}` : "공개 전 · 제안자/운영자만 보임"}>검증 리포트</SectionTitle>
-          <div className="ring-featured space-y-5 rounded-lg bg-white p-5">
+          <div className="space-y-5 rounded-2xl border border-border/70 bg-white p-5 sm:p-6">
             <Disclaimer total={report.total} />
             <div className="space-y-3">
               {report.steps.map((s) => (

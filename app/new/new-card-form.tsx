@@ -35,7 +35,7 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
   return (
     <div className="space-y-8">
       {!parent && (
-        <section className="ring-card rounded-lg bg-white p-5">
+        <section className="rounded-2xl border border-border/80 bg-white p-5 sm:p-6">
           <label htmlFor="text" className="mb-2 block text-sm font-medium">1. 아이디어를 자유롭게 적어 주세요</label>
           <Textarea id="text" value={text} onChange={(e) => setText(e.target.value)} rows={5} placeholder="예) 광운로 공터에서 주말마다 주민 플리마켓을 열면 좋겠어요." className={inputCls} />
           <div className="mt-3 flex items-center gap-3">
@@ -64,7 +64,7 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
       )}
 
       {draft && (
-        <form onSubmit={onSubmit} className="ring-featured space-y-5 rounded-lg bg-white p-5">
+        <form onSubmit={onSubmit} className="space-y-5 rounded-2xl border border-primary/20 bg-white p-5 sm:p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium">{parent ? "이어받을 카드 내용" : "2. 정리된 초안을 확인하고 고쳐 주세요"}</h2>
             <span className="font-mono text-[11px] uppercase tracking-wider text-ink-3">{draft.source === "llm" ? "AI 초안 · 확인 필요" : draft.source === "rule" ? "자동 정리 · 확인 필요" : "원본 연결"}</span>
