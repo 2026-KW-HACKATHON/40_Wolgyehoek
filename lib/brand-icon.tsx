@@ -14,7 +14,7 @@ export async function markIcon(size: number) {
 export async function fullBleedIcon(size: number) {
   const src = await brandFile("glyph.svg");
   return new ImageResponse(
-    <div style={{ width: "100%", height: "100%", display: "flex", backgroundImage: "linear-gradient(135deg, #f29a4a 0%, #d9572b 100%)" }}>
+    <div style={{ width: "100%", height: "100%", display: "flex", backgroundImage: "linear-gradient(135deg, #ff9a3c 0%, #ec5b13 100%)" }}>
       {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse는 next/image를 렌더링하지 않는다. */}
       <img src={src} width={size} height={size} alt="" />
     </div>,

@@ -37,7 +37,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
     <article className="space-y-8 px-4 pb-8 pt-1">
       <header className="relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-[22px] p-6 text-white shadow-float">
         <CardBackdrop cardId={card.id} media={card.media[0]} />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[rgb(74_24_4/.78)] via-transparent to-[rgb(74_24_4/.22)]" />
         <Link href="/" aria-label="뒤로" className="absolute left-4 top-4 flex size-10 items-center justify-center rounded-full bg-black/20 backdrop-blur hover:bg-black/30"><ChevronLeft className="size-5" /></Link>
         <div className="absolute right-4 top-6 flex items-center gap-1.5 text-[11px] font-bold"><span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">{card.succeededAt ? "성사" : STATUS_LABELS[status]}</span>{card.isSeed && <span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">예시</span>}</div>
         <div className="relative">
@@ -70,7 +70,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
           ))}
         </dl>
         {d.parent && (
-          <Link href={`/cards/${d.parent.id}`} className="block rounded-2xl bg-muted p-4 text-sm hover:bg-[#efe3d3]">
+          <Link href={`/cards/${d.parent.id}`} className="block rounded-2xl bg-muted p-4 text-sm hover:bg-[var(--muted-hover)]">
             <span className="text-muted-foreground">이어받은 카드 · </span><span className="font-bold">{d.parent.title}</span>
             {card.takeoverNote && <span className="mt-1 block text-muted-foreground">{card.takeoverNote}</span>}
           </Link>

@@ -24,7 +24,7 @@ export function ButtonLink({ href, children, variant = "primary" }: { href: stri
   return <Button asChild variant={variant === "primary" ? "default" : "soft"} className="h-12 px-6 text-[15px]"><Link href={href}>{children}</Link></Button>;
 }
 export const btnPrimary = "h-12 px-6 text-[15px] font-bold";
-export const btnSecondary = "h-12 bg-none bg-muted px-6 text-[15px] text-foreground hover:bg-[#efe3d3]";
+export const btnSecondary = "h-12 bg-none bg-muted px-6 text-[15px] text-foreground hover:bg-[var(--muted-hover)]";
 export const inputCls = "w-full min-h-12 rounded-2xl border-0 bg-muted px-4 py-3 text-base text-foreground placeholder:text-[var(--text-4)] focus-visible:ring-2 focus-visible:ring-primary";
 
 export function FormMessage({ state }: { state: { ok: boolean; error?: string; message?: string } | null }) {

@@ -26,9 +26,9 @@ function CardFront({card,index=0,onPick,playing=true}:{card:SwipeCard;index?:num
  const media=card.media??[];
  return <>
   <CardBackdrop cardId={card.id} media={media[index]} playing={playing}/>
-  {media.length>0&&<div aria-hidden="true" className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/35 to-transparent"/>}
+  {media.length>0&&<div aria-hidden="true" className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[rgb(74_24_4/.35)] to-transparent"/>}
   {media.length>1&&<div className="absolute inset-x-3 top-1 z-10 flex gap-1">{media.map((m,i)=><button key={m.id} type="button" tabIndex={onPick?0:-1} aria-label={`${i+1}번째 사진·영상`} aria-pressed={i===index} onClick={()=>onPick?.(i)} className="flex-1 py-2"><span className={cn("block h-1 rounded-full transition-colors",i===index?"bg-white":"bg-white/40")}/></button>)}</div>}
-  <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/30 to-transparent"/>
+  <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 card-scrim"/>
   <div className="absolute inset-x-0 bottom-0 p-6 pr-16 text-white">
    <Progress card={card}/>
    <p className="mb-2.5 flex items-center gap-2 text-sm font-semibold text-white/90">{topicLabel(card.topic)&&<span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold backdrop-blur">{topicLabel(card.topic)}</span>}<span className="flex items-center gap-1"><MapPin className="size-4"/>{card.place||"월계1동"}</span></p>
@@ -41,7 +41,7 @@ function CardFront({card,index=0,onPick,playing=true}:{card:SwipeCard;index?:num
 
 function CardBack({card,onFlip}:{card:SwipeCard;onFlip:()=>void}){
  const rows=[["문제",card.problem],["분야",topicLabel(card.topic)],["목표",card.succeededAt?`성사 · ${card.pledges}명 함께`:`${card.goal}명 중 ${card.pledges}명 모임`],["대상",card.target],["장소",card.place],["기대 효과",card.effect],["제안",card.proposerName]].filter(([,v])=>v);
- return <div className="absolute inset-0 flex flex-col bg-[#2d2219] text-white">
+ return <div className="absolute inset-0 flex flex-col bg-[var(--card-back)] text-white">
   <div aria-hidden="true" className="absolute inset-x-0 top-0 h-40 opacity-60" style={{background:cardSurface(card.id),maskImage:"linear-gradient(to bottom,black,transparent)"}}/>
   <div className="relative flex min-h-0 flex-1 flex-col p-6">
    <div className="flex items-start gap-3"><h2 className="flex-1 text-[24px] font-extrabold leading-[1.25] tracking-[-0.04em]">{card.title}</h2><button type="button" onClick={onFlip} aria-label="앞면 보기" className="-mr-2 -mt-1 flex size-10 shrink-0 items-center justify-center rounded-full bg-white/15 hover:bg-white/25"><RotateCcw className="size-[18px]"/></button></div>
@@ -70,7 +70,7 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
  const valid=reason.replace(/\s/g,"").length>=10&&reason.length<=500;
  const lean=Math.min(1,Math.abs(dx)/90);
  return <div className="px-3 pt-1">
-  {present.length>0&&<div role="tablist" aria-label="동네 문제 분야" className="-mx-3 mb-2.5 flex gap-1.5 overflow-x-auto px-3 pb-0.5 [scrollbar-width:none]">{(["ALL",...present] as const).map(t=><button key={t} type="button" role="tab" aria-selected={topic===t} onClick={()=>setTopic(t)} className={cn("shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-bold transition-colors",topic===t?"bg-foreground text-background":"bg-muted text-muted-foreground hover:bg-[#efe3d3]")}>{t==="ALL"?"전체":TOPICS[t]}</button>)}</div>}
+  {present.length>0&&<div role="tablist" aria-label="동네 문제 분야" className="-mx-3 mb-2.5 flex gap-1.5 overflow-x-auto px-3 pb-0.5 [scrollbar-width:none]">{(["ALL",...present] as const).map(t=><button key={t} type="button" role="tab" aria-selected={topic===t} onClick={()=>setTopic(t)} className={cn("shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-bold transition-colors",topic===t?"bg-foreground text-background":"bg-muted text-muted-foreground hover:bg-[var(--muted-hover)]")}>{t==="ALL"?"전체":TOPICS[t]}</button>)}</div>}
   <div className="swipe-stage relative">
    <div role="status" aria-live="polite" className={notice?"absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/75 px-4 py-2 text-sm font-bold text-white backdrop-blur":"sr-only"}>{notice||`내 잔액 ${balance}C`}</div>
    {!initial.enabled?<div className="flex h-full flex-col items-center justify-center text-center"><p className="text-lg font-bold">준비 중이에요</p></div>:card?<>

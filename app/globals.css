@@ -2,24 +2,24 @@
 
 /* Jangkki neutral palette, semantic colors, control sizes; see docs/UI-PORT.md. */
 :root {
-  --background: #fffaf3; --foreground: #2d2219; --card: #fffaf3; --card-foreground: #2d2219;
-  --border: #ecdfcf; --muted: #f5ecdf; --muted-foreground: #75665a; --field-bg: #f5ecdf;
-  --primary: #d9622b; --primary-foreground: #fff;
+  --background: #fff8f0; --foreground: #2b1a10; --card: #fff8f0; --card-foreground: #2b1a10;
+  --border: #f1dcc4; --muted: #fdecd8; --muted-foreground: #7c5a43; --field-bg: #fdecd8;
+  --primary: #ec5b13; --primary-foreground: #fff;
   --primary-hover: color-mix(in oklab, var(--primary) 86%, black);
   --accent: #f2f4f6; --accent-foreground: #191f28;
-  --input: #e6d9c8; --ring: #d9622b; --destructive: #c42b1c; --destructive-on-solid: #fff;
+  --input: #efd6bb; --ring: #ec5b13; --destructive: #c42b1c; --destructive-on-solid: #fff;
   --destructive-surface: #fdecea; --destructive-foreground: #c42b1c;
-  --success: #e9f8ef; --success-foreground: #0a7f3f;
-  --warning: #fff4d6; --warning-foreground: #8a5a00; --info: #eaf2e3; --info-foreground: #4d7a3a;
-  --shell-frame-bg: #fffaf3;
+  --success: #e3f5e9; --success-foreground: #1f7a45;
+  --warning: #fff1d6; --warning-foreground: #a15c00; --info: #e6f4ea; --info-foreground: #2f7a47;
+  --shell-frame-bg: #fff8f0;
   --surface: var(--background); --surface-subtle: var(--muted); --text: var(--foreground);
-  --text-2: var(--muted-foreground); --text-3: #8a7a6c; --text-4: #ab9c8d;
-  --divider: var(--border); --link: #d9622b; --focus: var(--primary);
+  --text-2: var(--muted-foreground); --text-3: #9a7660; --text-4: #b8957c;
+  --divider: var(--border); --link: #ec5b13; --focus: var(--primary);
   --badge-bg: var(--info); --badge-fg: var(--info-foreground);
   --go-bg: var(--success); --go-fg: var(--success-foreground);
   --hold-bg: var(--warning); --hold-fg: var(--warning-foreground);
   --stop-bg: var(--destructive-surface); --stop-fg: var(--destructive-foreground);
-  --step-1: #ab9c8d; --step-2: #6f8f5c; --step-3: #e0a03a; --step-4: #d9622b;
+  --step-1: #b8957c; --step-2: #4f9a5b; --step-3: #f5a623; --step-4: #ec5b13;
   --shadow-ring: 0 0 0 1px var(--border);
   --shadow-card: var(--shadow-ring); --shadow-featured: var(--shadow-ring);
 }
@@ -44,18 +44,21 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 .ring-card, .ring-featured, .ring-line { box-shadow: var(--shadow-ring); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; } }
 
-/* Service identity: warm apricot-to-terracotta gradient on beige paper, swipe-first layout. */
+/* Service identity: tangerine-to-persimmon gradient on warm cream paper, swipe-first layout. */
 :root {
-  --brand-gradient: linear-gradient(135deg, #f29a4a 0%, #d9572b 100%);
-  --like: #3e9b63; --nope: #d64f3a;
-  --brand-deep: #b54b25;
-  --brand-paper: #fff4e6;
-  --brand-paper-border: #efd8c5;
-  --brand-highlight: #ffe0b2;
-  --brand-mist: #ffe4ce;
-  --brand-soft: #fdeedd;
-  --shadow-float: 0 2px 6px rgb(73 45 20 / .06), 0 10px 28px rgb(73 45 20 / .12);
+  --brand-gradient: linear-gradient(135deg, #ff9a3c 0%, #ec5b13 100%);
+  --like: #23a05f; --nope: #e5484d;
+  --brand-deep: #c2410c;
+  --brand-paper: #fff1e2;
+  --brand-paper-border: #f5d7b8;
+  --brand-highlight: #ffd9ad;
+  --brand-mist: #ffe2c4;
+  --brand-soft: #fff0df;
+  --muted-hover: #fbdfc0;
+  --card-back: #33170a;
+  --shadow-float: 0 2px 6px rgb(140 60 10 / .08), 0 12px 30px rgb(140 60 10 / .16);
 }
+.card-scrim { background: linear-gradient(to top, rgb(74 24 4 / .8) 0%, rgb(74 24 4 / .35) 45%, transparent 100%); }
 @utility bg-brand { background-image: var(--brand-gradient); }
 @utility text-brand { background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @utility shadow-float { box-shadow: var(--shadow-float); }
@@ -76,4 +79,4 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 /* WebKit은 backface-visibility를 무시할 때가 있어, 회전 절반(90°) 시점에 면을 바꾼다. */
 .flip-face { transition: visibility 0s linear 250ms; }
 @media (prefers-reduced-motion: reduce) { .flip-face { transition: none; } }
-@media(min-width:481px) { html { background:#f2e9dd; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }
+@media(min-width:481px) { html { background:#f8e4cc; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }

@@ -12,7 +12,7 @@ export function CardBackdrop({ cardId, media, playing = true }: { cardId: string
   }
   return <>
     <div aria-hidden="true" className="absolute inset-0" style={{ background: cardSurface(cardId) }} />
-    <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgb(255_255_255/.28),transparent_45%)]" />
+    <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgb(255_240_200/.22),transparent_45%)]" />
     <BrandMark className="pointer-events-none absolute -right-12 top-10 size-72 rotate-[14deg] opacity-[0.12]" />
   </>;
 }
