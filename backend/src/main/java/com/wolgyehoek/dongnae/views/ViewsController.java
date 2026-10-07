@@ -3,6 +3,7 @@ package com.wolgyehoek.dongnae.views;
 import com.wolgyehoek.dongnae.card.*;
 import com.wolgyehoek.dongnae.conclusion.*;
 import com.wolgyehoek.dongnae.device.*;
+import com.wolgyehoek.dongnae.media.*;
 import com.wolgyehoek.dongnae.notice.*;
 import com.wolgyehoek.dongnae.opinion.*;
 import com.wolgyehoek.dongnae.reaction.*;
@@ -25,16 +26,18 @@ public class ViewsController {
     private final ReportService reports;
     private final NoticeService notices;
     private final com.wolgyehoek.dongnae.credits.CreditService credits;
+    private final MediaService media;
 
     public ViewsController(CardRepository cards, ReactionRepository reactions, OpinionRepository opinions,
-                           ConclusionRepository conclusions, DeviceService devices, ReportService reports, NoticeService notices, com.wolgyehoek.dongnae.credits.CreditService credits) {
+                           ConclusionRepository conclusions, DeviceService devices, ReportService reports, NoticeService notices, com.wolgyehoek.dongnae.credits.CreditService credits, MediaService media) {
         this.cards = cards; this.reactions = reactions; this.opinions = opinions;
-        this.conclusions = conclusions; this.devices = devices; this.reports = reports; this.notices = notices; this.credits = credits;
+        this.conclusions = conclusions; this.devices = devices; this.reports = reports; this.notices = notices; this.credits = credits; this.media = media;
     }
 
     public record CardView(String id, String title, String body, String target, String place, String effect,
                            String proposerName, Instant startsAt, Instant endsAt, String parentId, String takeoverNote,
-                           boolean isSeed, boolean hidden, Instant reportPublishedAt, String reportSummary, Instant createdAt) {}
+                           boolean isSeed, boolean hidden, Instant reportPublishedAt, String reportSummary, Instant createdAt,
+                           List<MediaView> media) {}
     public record Summary(CardView card, CardStatus status, int reactionCount, int opinionCount, ConclusionResponse latest) {}
     public record Detail(Summary summary, ReportViewResponse validation, List<OpinionResponse> opinions,
                          List<ConclusionResponse> conclusions, CardView parent, List<CardView> children) {}
@@ -43,7 +46,8 @@ public class ViewsController {
     private CardView view(Card c) {
         return new CardView(c.getId(), c.getTitle(), c.getBody(), c.getTarget(), c.getPlace(), c.getEffect(),
                 c.getProposerName(), c.getStartsAt(), c.getEndsAt(), c.getParentId(), c.getTakeoverNote(),
-                c.isSeed(), c.isHidden(), c.getReportPublishedAt(), c.getReportSummary(), c.getCreatedAt());
+                c.isSeed(), c.isHidden(), c.getReportPublishedAt(), c.getReportSummary(), c.getCreatedAt(),
+                media.forCard(c.getId()));
     }
     private Summary summary(Card c) {
         var history = conclusions.findByCardIdOrderByCreatedAtDesc(c.getId());

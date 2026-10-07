@@ -3,6 +3,7 @@ package com.wolgyehoek.dongnae.credits;
 import com.wolgyehoek.dongnae.card.*;
 import com.wolgyehoek.dongnae.common.*;
 import com.wolgyehoek.dongnae.device.DeviceService;
+import com.wolgyehoek.dongnae.media.MediaService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,11 @@ public class CreditService {
     private final JdbcTemplate db;
     private final CardRepository cards;
     private final DeviceService devices;
+    private final MediaService media;
     private final boolean enabled;
-    public CreditService(JdbcTemplate db, CardRepository cards, DeviceService devices,
+    public CreditService(JdbcTemplate db, CardRepository cards, DeviceService devices, MediaService media,
                          @Value("${DEMO_CREDITS:false}") boolean enabled) {
-        this.db = db; this.cards = cards; this.devices = devices; this.enabled = enabled;
+        this.db = db; this.cards = cards; this.devices = devices; this.media = media; this.enabled = enabled;
     }
     public record Product(String id, String title, String shop, String detail, int cost, String category) {}
     public static final List<Product> PRODUCTS = List.of(
@@ -114,6 +116,7 @@ public class CreditService {
               AND NOT EXISTS(SELECT 1 FROM idea_swipes s WHERE s.card_id=c.id AND s.device_id=?)
             ORDER BY c.is_seed,c.created_at DESC,c.id LIMIT 50
             """,device,device);
+        for(var row:deck) row.put("media",media.forCard((String) row.get("id")));
         return Map.of("enabled",true,"cards",deck,"balance",balance(device));
     }
     @Transactional

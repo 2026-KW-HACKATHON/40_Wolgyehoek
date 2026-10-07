@@ -25,6 +25,8 @@ services:
       DEMO_SEED: ${DEMO_SEED:-false}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-haiku-4-5-20251001}
+    volumes:
+      - dongnae-media:/app/data/media
     ports:
       - "127.0.0.1:8080:8080"
     depends_on:
@@ -42,3 +44,4 @@ services:
     restart: unless-stopped
 volumes:
   dongnae-data:
+  dongnae-media:

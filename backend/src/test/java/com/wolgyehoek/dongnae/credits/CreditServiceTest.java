@@ -23,6 +23,7 @@ class CreditServiceTest {
  @Autowired com.wolgyehoek.dongnae.device.DeviceRepository deviceRepository;
  @Autowired ConclusionService conclusions;
  @Autowired NoticeRepository notices;
+ @Autowired com.wolgyehoek.dongnae.media.MediaService media;
  String id(){return "d_"+UUID.randomUUID().toString().replace("-","").substring(0,16);}
  Card funded(String owner,int amount){
   devices.getOrCreate(owner);credits.topup(owner,500);
@@ -144,7 +145,7 @@ class CreditServiceTest {
   assertThatThrownBy(()->credits.insight(id(),c.getId())).isInstanceOf(CardNotFoundException.class);
  }
  @Test void disabledDemoCannotIssueCredits(){
-  CreditService disabled=new CreditService(db,cards,devices,false);
+  CreditService disabled=new CreditService(db,cards,devices,media,false);
   assertThat(disabled.wallet(id()).get("enabled")).isEqualTo(false);
   assertThatThrownBy(()->disabled.topup(id(),500)).isInstanceOf(BadRequestException.class);
  }

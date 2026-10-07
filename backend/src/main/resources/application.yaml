@@ -7,6 +7,10 @@ spring:
     password: dongnae
   flyway:
     baseline-version: 6
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 52MB
   jpa:
     open-in-view: false
     hibernate:
@@ -14,6 +18,8 @@ spring:
     show-sql: false
 dongnae:
   demo-seed: ${DEMO_SEED:false}
+  media:
+    dir: ${MEDIA_DIR:./data/media}
   operator-code: ${OPERATOR_CODE:}
   ai:
     api-key: ${ANTHROPIC_API_KEY:}

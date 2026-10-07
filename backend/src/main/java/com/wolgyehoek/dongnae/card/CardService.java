@@ -1,6 +1,7 @@
 package com.wolgyehoek.dongnae.card;
 
 import com.wolgyehoek.dongnae.common.Ids;
+import com.wolgyehoek.dongnae.media.MediaService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ public class CardService {
     private static final int DEFAULT_WEEKS = 2;
 
     private final CardRepository cardRepository;
+    private final MediaService mediaService;
 
-    public CardService(CardRepository cardRepository) {
+    public CardService(CardRepository cardRepository, MediaService mediaService) {
         this.cardRepository = cardRepository;
+        this.mediaService = mediaService;
     }
 
     @Transactional
@@ -47,7 +50,8 @@ public class CardService {
             card.linkParent(parentId, takeoverNote);
         }
 
-        Card saved = cardRepository.save(card);
+        Card saved = cardRepository.saveAndFlush(card);
+        mediaService.attach(id, proposerId, request.mediaIds());
         return CardResponse.from(saved, now);
     }
 

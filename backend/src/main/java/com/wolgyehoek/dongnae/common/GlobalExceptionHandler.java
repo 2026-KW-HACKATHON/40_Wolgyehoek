@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -73,6 +74,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorResponse handleMethodNotAllowed(HttpRequestMethodNotSupportedException e) {
         return new ErrorResponse("이 주소에서는 " + e.getMethod() + " 요청을 쓸 수 없어요.");
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.CONTENT_TOO_LARGE)
+    public ErrorResponse handleTooLarge(MaxUploadSizeExceededException e) {
+        return new ErrorResponse("파일이 너무 커요. 사진은 10MB, 영상은 50MB 이하로 올려 주세요.");
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
