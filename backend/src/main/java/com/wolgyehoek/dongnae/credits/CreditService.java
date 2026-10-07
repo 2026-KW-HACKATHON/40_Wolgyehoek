@@ -114,7 +114,7 @@ public class CreditService {
         ensureWallet(device);
         var deck=db.queryForList("""
             SELECT c.id,c.title,c.body,c.target,c.place,c.effect,c.proposer_name AS "proposerName",c.is_seed AS "isSeed",c.ends_at AS "endsAt",f.remaining,
-              c.goal,c.succeeded_at AS "succeededAt",(SELECT count(*) FROM idea_swipes s WHERE s.card_id=c.id AND s.direction='RIGHT') AS pledges
+              c.goal,c.succeeded_at AS "succeededAt",c.problem,c.topic,(SELECT count(*) FROM idea_swipes s WHERE s.card_id=c.id AND s.direction='RIGHT') AS pledges
             FROM cards c JOIN credit_campaigns f ON f.card_id=c.id
             WHERE NOT c.hidden AND c.ends_at>now() AND c.latest_decision IS NULL AND c.proposer_id<>? AND f.remaining>=30
               AND NOT EXISTS(SELECT 1 FROM idea_swipes s WHERE s.card_id=c.id AND s.device_id=?)
@@ -164,14 +164,19 @@ public class CreditService {
     public Map<String,Object> samples(String device) {
         requireDemo();
         // Explicitly requested, clearly labelled shared fixtures. Repeated setup never refills spent budgets.
+        // 월계1동 공개 사안을 바탕으로 한 시연 카드다. 출처와 가설 구분은 docs/DEMO-CASES.md에 둔다.
         String owner="d_0000000000000040"; ensureWallet(owner);
+        db.update("UPDATE cards SET ends_at=now() WHERE id IN ('demo_walk40','demo_lunch40','demo_repair40') AND ends_at>now()");
         String[][] items={
-            {"demo_walk40","퇴근길, 같이 걸을래요?","경춘선숲길에서 30분만 함께 걸어요. 혼자서는 미루게 되는 산책을 이웃과 가볍게 시작하는 모임이에요.","경춘선숲길","저녁에 산책하고 싶은 이웃","하루의 끝에 건강한 동네 습관"},
-            {"demo_lunch40","학생과 주민이 함께하는 점심 식탁","빈자리가 있는 동네 식당에서 학생과 주민이 함께 점심을 먹어요. 식당에는 새로운 손님을, 우리에게는 가까운 이웃을 연결해요.","광운로","혼밥 대신 함께 먹고 싶은 누구나","동네 식당과 함께하는 즐거운 한 끼"},
-            {"demo_repair40","고장 난 물건, 버리기 전에 한 번 더","학생 수리팀과 주민이 작은 생활용품을 함께 고쳐봐요. 수리 가능한 물건과 원하는 요일을 의견으로 알려 주세요.","월계1동","수리할 물건이 있는 주민","물건의 수명도, 이웃의 연결도 길게"}
+            {"wg_safety","공사 구간 우회길·야간 동행 지도","광운대역세권 개발 공사 주변을 학생팀이 직접 걸어 보고 안전한 우회길과 밤길 동행 시간을 지도로 만들어요.","광운대역 일대","공사 구간을 지나 통학·출퇴근하는 주민","공사 기간에도 안심하고 다니는 길","광운대역세권 공사로 통행이 불편하다는 민원이 이어져요","SAFETY","20"},
+            {"wg_care","휴센터 스마트폰·키오스크 교실","새로 문을 연 월계어르신휴센터에서 광운대생이 매주 한 번 스마트폰과 키오스크 주문을 1:1로 알려드려요.","월계어르신휴센터","스마트폰 주문이 어려운 어르신","혼자서도 주문하고 예약하는 일상","식당·병원 예약이 키오스크와 앱으로 바뀌어 어르신이 어려워해요","CARE","15"},
+            {"wg_youth","청년·주민이 함께 여는 동네 저녁 모임","주민자치회 청년분과와 총학생회가 물은 청년 생활 불편을 이어받아, 한 달에 한 번 청년과 주민이 함께하는 저녁 모임을 열어요.","월계1동","동네에서 할 일을 찾는 청년과 주민","청년이 머물고 싶은 동네","광운대 학생은 많지만 동네 일에 참여할 계기가 적어요","YOUTH","25"},
+            {"wg_env","원룸 골목 분리배출 클린데이","원룸이 많은 골목에 학생과 주민이 함께 분리배출 안내판을 붙이고, 한 달에 한 번 같이 골목을 치워요.","광운대 주변 골목","원룸에 사는 학생과 이웃 주민","쓰레기 없는 골목","골목 쓰레기 무단투기가 반복돼요","ENVIRONMENT","20"},
+            {"wg_shop","골목 식당 점심 빈자리 함께 먹기","점심 빈자리가 있는 동네 식당에 학생과 혼자 사는 주민이 함께 앉아요. 식당에는 손님을, 이웃에게는 같이 먹을 사람을 연결해요.","광운로","혼밥 대신 함께 먹고 싶은 누구나","손님이 늘어나는 골목 식당","골목 식당은 빈자리가 늘고, 혼자 밥 먹는 이웃도 많아요","COMMERCE","15"},
+            {"wg_walk","경춘선숲길 저녁 30분 걷기","퇴근 뒤 경춘선숲길 월계 구간을 이웃과 함께 30분 걸어요. 처음 만난 사람도 인사부터 시작해요.","경춘선숲길","저녁에 걷고 싶은 이웃","인사하는 이웃이 늘어나는 동네","같은 동네에 살아도 이웃과 인사할 계기가 없어요","NEIGHBOR","10"}
         };
         for(var item:items) {
-            int added=db.update("INSERT INTO cards(id,title,body,place,target,effect,proposer_id,proposer_name,starts_at,ends_at,is_seed) VALUES (?,?,?,?,?,?,?,'동네서랍 시연 팀',now(),now()+interval '90 days',true) ON CONFLICT DO NOTHING",item[0],item[1],item[2],item[3],item[4],item[5],owner);
+            int added=db.update("INSERT INTO cards(id,title,body,place,target,effect,problem,topic,goal,proposer_id,proposer_name,starts_at,ends_at,is_seed) VALUES (?,?,?,?,?,?,?,?,?,?,'동네서랍 시연 팀',now(),now()+interval '90 days',true) ON CONFLICT DO NOTHING",item[0],item[1],item[2],item[3],item[4],item[5],item[6],item[7],Integer.parseInt(item[8]),owner);
             if(added==1) db.update("INSERT INTO credit_campaigns(card_id,remaining,funded) VALUES (?,3000,3000)",item[0]);
         }
         return discovery(device);

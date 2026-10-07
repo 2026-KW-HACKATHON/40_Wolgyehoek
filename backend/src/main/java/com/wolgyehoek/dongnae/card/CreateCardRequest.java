@@ -3,6 +3,7 @@ package com.wolgyehoek.dongnae.card;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -34,13 +35,19 @@ public record CreateCardRequest(
 
         @Min(value = 2, message = "목표 인원은 2명 이상이어야 해요.")
         @Max(value = 1000, message = "목표 인원은 1,000명 이하여야 해요.")
-        Integer goal
+        Integer goal,
+
+        @Size(max = 80, message = "동네 문제는 80자 이하로 적어 주세요.")
+        String problem,
+
+        @Pattern(regexp = "^(|CARE|COMMERCE|SAFETY|ENVIRONMENT|YOUTH|NEIGHBOR)$", message = "주제를 다시 골라 주세요.")
+        String topic
 ) {
     public CreateCardRequest(String title, String body, String target, String place, String effect, Integer weeks) {
-        this(title, body, target, place, effect, weeks, List.of(), null);
+        this(title, body, target, place, effect, weeks, List.of(), null, null, null);
     }
 
     public CreateCardRequest(String title, String body, String target, String place, String effect, Integer weeks, List<String> mediaIds) {
-        this(title, body, target, place, effect, weeks, mediaIds, null);
+        this(title, body, target, place, effect, weeks, mediaIds, null, null, null);
     }
 }

@@ -24,6 +24,7 @@ class CreditServiceTest {
  @Autowired ConclusionService conclusions;
  @Autowired NoticeRepository notices;
  @Autowired com.wolgyehoek.dongnae.media.MediaService media;
+ @Autowired CardService cardService;
  String id(){return "d_"+UUID.randomUUID().toString().replace("-","").substring(0,16);}
  Card funded(String owner,int amount){
   devices.getOrCreate(owner);credits.topup(owner,500);
@@ -107,9 +108,16 @@ class CreditServiceTest {
   assertThat(credits.joinedCardIds(u)).contains(c.getId());
  }
  @Test void explicitFixturesNeverRefillExistingCampaigns(){
-  String u=id();credits.samples(u);credits.swipe(u,"demo_walk40","RIGHT","");
-  int before=db.queryForObject("SELECT remaining FROM credit_campaigns WHERE card_id='demo_walk40'",Integer.class);
-  credits.samples(u);assertThat(db.queryForObject("SELECT remaining FROM credit_campaigns WHERE card_id='demo_walk40'",Integer.class)).isEqualTo(before);
+  String u=id();credits.samples(u);credits.swipe(u,"wg_walk","RIGHT","");
+  int before=db.queryForObject("SELECT remaining FROM credit_campaigns WHERE card_id='wg_walk'",Integer.class);
+  credits.samples(u);assertThat(db.queryForObject("SELECT remaining FROM credit_campaigns WHERE card_id='wg_walk'",Integer.class)).isEqualTo(before);
+ }
+ @Test void fixturesNameTheNeighborhoodProblemAndTopic(){
+  @SuppressWarnings("unchecked") var deck=(List<Map<String,Object>>)credits.samples(id()).get("cards");
+  var safety=deck.stream().filter(c->c.get("id").equals("wg_safety")).findFirst().orElseThrow();
+  assertThat(safety.get("topic")).isEqualTo("SAFETY");
+  assertThat((String)safety.get("problem")).contains("광운대역세권");
+  assertThat(deck).extracting(c->c.get("topic")).contains("CARE","COMMERCE","SAFETY","ENVIRONMENT","YOUTH","NEIGHBOR");
  }
  @Test void endingCampaignReturnsOnlyUnusedBudgetOnce(){
   String owner=id(),u=id();Card c=funded(owner,100);credits.swipe(u,c.getId(),"LEFT","");
@@ -158,6 +166,11 @@ class CreditServiceTest {
   assertThatThrownBy(()->credits.announce(a,c.getId(),"토요일 10시 광운로에서 만나요")).isInstanceOf(ForbiddenException.class);
   assertThat(credits.announce(owner,c.getId(),"토요일 10시 광운로에서 만나요").get("notified")).isEqualTo(3);
   assertThat(credits.insight(passer,c.getId()).get("successNote")).isEqualTo("토요일 10시 광운로에서 만나요");
+ }
+ @Test void createdCardKeepsProblemAndTopic(){
+  var created=cardService.create(new CreateCardRequest("골목 분리배출 안내","학생과 주민이 함께 분리배출 안내판을 붙여요.",null,null,null,2,List.of(),10,"  골목 쓰레기가 쌓여요  ","ENVIRONMENT"),id(),"주민");
+  Card saved=cards.findById(created.id()).orElseThrow();
+  assertThat(saved.getProblem()).isEqualTo("골목 쓰레기가 쌓여요");assertThat(saved.getTopic()).isEqualTo("ENVIRONMENT");assertThat(saved.getGoal()).isEqualTo(10);
  }
  @Test void announcingBeforeSuccessIsRejected(){
   String owner=id();Card c=funded(owner,100);

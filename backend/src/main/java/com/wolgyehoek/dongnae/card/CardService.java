@@ -52,6 +52,7 @@ public class CardService {
         if (request.goal() != null) {
             card.setGoal(request.goal());
         }
+        card.describeProblem(clean(request.problem()), request.topic() == null ? "" : request.topic());
 
         Card saved = cardRepository.saveAndFlush(card);
         mediaService.attach(id, proposerId, request.mediaIds());

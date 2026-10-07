@@ -33,6 +33,9 @@ public class Card {
     private Instant reportPublishedAt;
     private String reportSummary;
 
+    private String problem = "";
+    private String topic = "";
+
     private int goal = 30;
     private Instant succeededAt;
     private String successNote;
@@ -100,6 +103,19 @@ public class Card {
     }
 
     public void markSeed() { this.seed = true; }
+
+    public void describeProblem(String problem, String topic) {
+        this.problem = problem;
+        this.topic = topic;
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
 
     public void setGoal(int goal) {
         this.goal = goal;
