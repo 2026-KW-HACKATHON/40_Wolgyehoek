@@ -38,10 +38,10 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
     return <p className="rounded-lg bg-subtle px-4 py-3 text-sm text-ink-2 ring-line">검증 기간이 끝났어요. 아래 리포트와 결론을 확인해 주세요.</p>;
   }
   return (
-    <form onSubmit={onSubmit} className="space-y-5 rounded-2xl border border-border/80 bg-white p-5 sm:p-6">
+    <form onSubmit={onSubmit} className="space-y-5 rounded-2xl border border-border/80 bg-white p-5 ">
       <fieldset>
         <legend className="mb-2 text-sm font-medium">수요의 강도를 골라 주세요</legend>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 ">
           {STEP_LABELS.map((label, i) => {
             const s = i + 1;
             const on = step === s;

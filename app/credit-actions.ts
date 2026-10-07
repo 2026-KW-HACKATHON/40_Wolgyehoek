@@ -1,0 +1,17 @@
+"use server";
+import {api,ApiError} from "@/lib/api";
+import {revalidatePath} from "next/cache";
+import type {Deck} from "@/lib/credits";
+export type CreditResult<T=Record<string,never>>={ok:true;data:T}|{ok:false;error:string};
+async function write<T>(path:string,body?:unknown):Promise<CreditResult<T>> {
+ try {const data=await api<T>(path,{method:"POST",body});revalidatePath("/","layout");return {ok:true,data};}
+ catch(e){return {ok:false,error:e instanceof ApiError?e.message:"저장하지 못했어요. 다시 시도해 주세요."};}
+}
+export async function swipeIdea(id:string,direction:"RIGHT"|"LEFT",reason:string){return write<{reward:number;balance:number;duplicate:boolean}>(`/api/credits/campaigns/${encodeURIComponent(id)}/swipe`,{direction,reason});}
+export async function prepareSamples(){return write<Deck>("/api/credits/samples");}
+export async function topupCredits(amount:number){return write<{balance:number}>("/api/credits/topup",{amount});}
+export async function fundIdea(id:string,amount:number){return write<{balance:number}>(`/api/credits/campaigns/${encodeURIComponent(id)}/fund`,{amount});}
+export async function buyVoucher(productId:string,requestId:string){return write<{voucherId:string;balance:number}>("/api/credits/vouchers",{productId,requestId});}
+export async function redeemVoucher(id:string){return write<{ok:boolean}>(`/api/credits/vouchers/${encodeURIComponent(id)}/redeem`);}
+
+export async function endIdea(id:string){return write<{balance:number;returned:number}>(`/api/credits/campaigns/${encodeURIComponent(id)}/end`);}

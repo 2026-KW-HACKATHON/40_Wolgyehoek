@@ -11,7 +11,7 @@ export const softInputSurfaceClass =
   "rounded-xl border-0 bg-[var(--field-bg)] shadow-none placeholder:text-sm placeholder:text-[var(--muted-foreground)] focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-inset";
 
 const inputVariants = cva(
-  "flex w-full text-foreground transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "min-h-11 flex w-full text-foreground transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
