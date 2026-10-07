@@ -15,7 +15,8 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "동네서랍",
-  description: "월계1동의 지역 문제 해결 아이디어가 주민 수요를 확인하고, 결론을 기록해 다음 시도로 이어지게 하는 플랫폼",
+  description: "매년 다시 나오는 동네 아이디어를 지난 시도·멈춘 이유·빈칸과 함께 보여주는 지역 아이디어의 기억",
+  metadataBase: new URL("https://dongne-seorap.vercel.app"),
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#ffffff" };
