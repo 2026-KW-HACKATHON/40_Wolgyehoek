@@ -12,8 +12,8 @@ export default async function AdminPage() {
   const me = await currentDevice();
   if (!me?.isOperator) {
     return (
-      <div className="mx-auto max-w-[560px] space-y-4 px-4 py-8 sm:px-8">
-        <PageHeaderBar title="운영" className="-mx-4 sm:-mx-8" />
+      <div className="mx-auto max-w-[560px] space-y-4 px-4 py-8 ">
+        <PageHeaderBar title="운영" className="-mx-4 " />
         <p className="text-sm text-ink-2">운영 코드를 입력하면 이 기기에서 신고 처리와 검증 즉시 종료를 할 수 있어요.</p>
         <OperatorForm />
       </div>
@@ -21,8 +21,8 @@ export default async function AdminPage() {
   }
   const flags = await openFlags();
   return (
-    <div className="mx-auto max-w-[800px] space-y-8 px-4 py-6 sm:px-8">
-      <PageHeaderBar title="운영" className="-mx-4 sm:-mx-8" />
+    <div className="mx-auto max-w-[800px] space-y-8 px-4 py-6 ">
+      <PageHeaderBar title="운영" className="-mx-4 " />
       <section>
         <SectionTitle sub={`${flags.length}건`}>처리 대기 신고</SectionTitle>
         {flags.length === 0 ? (

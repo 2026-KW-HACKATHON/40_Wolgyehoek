@@ -24,11 +24,12 @@ public class ViewsController {
     private final DeviceService devices;
     private final ReportService reports;
     private final NoticeService notices;
+    private final com.wolgyehoek.dongnae.credits.CreditService credits;
 
     public ViewsController(CardRepository cards, ReactionRepository reactions, OpinionRepository opinions,
-                           ConclusionRepository conclusions, DeviceService devices, ReportService reports, NoticeService notices) {
+                           ConclusionRepository conclusions, DeviceService devices, ReportService reports, NoticeService notices, com.wolgyehoek.dongnae.credits.CreditService credits) {
         this.cards = cards; this.reactions = reactions; this.opinions = opinions;
-        this.conclusions = conclusions; this.devices = devices; this.reports = reports; this.notices = notices;
+        this.conclusions = conclusions; this.devices = devices; this.reports = reports; this.notices = notices; this.credits = credits;
     }
 
     public record CardView(String id, String title, String body, String target, String place, String effect,
@@ -79,7 +80,7 @@ public class ViewsController {
 
     @GetMapping("/me")
     public Activity activity(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String deviceId) {
-        Set<String> ids = new HashSet<>();
+        Set<String> ids = new HashSet<>(credits.joinedCardIds(deviceId));
         reactions.findByDeviceId(deviceId).forEach(r -> ids.add(r.getCardId()));
         opinions.findByDeviceId(deviceId).forEach(o -> ids.add(o.getCardId()));
         return new Activity(summaries(cards.findByProposerIdOrderByCreatedAtDesc(deviceId).stream()),

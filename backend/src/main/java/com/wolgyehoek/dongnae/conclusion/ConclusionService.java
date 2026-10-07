@@ -32,17 +32,19 @@ public class ConclusionService {
     private final ReactionRepository reactionRepository;
     private final OpinionRepository opinionRepository;
     private final NoticeRepository noticeRepository;
+    private final com.wolgyehoek.dongnae.credits.CreditService credits;
 
     public ConclusionService(CardRepository cardRepository,
                              ConclusionRepository conclusionRepository,
                              ReactionRepository reactionRepository,
                              OpinionRepository opinionRepository,
-                             NoticeRepository noticeRepository) {
+                             NoticeRepository noticeRepository, com.wolgyehoek.dongnae.credits.CreditService credits) {
         this.cardRepository = cardRepository;
         this.conclusionRepository = conclusionRepository;
         this.reactionRepository = reactionRepository;
         this.opinionRepository = opinionRepository;
         this.noticeRepository = noticeRepository;
+        this.credits = credits;
     }
 
     @Transactional
@@ -79,6 +81,7 @@ public class ConclusionService {
         Set<String> targets = new HashSet<>();
         reactionRepository.findByCardId(cardId).forEach(r -> targets.add(r.getDeviceId()));
         opinionRepository.findByCardId(cardId).forEach(o -> targets.add(o.getDeviceId()));
+        targets.addAll(credits.participantIds(cardId));
         targets.remove(actor.id());
 
         List<Notice> notices = targets.stream()

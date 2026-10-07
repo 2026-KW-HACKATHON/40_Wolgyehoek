@@ -56,15 +56,23 @@ jobs:
     env:
       POSTGRES_PASSWORD: ci-local-only
       OPERATOR_CODE: ci-local-operator
+      DEMO_CREDITS: 'true'
       DEMO_SEED: 'true'
     steps:
       - uses: actions/checkout@v4
+      - name: Validate public deployment configuration
+        env:
+          PUBLIC_DOMAIN: validation.example.org
+          ACME_EMAIL: operator@example.org
+        run: |
+          docker compose -f compose.yaml -f compose.public.yaml config --quiet
+          docker compose -f compose.yaml -f compose.public.yaml run --rm --no-deps caddy caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
       - run: docker compose up --build -d
       - name: Verify database, API and rendered web
         run: |
           curl --retry 30 --retry-delay 2 --retry-connrefused --retry-all-errors --fail http://localhost:8080/api/health
           curl --retry 30 --retry-delay 2 --retry-connrefused --retry-all-errors --fail http://localhost:3000/ > /tmp/home.html
-          python3 -c 'from pathlib import Path; s = Path("/tmp/home.html").read_text(); assert "광운로 주말 플리마켓" in s and "화면을 불러오지 못했어요" not in s'
+          python3 -c 'from pathlib import Path; s = Path("/tmp/home.html").read_text(); assert "동네의 다음 아이디어" in s and "화면을 불러오지 못했어요" not in s'
       - run: docker compose logs --tail 100
         if: always()
       - run: docker compose down

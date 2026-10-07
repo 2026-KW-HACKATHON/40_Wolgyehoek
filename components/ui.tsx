@@ -21,11 +21,11 @@ export function Disclaimer({ total }: { total?: number }) {
 }
 
 export function ButtonLink({ href, children, variant = "primary" }: { href: string; children: React.ReactNode; variant?: "primary" | "secondary" }) {
-  return <Button asChild variant={variant === "primary" ? "default" : "outline"} size="lg" className="h-11 px-4 text-sm"><Link href={href}>{children}</Link></Button>;
+  return <Button asChild variant={variant === "primary" ? "default" : "outline"} size="lg" className="h-11 rounded-xl px-4 text-sm"><Link href={href}>{children}</Link></Button>;
 }
-export const btnPrimary = "h-11 px-4 text-sm";
-export const btnSecondary = "h-11 border border-input bg-background px-4 text-sm text-foreground hover:bg-accent";
-export const inputCls = "w-full min-h-11 rounded-md border border-input bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring";
+export const btnPrimary = "h-11 rounded-xl px-4 text-sm";
+export const btnSecondary = "h-11 rounded-xl border border-input bg-background px-4 text-sm text-foreground hover:bg-accent";
+export const inputCls = "w-full min-h-11 rounded-lg border border-input bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring";
 
 export function FormMessage({ state }: { state: { ok: boolean; error?: string; message?: string } | null }) {
   if (!state || (!state.error && !state.message)) return null;

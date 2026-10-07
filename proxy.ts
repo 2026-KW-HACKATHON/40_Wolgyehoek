@@ -7,7 +7,7 @@ export function proxy(request: NextRequest) {
   const id = `d_${crypto.randomUUID().replace(/-/g, "").slice(0, 16)}`;
   request.cookies.set(COOKIE, id);
   const res = NextResponse.next({ request: { headers: request.headers } });
-  res.cookies.set(COOKIE, id, { httpOnly: true, secure: request.nextUrl.protocol === "https:", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 365 });
+  res.cookies.set(COOKIE, id, { httpOnly: true, secure: process.env.COOKIE_SECURE === "true" || request.nextUrl.protocol === "https:", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 365 });
   return res;
 }
 

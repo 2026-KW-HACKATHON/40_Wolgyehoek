@@ -1,5 +1,7 @@
 # 배포와 기존 DB 이관
 
+본선 최소 공개 운영은 [PUBLIC-E2E.md](PUBLIC-E2E.md)를 따른다. 공개 HTTPS용 `compose.public.yaml`은 기존 Compose 위에 적용한다. 실제 주민 검증과 로컬 검증의 완료 기준을 구분한다.
+
 ## 실행 구조
 
 브라우저 → Next.js(화면·Server Actions) → Spring Boot(API·권한·도메인) → Postgres.

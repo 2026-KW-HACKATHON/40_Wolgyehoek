@@ -11,14 +11,14 @@ export default async function TakeoverPage({ params }: { params: Promise<{ id: s
   if (!d || d.card.hidden) notFound();
   if (!canTakeOver(d.status)) {
     return (
-      <div className="mx-auto max-w-[800px] space-y-4 px-4 py-6 sm:px-8">
+      <div className="mx-auto max-w-[800px] space-y-4 px-4 py-6 ">
         <p className="text-ink-2">보류·중단·정체된 카드만 이어받을 수 있어요.</p>
         <ButtonLink href={`/cards/${id}`} variant="secondary">카드로 돌아가기</ButtonLink>
       </div>
     );
   }
   return (
-    <div className="mx-auto max-w-[800px] space-y-6 px-4 py-6 sm:px-8">
+    <div className="mx-auto max-w-[800px] space-y-6 px-4 py-6 ">
       <div>
         <p className="mb-2 font-mono text-[12px] uppercase tracking-wider text-ink-3">이전 기록과 연결</p>
         <h1 className="text-[26px] font-semibold tracking-[-0.03em]">멈춘 아이디어 이어받기</h1>

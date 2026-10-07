@@ -1,3 +1,6 @@
+import { ArrowLeft, MapPin, UserRound } from "lucide-react";
+import { getCreditInsight } from "@/lib/credits";
+import { RecordProgress } from "@/components/RecordProgress";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,6 +17,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const [d, me] = await Promise.all([getCard(id), currentDevice()]);
   if (!d || (d.card.hidden && !me?.isOperator)) notFound();
+  const insight = await getCreditInsight(id);
   const { card, status } = d;
   const canManage = d.canManage;
   const mine = d.mine;
@@ -27,16 +31,17 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
   };
 
   return (
-    <article className="mx-auto max-w-[800px] space-y-8 px-4 py-6 sm:px-8">
+    <article className="mx-auto max-w-[800px] space-y-8 px-4 py-7  ">
+      <Link href="/" className="inline-flex min-h-9 items-center gap-2 text-xs font-medium text-muted-foreground hover:text-primary"><ArrowLeft className="size-3.5" />동네 아이디어로 돌아가기</Link>
       <header className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={status} />
           {card.isSeed && <Pill>예시 카드</Pill>}
           <span className="tnum font-mono text-[12px] text-ink-3">{fmtDate(card.startsAt)} ~ {fmtDate(card.endsAt)}</span>
         </div>
-        <h1 className="text-[26px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">{card.title}</h1>
+        <h1 className="text-[29px] font-semibold leading-[1.3] tracking-[-0.035em] ">{card.title}</h1>
         <p className="whitespace-pre-line text-[16px] leading-7 text-ink-2">{card.body}</p>
-        <dl className="ring-card grid grid-cols-3 divide-x divide-divider rounded-lg bg-white text-sm">
+        <dl className="grid grid-cols-3 divide-x divide-border/70 rounded-2xl border border-border/70 bg-[var(--brand-soft)] text-sm">
           {[["대상", card.target], ["장소", card.place], ["기대 효과", card.effect]].map(([k, v]) => (
             <div key={k} className="p-3">
               <dt className="font-mono text-[11px] uppercase tracking-wider text-ink-3">{k}</dt>
@@ -44,7 +49,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
             </div>
           ))}
         </dl>
-        <p className="text-xs text-ink-3">제안 · {card.proposerName}</p>
+        <p className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground"><span className="flex items-center gap-1.5"><UserRound className="size-3.5" />{card.proposerName}의 제안</span><span className="flex items-center gap-1.5"><MapPin className="size-3.5" />{card.place || "월계1동"}</span></p>
         {d.parent && (
           <p className="rounded-md bg-subtle px-3 py-2 text-sm ring-line">
             이어받은 카드예요. 원본: <Link href={`/cards/${d.parent.id}`} className="font-medium underline">{d.parent.title}</Link>
@@ -57,8 +62,14 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
           </form>
         )}
       </header>
+      {!insight.campaign && <RecordProgress status={status} reactions={d.reactionCount} published={!!card.reportPublishedAt} concluded={d.conclusions.length > 0} />}
 
-      <section>
+      {insight.campaign ? <section className="rounded-2xl border border-primary/20 bg-[var(--brand-soft)] p-5">
+        <h2 className="text-lg font-semibold">스와이프로 남긴 생각</h2>{card.reportPublishedAt && <p role="status" className="mt-2 text-xs font-semibold text-primary">공개 리포트 · {fmtDate(card.reportPublishedAt)}</p>}
+        {insight.mine ? <div className="mt-3"><p className="text-sm font-semibold text-primary">내 반응: {insight.mine.direction === "RIGHT" ? "관심 있어요" : "이번엔 패스"} · {insight.mine.reward}C</p>{insight.mine.reason && <p className="mt-2 text-sm leading-6">{insight.mine.reason}</p>}<p className="mt-2 text-xs text-muted-foreground">이 카드의 보상은 한 번만 지급돼요.</p></div> : canManage ? <div className="mt-3"><p className="mb-3 text-xs leading-6 text-muted-foreground">{me?.isOperator ? "운영자 공간에서 카드 상태를 관리해 주세요." : "내 아이디어에는 보상 참여를 할 수 없어요. 팀 공간에서 모집과 예산을 관리해 주세요."}</p><ButtonLink href={me?.isOperator ? "/admin" : "/team"} variant="secondary">{me?.isOperator ? "운영자 공간" : "팀 공간에서 관리"}</ButtonLink></div> : insight.accepting ? <div className="mt-3"><p className="mb-3 text-xs leading-6 text-muted-foreground">관심 또는 패스를 선택해 주세요. 이유는 선택이며, 보상은 두 방향 모두 같아요.</p><ButtonLink href={`/?idea=${card.id}`}>이 카드에 생각 남기기</ButtonLink></div> : <p className="mt-3 text-xs text-muted-foreground">{status === "open" ? "참여 보상 예산이 준비되면 반응을 남길 수 있어요." : "참여 기간이 끝난 아이디어예요."}</p>}
+        {insight.visible ? <div className="mt-5 border-t border-primary/15 pt-4"><p className="text-xs leading-6">기기 {insight.total}개의 반응 · 관심 {insight.likes} · 패스 {insight.passes}{insight.showRatio && !!insight.total && <span> · 관심 {Math.round((insight.likes ?? 0)/insight.total*100)}%</span>}</p>{!insight.showRatio && <p className="mt-2 text-[10px] text-muted-foreground">5개 미만 반응의 비율은 표시하지 않아요.</p>}<div className="mt-4 space-y-3">{insight.responses?.map((r,i)=><div key={i} className="rounded-xl bg-background p-3"><p className="text-[10px] font-semibold text-primary">{r.direction === "RIGHT" ? "관심 있어요" : "이번엔 패스"}</p><p className="mt-1 text-xs leading-6">{r.reason}</p></div>)}</div><p className="mt-3 text-[10px] leading-5 text-muted-foreground">보상 참여에 따른 비공식 반응이며 실제 구매나 주민 대표성을 뜻하지 않습니다.</p></div> : <p className="mt-5 text-xs leading-6 text-muted-foreground">전체 결과와 이유는 종료 후 팀이 리포트를 공개하면 확인할 수 있어요.</p>}
+        {canManage && status !== "open" && !card.reportPublishedAt && <div className="mt-5"><ReportPublishForm cardId={card.id}/></div>}
+      </section> : <>      <section>
         <SectionTitle sub={<span className="tnum">반응 {report.total}</span>}>이 아이디어, 써보실 건가요?</SectionTitle>
         <ReactionPanel
           cardId={card.id}
@@ -67,11 +78,12 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
           mine={mine ? { step: mine.step, price: mine.price, respondentType: mine.respondentType as RespondentType } : null}
         />
       </section>
+</>}
 
-      {reportVisible && (
+      {reportVisible && !insight.campaign && (
         <section>
           <SectionTitle sub={card.reportPublishedAt ? `공개 ${fmtDate(card.reportPublishedAt)}` : "공개 전 · 제안자/운영자만 보임"}>검증 리포트</SectionTitle>
-          <div className="ring-featured space-y-5 rounded-lg bg-white p-5">
+          <div className="space-y-5 rounded-2xl border border-border/70 bg-white p-5 ">
             <Disclaimer total={report.total} />
             <div className="space-y-3">
               {report.steps.map((s) => (
@@ -84,7 +96,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 text-sm ">
               <Stat label="희망가 중앙값" value={report.price.median !== null ? fmtWon(report.price.median) : "—"} sub={report.price.count ? `${fmtWon(report.price.min!)}~${fmtWon(report.price.max!)}` : "가격 응답 없음"} />
               {(Object.keys(RESPONDENT_LABELS) as RespondentType[]).map((k) => (
                 <Stat key={k} label={RESPONDENT_LABELS[k]} value={`${report.respondents[k]}명`} />

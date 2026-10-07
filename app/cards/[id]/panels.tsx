@@ -38,15 +38,15 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
     return <p className="rounded-lg bg-subtle px-4 py-3 text-sm text-ink-2 ring-line">검증 기간이 끝났어요. 아래 리포트와 결론을 확인해 주세요.</p>;
   }
   return (
-    <form onSubmit={onSubmit} className="ring-card space-y-5 rounded-lg bg-white p-5">
+    <form onSubmit={onSubmit} className="space-y-5 rounded-2xl border border-border/80 bg-white p-5 ">
       <fieldset>
         <legend className="mb-2 text-sm font-medium">수요의 강도를 골라 주세요</legend>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 ">
           {STEP_LABELS.map((label, i) => {
             const s = i + 1;
             const on = step === s;
             return (
-              <label key={s} className={`relative flex min-h-[64px] cursor-pointer flex-col justify-between rounded-md bg-white p-3 text-sm transition-shadow ${on ? "ring-2 ring-primary" : "ring-line hover:bg-subtle"}`}>
+              <label key={s} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 relative flex min-h-[64px] cursor-pointer flex-col justify-between rounded-md bg-white p-3 text-sm transition-shadow ${on ? "ring-2 ring-primary" : "ring-line hover:bg-subtle"}`}>
                 <input type="radio" name="step" value={s} checked={on} onChange={() => setStep(s)} className="sr-only" />
                 <span className="flex items-center gap-2 font-medium"><i className="block size-2 rounded-full" style={{ background: `var(--step-${s})` }} />{label}</span>
                 <span className="tnum font-mono text-[12px] text-ink-3">{counts[i]}명</span>
@@ -65,7 +65,7 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
         <legend className="mb-2 text-sm font-medium">나는 월계1동에서</legend>
         <div className="flex gap-1 rounded-lg bg-subtle p-1 ring-line">
           {(Object.keys(RESPONDENT_LABELS) as RespondentType[]).map((k) => (
-            <label key={k} className={`flex-1 cursor-pointer rounded-md px-3 py-2 text-center text-sm font-medium ${type === k ? "bg-white text-ink ring-card" : "text-ink-3"}`}>
+            <label key={k} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 flex-1 cursor-pointer rounded-md px-3 py-2 text-center text-sm font-medium ${type === k ? "bg-white text-ink ring-card" : "text-ink-3"}`}>
               <input type="radio" name="respondentType" value={k} checked={type === k} onChange={() => setType(k)} className="sr-only" />
               {RESPONDENT_LABELS[k]}
             </label>
@@ -97,10 +97,10 @@ export function OpinionForm({ cardId }: { cardId: string }) {
     }
   }, [state]);
   return (
-    <form ref={formRef} onSubmit={onSubmit} className="ring-card space-y-3 rounded-lg bg-white p-4">
+    <form ref={formRef} onSubmit={onSubmit} className="space-y-3 rounded-2xl border border-border/80 bg-white p-5">
       <div className="flex gap-1 rounded-lg bg-subtle p-1 ring-line">
         {[["pro", "찬성"], ["con", "반대"], ["conditional", "조건부 찬성"]].map(([k, l]) => (
-          <label key={k} className={`flex-1 cursor-pointer rounded-md px-3 py-1.5 text-center text-sm font-medium ${stance === k ? "bg-white ring-card" : "text-ink-3"}`}>
+          <label key={k} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 flex-1 cursor-pointer rounded-md px-3 py-1.5 text-center text-sm font-medium ${stance === k ? "bg-white ring-card" : "text-ink-3"}`}>
             <input type="radio" name="stance" value={k} checked={stance === k} onChange={() => setStance(k)} className="sr-only" />
             {l}
           </label>
@@ -132,11 +132,11 @@ export function ConclusionForm({ cardId }: { cardId: string }) {
   const [decision, setDecision] = useState("hold");
   const onSubmit = useFormSubmit(action);
   return (
-    <form onSubmit={onSubmit} className="ring-card space-y-4 rounded-lg bg-white p-5">
+    <form onSubmit={onSubmit} className="space-y-4 rounded-2xl border border-border/80 bg-white p-5">
       <p className="text-sm font-medium">결론 기록 (응답자 전원에게 알림)</p>
       <div className="flex gap-1 rounded-lg bg-subtle p-1 ring-line">
         {[["go", "진행"], ["hold", "보류"], ["stop", "중단"]].map(([k, l]) => (
-          <label key={k} className={`flex-1 cursor-pointer rounded-md px-3 py-1.5 text-center text-sm font-medium ${decision === k ? "bg-white ring-card" : "text-ink-3"}`}>
+          <label key={k} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 flex-1 cursor-pointer rounded-md px-3 py-1.5 text-center text-sm font-medium ${decision === k ? "bg-white ring-card" : "text-ink-3"}`}>
             <input type="radio" name="decision" value={k} checked={decision === k} onChange={() => setDecision(k)} className="sr-only" />
             {l}
           </label>
@@ -144,7 +144,7 @@ export function ConclusionForm({ cardId }: { cardId: string }) {
       </div>
       <div className="flex flex-wrap gap-2">
         {REASON_TAGS.map((t) => (
-          <label key={t} className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium ring-line has-[:checked]:bg-ink has-[:checked]:text-white">
+          <label key={t} className="has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium ring-line has-[:checked]:bg-ink has-[:checked]:text-white">
             <input type="checkbox" name="reasonTags" value={t} className="sr-only" />
             {t}
           </label>

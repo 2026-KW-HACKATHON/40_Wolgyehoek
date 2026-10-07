@@ -31,15 +31,17 @@ public class TakeoverService {
     private final ReactionRepository reactionRepository;
     private final OpinionRepository opinionRepository;
     private final NoticeRepository noticeRepository;
+    private final com.wolgyehoek.dongnae.credits.CreditService credits;
 
     public TakeoverService(CardRepository cardRepository, CardService cardService,
                            ReactionRepository reactionRepository, OpinionRepository opinionRepository,
-                           NoticeRepository noticeRepository) {
+                           NoticeRepository noticeRepository, com.wolgyehoek.dongnae.credits.CreditService credits) {
         this.cardRepository = cardRepository;
         this.cardService = cardService;
         this.reactionRepository = reactionRepository;
         this.opinionRepository = opinionRepository;
         this.noticeRepository = noticeRepository;
+        this.credits = credits;
     }
 
     @Transactional
@@ -68,6 +70,7 @@ public class TakeoverService {
         Set<String> targets = new HashSet<>();
         reactionRepository.findByCardId(parentId).forEach(r -> targets.add(r.getDeviceId()));
         opinionRepository.findByCardId(parentId).forEach(o -> targets.add(o.getDeviceId()));
+        targets.addAll(credits.participantIds(parentId));
         targets.remove(actor.id());
 
         List<Notice> notices = targets.stream()
