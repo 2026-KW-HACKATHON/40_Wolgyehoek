@@ -2,6 +2,7 @@ import "server-only";
 import { api, ApiError } from "./api";
 import type { CardStatus, Decision, Media, Stance, RespondentType } from "./domain/types";
 import type { Report } from "./domain/report";
+import type { KnowledgeGraph } from "./domain/graph";
 import type { IdeaCheck, IdeaMap } from "./domain/ideas";
 
 export interface Card {
@@ -56,3 +57,4 @@ export async function openFlags() {
   const flags = await api<{ id: string; targetType: string; targetId: string; reason: string; createdAt: Date }[]>("/api/operator/flags");
   return flags.map(f => ({ ...f, targetType: f.targetType.toLowerCase(), createdAt: date(f.createdAt) }));
 }
+export async function knowledgeGraph() { return api<KnowledgeGraph>("/api/ideas/graph"); }

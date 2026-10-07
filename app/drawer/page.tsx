@@ -1,7 +1,8 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { ideaMap, listCards } from "@/lib/queries";
+import { ideaMap, knowledgeGraph, listCards } from "@/lib/queries";
+import { KnowledgeExplorer } from "@/components/KnowledgeExplorer";
 import { CardItem } from "@/components/card-item";
 import { OutcomeBar, ReasonChips } from "@/components/IdeaLineage";
 import { SectionTitle } from "@/components/ui";
@@ -11,7 +12,7 @@ import { TOPIC_SHORT, ZONE_SHORT, type IdeaCluster } from "@/lib/domain/ideas";
 import { cn } from "@/lib/utils";
 
 export default async function DrawerPage({ searchParams }: { searchParams: Promise<{ zone?: string; topic?: string }> }) {
-  const [cards, map, sp] = await Promise.all([listCards({ tab: "all" }), ideaMap(), searchParams]);
+  const [cards, map, graph, sp] = await Promise.all([listCards({ tab: "all" }), ideaMap(), knowledgeGraph(), searchParams]);
   const topics = Object.keys(TOPICS) as Topic[];
   const cellOf = (zone: string, topic: string) => map.cells.find((c) => c.zone === zone && c.topic === topic);
   const picked = sp.zone && sp.topic ? { zone: sp.zone, topic: sp.topic, ids: cellOf(sp.zone, sp.topic)?.ids ?? [] } : null;
@@ -25,7 +26,10 @@ export default async function DrawerPage({ searchParams }: { searchParams: Promi
       <span className="tnum text-sm text-[var(--text-4)]">{map.total}개</span>
     </div>
 
+    <KnowledgeExplorer graph={graph} />
+
     <section aria-label="아이디어 지도">
+      <h2 className="mb-3 text-lg font-extrabold tracking-tight">장소 × 분야</h2>
       <div className="grid grid-cols-[64px_repeat(6,minmax(0,1fr))] gap-1 text-center">
         <span />
         {topics.map((t) => <span key={t} className="pb-1 text-[11px] font-bold text-muted-foreground">{TOPIC_SHORT[t]}</span>)}
