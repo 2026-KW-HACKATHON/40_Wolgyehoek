@@ -20,11 +20,11 @@ export function HomeOverview({ cards }: { cards: CardSummary[] }) {
       <div className="relative flex min-h-[340px] flex-col justify-between overflow-hidden p-6 text-white sm:p-9 lg:p-10">
         <div className="relative z-10">
           <p className="mb-7 flex items-center gap-2 text-xs font-medium text-[var(--brand-mist)]"><MapPin className="size-3.5" />월계1동의 생각이 모이는 곳</p>
-          <h1 id="home-intro" className="max-w-lg text-[34px] font-bold leading-[1.22] tracking-[-0.045em] sm:text-[44px] xl:text-[48px]">동네의 좋은 생각,<br /><span className="text-[var(--brand-lime)]">다음 시도</span>로 이어지다.</h1>
+          <h1 id="home-intro" className="max-w-lg text-[34px] font-bold leading-[1.22] tracking-[-0.045em] sm:text-[44px] xl:text-[48px]">동네의 좋은 생각,<br /><span className="text-[var(--brand-highlight)]">다음 시도</span>로 이어지다.</h1>
           <p className="mt-5 max-w-[360px] text-sm leading-7 text-white/80">내 아이디어에 이웃의 생각을 더해요.<br />함께 확인한 결과는 동네의 기록으로 남아요.</p>
         </div>
         <div className="relative z-10 mt-7 flex flex-wrap items-center gap-3">
-          <Button asChild size="lg" className="h-12 rounded-xl bg-[var(--brand-lime)] px-5 text-sm font-semibold text-[var(--brand-deep)] hover:bg-[var(--brand-lime)]/90"><Link href="/new">아이디어 올리기<ArrowUpRight /></Link></Button>
+          <Button asChild size="lg" className="h-12 rounded-xl bg-[var(--brand-highlight)] px-5 text-sm font-semibold text-[var(--brand-deep)] hover:bg-[var(--brand-highlight)]/90"><Link href="/new">아이디어 올리기<ArrowUpRight /></Link></Button>
           <a href="#ideas" className="inline-flex min-h-12 items-center gap-2 px-2 text-sm font-medium text-white/90 hover:text-white">동네 둘러보기<ArrowDown className="size-4" /></a>
         </div>
         <svg viewBox="0 0 240 240" fill="none" className="pointer-events-none absolute -bottom-16 -right-12 size-64 text-white/[0.055]" aria-hidden="true"><rect x="30" y="35" width="175" height="160" rx="14" stroke="currentColor" strokeWidth="10" /><path d="M30 90h175M30 145h175M102 63h30M102 118h30M102 172h30" stroke="currentColor" strokeWidth="10" strokeLinecap="round" /></svg>

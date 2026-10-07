@@ -4,22 +4,22 @@
 :root {
   --background: #fff; --foreground: #191f28; --card: #fff; --card-foreground: #191f28;
   --border: #dde1e5; --muted: #f2f4f6; --muted-foreground: #4e5968; --field-bg: #f2f4f6;
-  --primary: #0b7688; --primary-foreground: #fff;
+  --primary: #b54b25; --primary-foreground: #fff;
   --primary-hover: color-mix(in oklab, var(--primary) 86%, black);
   --accent: #f2f4f6; --accent-foreground: #191f28;
-  --input: #e5e8eb; --ring: #0b7688; --destructive: #c42b1c; --destructive-on-solid: #fff;
+  --input: #e5e8eb; --ring: #b54b25; --destructive: #c42b1c; --destructive-on-solid: #fff;
   --destructive-surface: #fdecea; --destructive-foreground: #c42b1c;
   --success: #e9f8ef; --success-foreground: #0a7f3f;
   --warning: #fff4d6; --warning-foreground: #8a5a00; --info: #ebf5ff; --info-foreground: #0068d6;
   --shell-frame-bg: rgb(239, 239, 240);
   --surface: var(--background); --surface-subtle: var(--muted); --text: var(--foreground);
   --text-2: var(--muted-foreground); --text-3: #6b7684; --text-4: #8b95a1;
-  --divider: var(--border); --link: #0b7688; --focus: var(--primary);
+  --divider: var(--border); --link: #b54b25; --focus: var(--primary);
   --badge-bg: var(--info); --badge-fg: var(--info-foreground);
   --go-bg: var(--success); --go-fg: var(--success-foreground);
   --hold-bg: var(--warning); --hold-fg: var(--warning-foreground);
   --stop-bg: var(--destructive-surface); --stop-fg: var(--destructive-foreground);
-  --step-1: #6b7684; --step-2: #0068d6; --step-3: #8a5a00; --step-4: #0b7688;
+  --step-1: #6b7684; --step-2: #0068d6; --step-3: #8a5a00; --step-4: #b54b25;
   --shadow-ring: 0 0 0 1px var(--border);
   --shadow-card: var(--shadow-ring); --shadow-featured: var(--shadow-ring);
 }
@@ -46,13 +46,13 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 
 /* Service identity extends the shared Jangkki controls with a warm editorial surface. */
 :root {
-  --brand-deep: #123e43;
-  --brand-paper: #f5f4ec;
-  --brand-paper-border: #e2e3d7;
-  --brand-lime: #dcf1a1;
-  --brand-mist: #b9d9d1;
-  --brand-soft: #f3f7f6;
+  --brand-deep: #9b3f1f;
+  --brand-paper: #fff6ed;
+  --brand-paper-border: #efd8c5;
+  --brand-highlight: #ffe0b2;
+  --brand-mist: #ffe4ce;
+  --brand-soft: #fff7f0;
 }
 .home-hero { background: var(--brand-deep); }
 .featured-paper { box-shadow: 0 7px 0 -3px var(--brand-paper), 0 8px 0 -3px var(--brand-paper-border); }
-::selection { background: var(--brand-lime); color: var(--brand-deep); }
+::selection { background: var(--brand-highlight); color: var(--brand-deep); }
