@@ -49,6 +49,9 @@ public class CardService {
         if (parentId != null) {
             card.linkParent(parentId, takeoverNote);
         }
+        if (request.goal() != null) {
+            card.setGoal(request.goal());
+        }
 
         Card saved = cardRepository.saveAndFlush(card);
         mediaService.attach(id, proposerId, request.mediaIds());

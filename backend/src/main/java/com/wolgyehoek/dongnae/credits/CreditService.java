@@ -103,14 +103,18 @@ public class CreditService {
         db.update("INSERT INTO idea_swipes(id,card_id,device_id,direction,reason,reward) VALUES (?,?,?,?,?,?)",Ids.newId(),cardId,device,direction,reason,reward);
         db.update("UPDATE credit_wallets SET balance=balance+? WHERE device_id=?",reward,device);
         entry(device,reward,"SWIPE",card.getTitle()+(reason.isEmpty()?" · 반응":" · 반응과 이유"));
-        return Map.of("reward",reward,"balance",balance(device),"duplicate",false);
+        long pledges=pledgeCount(cardId);
+        boolean succeeded=direction.equals("RIGHT") && card.succeedIfReached(pledges,Instant.now());
+        if (succeeded) notifyPledgers(cardId,"SUCCESS");
+        return Map.of("reward",reward,"balance",balance(device),"duplicate",false,"pledges",pledges,"goal",card.getGoal(),"succeeded",succeeded);
     }
     @Transactional
     public Map<String,Object> discovery(String device) {
         if (!enabled) return Map.of("enabled",false,"cards",List.of(),"balance",0);
         ensureWallet(device);
         var deck=db.queryForList("""
-            SELECT c.id,c.title,c.body,c.target,c.place,c.effect,c.proposer_name AS "proposerName",c.is_seed AS "isSeed",c.ends_at AS "endsAt",f.remaining
+            SELECT c.id,c.title,c.body,c.target,c.place,c.effect,c.proposer_name AS "proposerName",c.is_seed AS "isSeed",c.ends_at AS "endsAt",f.remaining,
+              c.goal,c.succeeded_at AS "succeededAt",(SELECT count(*) FROM idea_swipes s WHERE s.card_id=c.id AND s.direction='RIGHT') AS pledges
             FROM cards c JOIN credit_campaigns f ON f.card_id=c.id
             WHERE NOT c.hidden AND c.ends_at>now() AND c.latest_decision IS NULL AND c.proposer_id<>? AND f.remaining>=30
               AND NOT EXISTS(SELECT 1 FROM idea_swipes s WHERE s.card_id=c.id AND s.device_id=?)
@@ -124,7 +128,7 @@ public class CreditService {
         if (!enabled) return Map.of("enabled",false,"balance",0,"campaigns",List.of());
         ensureWallet(device);
         var list=db.queryForList("""
-            SELECT c.id,c.title,c.ends_at AS "endsAt",c.latest_decision AS decision,c.hidden,(NOT c.hidden AND c.ends_at>now() AND c.latest_decision IS NULL) AS open,COALESCE(f.remaining,0) AS remaining,COALESCE(f.funded,0) AS funded,COALESCE(f.returned,0) AS returned,
+            SELECT c.id,c.title,c.ends_at AS "endsAt",c.latest_decision AS decision,c.hidden,c.goal,c.succeeded_at AS "succeededAt",c.success_note AS "successNote",(NOT c.hidden AND c.ends_at>now() AND c.latest_decision IS NULL) AS open,COALESCE(f.remaining,0) AS remaining,COALESCE(f.funded,0) AS funded,COALESCE(f.returned,0) AS returned,
               (SELECT count(*) FROM idea_swipes s WHERE s.card_id=c.id AND s.direction='RIGHT') AS likes,
               (SELECT count(*) FROM idea_swipes s WHERE s.card_id=c.id AND s.direction='LEFT') AS passes
             FROM cards c LEFT JOIN credit_campaigns f ON c.id=f.card_id WHERE c.proposer_id=? ORDER BY c.created_at DESC
@@ -182,6 +186,8 @@ public class CreditService {
         var mine=db.queryForList("SELECT direction,reason,reward FROM idea_swipes WHERE card_id=? AND device_id=?",cardId,device);
         var result=new LinkedHashMap<String,Object>(); result.put("campaign",campaign); result.put("visible",visible);
         result.put("mine",mine.isEmpty()?null:mine.getFirst());
+        result.put("pledges",pledgeCount(cardId)); result.put("goal",card.getGoal());
+        result.put("succeededAt",card.getSucceededAt()); result.put("successNote",card.getSuccessNote());
         result.put("accepting",enabled && !card.isHidden() && card.isOpen(Instant.now()) && !card.isProposedBy(device) && mine.isEmpty() && Boolean.TRUE.equals(db.queryForObject("SELECT EXISTS(SELECT 1 FROM credit_campaigns WHERE card_id=? AND remaining>=30)",Boolean.class,cardId)));
         if(visible){
             var responses=db.queryForList("SELECT direction,reason FROM idea_swipes WHERE card_id=? ORDER BY created_at DESC",cardId);
@@ -191,6 +197,23 @@ public class CreditService {
         }
         return result;
     }
+    /** 성사된 아이디어의 일정·장소를 함께하기로 한 주민 모두에게 알린다. */
+    @Transactional
+    public Map<String,Object> announce(String device,String cardId,String rawNote) {
+        String note=rawNote==null?"":rawNote.trim();
+        if (note.length()<2 || note.length()>200) throw new BadRequestException("안내는 2자 이상 200자 이내로 적어 주세요.");
+        Card card=cards.findLockedById(cardId).orElseThrow(()->new CardNotFoundException(cardId));
+        if (card.isHidden() || !card.isProposedBy(device)) throw new ForbiddenException("내 아이디어에만 안내를 보낼 수 있어요.");
+        if (card.getSucceededAt()==null) throw new BadRequestException("성사된 아이디어에만 안내를 보낼 수 있어요.");
+        card.announceSuccess(note);
+        return Map.of("notified",notifyPledgers(cardId,"SUCCESS_NOTE"));
+    }
+    private int notifyPledgers(String cardId,String kind) {
+        var pledgers=db.queryForList("SELECT device_id FROM idea_swipes WHERE card_id=? AND direction='RIGHT'",String.class,cardId);
+        for (String pledger:pledgers) db.update("INSERT INTO notices(id,device_id,card_id,kind,created_at) VALUES (?,?,?,?,now())",Ids.newId(),pledger,cardId,kind);
+        return pledgers.size();
+    }
+    public long pledgeCount(String cardId) { return db.queryForObject("SELECT count(*) FROM idea_swipes WHERE card_id=? AND direction='RIGHT'",Long.class,cardId); }
     public List<String> participantIds(String cardId) { return db.queryForList("SELECT device_id FROM idea_swipes WHERE card_id=?",String.class,cardId); }
     public List<String> joinedCardIds(String deviceId) { return db.queryForList("SELECT card_id FROM idea_swipes WHERE device_id=?",String.class,deviceId); }
 }

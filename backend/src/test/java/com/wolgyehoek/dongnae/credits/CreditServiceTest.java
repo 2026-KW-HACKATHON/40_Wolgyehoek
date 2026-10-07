@@ -144,6 +144,25 @@ class CreditServiceTest {
   assertThat(credits.insight(operator,c.getId()).get("accepting")).isEqualTo(false);
   assertThatThrownBy(()->credits.insight(id(),c.getId())).isInstanceOf(CardNotFoundException.class);
  }
+ @Test void reachingGoalSucceedsOnceNotifiesPledgersAndOnlyOwnerAnnounces(){
+  String owner=id();Card c=funded(owner,300);c.setGoal(2);cards.saveAndFlush(c);
+  String a=id(),b=id(),passer=id(),late=id();
+  assertThat(credits.swipe(a,c.getId(),"RIGHT","").get("succeeded")).isEqualTo(false);
+  assertThat(credits.swipe(passer,c.getId(),"LEFT","").get("succeeded")).isEqualTo(false);
+  var tipping=credits.swipe(b,c.getId(),"RIGHT","");
+  assertThat(tipping.get("succeeded")).isEqualTo(true);assertThat(tipping.get("pledges")).isEqualTo(2L);
+  assertThat(credits.swipe(late,c.getId(),"RIGHT","").get("succeeded")).isEqualTo(false);
+  assertThat(cards.findById(c.getId()).orElseThrow().getSucceededAt()).isNotNull();
+  assertThat(db.queryForObject("SELECT count(*) FROM notices WHERE card_id=? AND kind='SUCCESS'",Integer.class,c.getId())).isEqualTo(2);
+  assertThat(db.queryForObject("SELECT count(*) FROM notices WHERE card_id=? AND device_id=?",Integer.class,c.getId(),passer)).isZero();
+  assertThatThrownBy(()->credits.announce(a,c.getId(),"토요일 10시 광운로에서 만나요")).isInstanceOf(ForbiddenException.class);
+  assertThat(credits.announce(owner,c.getId(),"토요일 10시 광운로에서 만나요").get("notified")).isEqualTo(3);
+  assertThat(credits.insight(passer,c.getId()).get("successNote")).isEqualTo("토요일 10시 광운로에서 만나요");
+ }
+ @Test void announcingBeforeSuccessIsRejected(){
+  String owner=id();Card c=funded(owner,100);
+  assertThatThrownBy(()->credits.announce(owner,c.getId(),"아직 모이는 중이에요")).isInstanceOf(BadRequestException.class);
+ }
  @Test void disabledDemoCannotIssueCredits(){
   CreditService disabled=new CreditService(db,cards,devices,media,false);
   assertThat(disabled.wallet(id()).get("enabled")).isEqualTo(false);

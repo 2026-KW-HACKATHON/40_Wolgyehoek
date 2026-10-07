@@ -33,6 +33,10 @@ public class Card {
     private Instant reportPublishedAt;
     private String reportSummary;
 
+    private int goal = 30;
+    private Instant succeededAt;
+    private String successNote;
+
     @Enumerated(EnumType.STRING)
     private Decision latestDecision;
 
@@ -96,6 +100,33 @@ public class Card {
     }
 
     public void markSeed() { this.seed = true; }
+
+    public void setGoal(int goal) {
+        this.goal = goal;
+    }
+
+    /** 처음 목표에 닿은 순간만 성사로 기록한다. 이미 성사됐으면 false. */
+    public boolean succeedIfReached(long pledges, Instant now) {
+        if (succeededAt != null || pledges < goal) return false;
+        this.succeededAt = now;
+        return true;
+    }
+
+    public void announceSuccess(String note) {
+        this.successNote = note;
+    }
+
+    public int getGoal() {
+        return goal;
+    }
+
+    public Instant getSucceededAt() {
+        return succeededAt;
+    }
+
+    public String getSuccessNote() {
+        return successNote;
+    }
 
     public void hide() {
         this.hidden = true;

@@ -11,6 +11,7 @@ public class CreditController {
  public record Amount(int amount){}
  public record Swipe(String direction,String reason){}
  public record Purchase(String productId,String requestId){}
+ public record Announcement(String note){}
  @GetMapping("/wallet") public Map<String,Object> wallet(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id){return service.wallet(id);}
  @GetMapping("/discover") public Map<String,Object> discover(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id){return service.discovery(id);}
  @GetMapping("/team") public Map<String,Object> team(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id){return service.team(id);}
@@ -19,6 +20,7 @@ public class CreditController {
  @PostMapping("/topup") public Map<String,Object> topup(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id,@RequestBody Amount r){return service.topup(id,r.amount());}
  @PostMapping("/campaigns/{cardId}/fund") public Map<String,Object> fund(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id,@PathVariable String cardId,@RequestBody Amount r){return service.fund(id,cardId,r.amount());}
  @PostMapping("/campaigns/{cardId}/swipe") public Map<String,Object> swipe(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id,@PathVariable String cardId,@RequestBody Swipe r){return service.swipe(id,cardId,r.direction(),r.reason());}
+ @PostMapping("/campaigns/{cardId}/success-note") public Map<String,Object> announce(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id,@PathVariable String cardId,@RequestBody Announcement r){return service.announce(id,cardId,r.note());}
  @PostMapping("/campaigns/{cardId}/end") public Map<String,Object> end(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id,@PathVariable String cardId){return service.end(id,cardId);}
  @PostMapping("/vouchers") public Map<String,Object> buy(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id,@RequestBody Purchase r){return service.buy(id,r.productId(),r.requestId());}
  @PostMapping("/vouchers/{voucherId}/redeem") public Map<String,Object> redeem(@RequestAttribute(DeviceCookieFilter.ATTRIBUTE_NAME) String id,@PathVariable String voucherId){return service.redeem(id,voucherId);}

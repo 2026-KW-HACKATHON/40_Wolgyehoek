@@ -30,9 +30,17 @@ public record CreateCardRequest(
         Integer weeks,
 
         @Size(max = 4, message = "사진·영상은 4개까지 올릴 수 있어요.")
-        List<String> mediaIds
+        List<String> mediaIds,
+
+        @Min(value = 2, message = "목표 인원은 2명 이상이어야 해요.")
+        @Max(value = 1000, message = "목표 인원은 1,000명 이하여야 해요.")
+        Integer goal
 ) {
     public CreateCardRequest(String title, String body, String target, String place, String effect, Integer weeks) {
-        this(title, body, target, place, effect, weeks, List.of());
+        this(title, body, target, place, effect, weeks, List.of(), null);
+    }
+
+    public CreateCardRequest(String title, String body, String target, String place, String effect, Integer weeks, List<String> mediaIds) {
+        this(title, body, target, place, effect, weeks, mediaIds, null);
     }
 }
