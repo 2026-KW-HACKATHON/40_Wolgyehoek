@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { CardSummary } from "@/lib/queries";
@@ -8,7 +9,9 @@ import { StatusBadge } from "./ui";
 export function CardItem({ s }: { s: CardSummary }) {
   const { card } = s;
   return <Link href={`/cards/${card.id}`} className="group flex items-center gap-4 rounded-[18px] py-3 outline-offset-4">
-    <span aria-hidden="true" className="flex size-16 shrink-0 items-end overflow-hidden rounded-2xl p-2 text-[22px] font-black leading-none text-white" style={{ background: cardSurface(card.id) }}>{card.title.slice(0, 1)}</span>
+    {card.media[0]?.kind === "IMAGE"
+      ? <span aria-hidden="true" className="relative size-16 shrink-0 overflow-hidden rounded-2xl bg-muted"><Image src={`/media/${card.media[0].id}`} alt="" fill unoptimized sizes="64px" className="object-cover" /></span>
+      : <span aria-hidden="true" className="flex size-16 shrink-0 items-end overflow-hidden rounded-2xl p-2 text-[22px] font-black leading-none text-white" style={{ background: cardSurface(card.id) }}>{card.title.slice(0, 1)}</span>}
     <span className="min-w-0 flex-1">
       <span className="flex items-center gap-2"><StatusBadge status={s.status} /><span className="truncate text-xs text-muted-foreground">{card.place || "월계1동"}</span></span>
       <span className="mt-1 block truncate text-[15px] font-bold group-hover:text-primary">{card.title}</span>

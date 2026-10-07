@@ -2,6 +2,7 @@ import { ChevronLeft, Heart, MapPin, X } from "lucide-react";
 import { getCreditInsight } from "@/lib/credits";
 import { RecordProgress } from "@/components/RecordProgress";
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCard } from "@/lib/queries";
@@ -10,7 +11,7 @@ import type { Report } from "@/lib/domain/report";
 import { canTakeOver } from "@/lib/domain/status";
 import { DECISION_LABELS, RESPONDENT_LABELS, STANCE_LABELS, STATUS_LABELS, STEP_LABELS, type Decision, type RespondentType, type Stance } from "@/lib/domain/types";
 import { closeNow } from "@/app/actions";
-import { cardSurface } from "@/lib/surface";
+import { CardBackdrop } from "@/components/CardMedia";
 import { ButtonLink, Disclaimer, Pill, SectionTitle, StatusBadge, fmtDate, fmtWon } from "@/components/ui";
 import { ConclusionForm, FlagForm, OpinionForm, ReactionPanel, ReportPublishForm } from "./panels";
 
@@ -34,8 +35,9 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
 
   return (
     <article className="space-y-8 px-4 pb-8 pt-1">
-      <header className="relative flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[22px] p-6 text-white shadow-float" style={{ background: cardSurface(card.id) }}>
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+      <header className="relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-[22px] p-6 text-white shadow-float">
+        <CardBackdrop cardId={card.id} media={card.media[0]} />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
         <Link href="/" aria-label="뒤로" className="absolute left-4 top-4 flex size-10 items-center justify-center rounded-full bg-black/20 backdrop-blur hover:bg-black/30"><ChevronLeft className="size-5" /></Link>
         <div className="absolute right-4 top-6 flex items-center gap-1.5 text-[11px] font-bold"><span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">{STATUS_LABELS[status]}</span>{card.isSeed && <span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">예시</span>}</div>
         <div className="relative">
@@ -47,6 +49,15 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
 
       <section className="space-y-5">
         <p className="whitespace-pre-line text-[16px] leading-7">{card.body}</p>
+        {card.media.length > 1 && (
+          <ul className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-1">
+            {card.media.map((m) => (
+              <li key={m.id} className="relative aspect-[3/4] w-[62%] shrink-0 snap-start overflow-hidden rounded-2xl bg-muted">
+                {m.kind === "IMAGE" ? <Image src={`/media/${m.id}`} alt="" fill unoptimized sizes="300px" className="object-cover" /> : <video src={`/media/${m.id}`} controls playsInline preload="metadata" className="absolute inset-0 size-full object-cover" />}
+              </li>
+            ))}
+          </ul>
+        )}
         <dl className="divide-y divide-border border-y border-border">
           {[["대상", card.target], ["기대 효과", card.effect]].filter(([, v]) => v).map(([k, v]) => (
             <div key={k} className="flex gap-4 py-3 text-[15px]"><dt className="w-16 shrink-0 text-muted-foreground">{k}</dt><dd className="font-medium">{v}</dd></div>

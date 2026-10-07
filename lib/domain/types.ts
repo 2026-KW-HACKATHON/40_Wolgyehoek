@@ -2,6 +2,9 @@ export type Decision = "go" | "hold" | "stop";
 export type CardStatus = "open" | "closed" | "go" | "hold" | "stop" | "stale";
 export type RespondentType = "resident" | "work_study" | "visitor";
 export type Stance = "pro" | "con" | "conditional";
+export interface Media { id: string; kind: "IMAGE" | "VIDEO"; contentType: string }
+export const MEDIA_MAX = 4;
+export const MEDIA_LIMIT_BYTES = { IMAGE: 10 * 1024 * 1024, VIDEO: 50 * 1024 * 1024 } as const;
 
 export const STEP_LABELS = ["괜찮다", "써볼 것 같다", "이 가격이면 쓰겠다", "알림 신청"] as const;
 export const RESPONDENT_LABELS: Record<RespondentType, string> = {

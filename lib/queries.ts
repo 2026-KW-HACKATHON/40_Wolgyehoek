@@ -1,12 +1,13 @@
 import "server-only";
 import { api, ApiError } from "./api";
-import type { CardStatus, Decision, Stance, RespondentType } from "./domain/types";
+import type { CardStatus, Decision, Media, Stance, RespondentType } from "./domain/types";
 import type { Report } from "./domain/report";
 
 export interface Card {
   id: string; title: string; body: string; target: string; place: string; effect: string;
   proposerName: string; startsAt: Date; endsAt: Date; parentId: string | null; takeoverNote: string | null;
   isSeed: boolean; hidden: boolean; reportPublishedAt: Date | null; reportSummary: string | null; createdAt: Date;
+  media: Media[];
 }
 export interface Conclusion { id: string; decision: Decision; reasonTags: string[]; reason: string; createdAt: Date }
 export interface Opinion { id: string; stance: Stance; body: string; condition: string; authorName: string; createdAt: Date; hidden: boolean }

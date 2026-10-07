@@ -28,12 +28,13 @@ export async function publishCard(_: ActionState, form: FormData): Promise<Actio
   const parsed = cardInput.safeParse(Object.fromEntries(form));
   if (!parsed.success) return fail(parsed.error.issues[0].message);
   const parentId = String(form.get("parentId") ?? "");
+  const card = { ...parsed.data, mediaIds: form.getAll("mediaIds").map(String).filter(Boolean) };
   let id: string;
   try {
     if (parentId) {
-      const result = await api<{ card: { id: string } }>(`/api/cards/${encodeURIComponent(parentId)}/takeover`, { method: "POST", body: { card: parsed.data, takeoverNote: String(form.get("takeoverNote") ?? "").trim() } });
+      const result = await api<{ card: { id: string } }>(`/api/cards/${encodeURIComponent(parentId)}/takeover`, { method: "POST", body: { card, takeoverNote: String(form.get("takeoverNote") ?? "").trim() } });
       id = result.card.id;
-    } else { id = (await api<{ id: string }>("/api/cards", { method: "POST", body: parsed.data })).id; }
+    } else { id = (await api<{ id: string }>("/api/cards", { method: "POST", body: card })).id; }
   } catch (e) { return fail(errorMessage(e)); }
   refresh(parentId || id);
   redirect("/team");

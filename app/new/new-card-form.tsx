@@ -8,6 +8,7 @@ import { useActionState, useState, useTransition } from "react";
 import { createDraft, publishCard, type ActionState } from "@/app/actions";
 import { FormMessage, StatusBadge, btnPrimary, btnSecondary, inputCls } from "@/components/ui";
 import { useFormSubmit } from "@/components/use-form-submit";
+import { MediaPicker, type PickedMedia } from "@/components/MediaPicker";
 import type { CardStatus } from "@/lib/domain/types";
 
 type Similar = { id: string; title: string; status: CardStatus; reactionCount: number; reason: string | null };
@@ -18,6 +19,9 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
     parent ? { title: parent.title, target: parent.target, place: parent.place, effect: parent.effect, source: "takeover" } : null,
   );
   const [similar, setSimilar] = useState<Similar[]>([]);
+  const [media, setMedia] = useState<PickedMedia[]>([]);
+  const uploading = media.some((m) => !m.id && !m.error);
+  const picker = <MediaPicker items={media} onChange={setMedia} />;
   const [draftError, setDraftError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const [state, formAction, publishing] = useActionState<ActionState, FormData>(publishCard, { ok: true });
@@ -38,6 +42,7 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
         <section>
           <label htmlFor="text" className="sr-only">아이디어</label>
           <Textarea id="text" value={text} onChange={(e) => setText(e.target.value)} rows={6} placeholder="우리 동네에 이런 게 있다면?" className={`${inputCls} rounded-[22px] p-5 text-[17px] leading-7`} />
+          <div className="mt-3">{picker}</div>
           <Button type="button" onClick={runDraft} disabled={pending || text.trim().length < 10} className={`${draft ? btnSecondary : btnPrimary} mt-3 w-full`}>
             {pending ? "정리하는 중…" : draft ? "다시 정리하기" : "카드로 만들기"}
           </Button>
@@ -67,6 +72,8 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
             <span className="rounded-full bg-muted px-2.5 py-1 text-[11px] font-bold text-muted-foreground">{draft.source === "llm" ? "AI" : draft.source === "rule" ? "자동" : "원본 연결"}</span>
           </div>
           {parent && <input type="hidden" name="parentId" value={parent.id} />}
+          {media.flatMap((m) => m.id && !m.error ? [<input key={m.key} type="hidden" name="mediaIds" value={m.id} />] : [])}
+          {parent && picker}
           <Field label="제목" name="title" defaultValue={draft.title} required />
           <div className="space-y-1.5">
             <label htmlFor="body" className="block text-sm font-semibold text-muted-foreground">내용</label>
@@ -92,8 +99,8 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
             </select>
           </div>
           <FormMessage state={state} />
-          <Button type="submit" size="lg" disabled={publishing} className="w-full">
-            {publishing ? "게시하는 중…" : parent ? "이어받기" : "게시"}
+          <Button type="submit" size="lg" disabled={publishing || uploading} className="w-full">
+            {publishing ? "게시하는 중…" : uploading ? "올리는 중…" : parent ? "이어받기" : "게시"}
           </Button>
         </form>
       )}

@@ -12,5 +12,6 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  // 업로드·미디어 스트림은 proxy가 본문을 버퍼링하지 않도록 제외한다(기기 쿠키는 이미 발급된 상태).
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/media|media/).*)"],
 };

@@ -5,13 +5,17 @@ export class ApiError extends Error {
   constructor(public status: number, message: string) { super(message); }
 }
 
+export const springUrl = (path: string) => `${process.env.SPRING_API_URL ?? "http://localhost:8080"}${path}`;
+export const deviceCookie = (value: string | undefined) => value && /^d_[0-9a-f]{16}$/.test(value) ? `dn_device=${value}` : null;
+
 export async function api<T>(path: string, options: { method?: string; body?: unknown } = {}): Promise<T> {
   const device = (await cookies()).get("dn_device")?.value;
   const headers: Record<string, string> = { "content-type": "application/json" };
-  if (device && /^d_[0-9a-f]{16}$/.test(device)) headers.cookie = `dn_device=${device}`;
+  const cookie = deviceCookie(device);
+  if (cookie) headers.cookie = cookie;
   let response: Response;
   try {
-    response = await fetch(`${process.env.SPRING_API_URL ?? "http://localhost:8080"}${path}`, {
+    response = await fetch(springUrl(path), {
       method: options.method ?? "GET", headers, cache: "no-store",
       body: options.body === undefined ? undefined : JSON.stringify(options.body),
       signal: AbortSignal.timeout(15000),

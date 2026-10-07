@@ -1,6 +1,7 @@
 import "server-only";
 import { api } from "./api";
-export interface SwipeCard { id:string; title:string; body:string; target:string; place:string; effect:string; proposerName:string; isSeed:boolean; endsAt:string; remaining:number }
+import type { Media } from "./domain/types";
+export interface SwipeCard { id:string; title:string; body:string; target:string; place:string; effect:string; proposerName:string; isSeed:boolean; endsAt:string; remaining:number; media:Media[] }
 export interface Deck {enabled:boolean; balance:number; cards:SwipeCard[]}
 export interface Voucher {id:string; title:string; cost:number; createdAt:string; usedAt:string|null}
 export interface Wallet {enabled:boolean; balance:number; ledger:{amount:number; kind:string; description:string; createdAt:string}[]; vouchers:Voucher[]}
