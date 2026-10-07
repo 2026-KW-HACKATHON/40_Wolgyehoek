@@ -4,6 +4,9 @@ export type RespondentType = "resident" | "work_study" | "visitor";
 export type Stance = "pro" | "con" | "conditional";
 export interface Media { id: string; kind: "IMAGE" | "VIDEO"; contentType: string }
 export const MEDIA_MAX = 4;
+export const TOPICS = { CARE: "돌봄", COMMERCE: "골목상권", SAFETY: "안전", ENVIRONMENT: "환경", YOUTH: "청년", NEIGHBOR: "이웃" } as const;
+export type Topic = keyof typeof TOPICS;
+export const topicLabel = (topic: string | null | undefined) => (topic && topic in TOPICS ? TOPICS[topic as Topic] : "");
 export const MEDIA_LIMIT_BYTES = { IMAGE: 10 * 1024 * 1024, VIDEO: 50 * 1024 * 1024 } as const;
 
 export const STEP_LABELS = ["괜찮다", "써볼 것 같다", "이 가격이면 쓰겠다", "알림 신청"] as const;

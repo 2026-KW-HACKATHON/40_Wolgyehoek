@@ -62,7 +62,7 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 ::selection { background: var(--brand-highlight); color: var(--brand-deep); }
 
 /* One mobile canvas on every screen; wider monitors frame the same product. */
-.swipe-stage { height: clamp(380px, calc(100svh - 252px), 640px); }
+.swipe-stage { height: clamp(360px, calc(100svh - 296px), 620px); }
 .swipe-card { user-select:none; cursor:grab; touch-action: pan-y; }
 .swipe-card:active { cursor:grabbing; }
 .credit-sheet { margin: auto auto 0; max-height:calc(100dvh - 32px); overflow-y:auto; }

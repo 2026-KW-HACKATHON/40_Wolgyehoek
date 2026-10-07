@@ -8,6 +8,7 @@ export interface Card {
   proposerName: string; startsAt: Date; endsAt: Date; parentId: string | null; takeoverNote: string | null;
   isSeed: boolean; hidden: boolean; reportPublishedAt: Date | null; reportSummary: string | null; createdAt: Date;
   media: Media[]; goal: number; succeededAt: string | null; successNote: string | null; pledges: number;
+  problem: string; topic: string;
 }
 export interface Conclusion { id: string; decision: Decision; reasonTags: string[]; reason: string; createdAt: Date }
 export interface Opinion { id: string; stance: Stance; body: string; condition: string; authorName: string; createdAt: Date; hidden: boolean }

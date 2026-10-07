@@ -9,7 +9,7 @@ import { getCard } from "@/lib/queries";
 import { currentDevice } from "@/lib/device";
 import type { Report } from "@/lib/domain/report";
 import { canTakeOver } from "@/lib/domain/status";
-import { DECISION_LABELS, RESPONDENT_LABELS, STANCE_LABELS, STATUS_LABELS, STEP_LABELS, type Decision, type RespondentType, type Stance } from "@/lib/domain/types";
+import { DECISION_LABELS, RESPONDENT_LABELS, STANCE_LABELS, STATUS_LABELS, STEP_LABELS, topicLabel, type Decision, type RespondentType, type Stance } from "@/lib/domain/types";
 import { closeNow } from "@/app/actions";
 import { CardBackdrop } from "@/components/CardMedia";
 import { ButtonLink, Disclaimer, Pill, SectionTitle, StatusBadge, fmtDate, fmtWon } from "@/components/ui";
@@ -48,6 +48,12 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
       </header>
 
       <section className="space-y-5">
+        {card.problem && (
+          <div className="rounded-2xl bg-[var(--brand-soft)] p-4">
+            <p className="text-xs font-bold text-primary">{[topicLabel(card.topic), "동네 문제"].filter(Boolean).join(" · ")}</p>
+            <p className="mt-1 text-[17px] font-bold leading-snug">{card.problem}</p>
+          </div>
+        )}
         <p className="whitespace-pre-line text-[16px] leading-7">{card.body}</p>
         {card.media.length > 1 && (
           <ul className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-1">

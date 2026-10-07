@@ -9,11 +9,11 @@ import { createDraft, publishCard, type ActionState } from "@/app/actions";
 import { FormMessage, StatusBadge, btnPrimary, btnSecondary, inputCls } from "@/components/ui";
 import { useFormSubmit } from "@/components/use-form-submit";
 import { MediaPicker, type PickedMedia } from "@/components/MediaPicker";
-import type { CardStatus } from "@/lib/domain/types";
+import { TOPICS, type CardStatus, type Topic } from "@/lib/domain/types";
 
 type Similar = { id: string; title: string; status: CardStatus; reactionCount: number; reason: string | null };
 
-export function NewCardForm({ parent }: { parent?: { id: string; title: string; body: string; target: string; place: string; effect: string } }) {
+export function NewCardForm({ parent }: { parent?: { id: string; title: string; body: string; target: string; place: string; effect: string; problem: string; topic: string } }) {
   const [text, setText] = useState(parent?.body ?? "");
   const [draft, setDraft] = useState<null | { title: string; target: string; place: string; effect: string; source: string }>(
     parent ? { title: parent.title, target: parent.target, place: parent.place, effect: parent.effect, source: "takeover" } : null,
@@ -74,7 +74,22 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
           {parent && <input type="hidden" name="parentId" value={parent.id} />}
           {media.flatMap((m) => m.id && !m.error ? [<input key={m.key} type="hidden" name="mediaIds" value={m.id} />] : [])}
           {parent && picker}
-          <Field label="제목" name="title" defaultValue={draft.title} required />
+          <div className="space-y-1.5">
+            <label htmlFor="problem" className="block text-sm font-semibold text-muted-foreground">어떤 동네 문제인가요?</label>
+            <Input id="problem" name="problem" defaultValue={parent?.problem ?? ""} maxLength={80} placeholder="예) 골목 쓰레기 무단투기가 반복돼요" className={inputCls} required />
+          </div>
+          <fieldset>
+            <legend className="mb-2 block text-sm font-semibold text-muted-foreground">분야</legend>
+            <div className="flex flex-wrap gap-1.5">
+              {(Object.keys(TOPICS) as Topic[]).map((t) => (
+                <label key={t} className="cursor-pointer rounded-full bg-muted px-3.5 py-2 text-sm font-bold text-muted-foreground has-[:checked]:bg-foreground has-[:checked]:text-background has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary">
+                  <input type="radio" name="topic" value={t} defaultChecked={parent?.topic === t} className="sr-only" required />
+                  {TOPICS[t]}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <Field label="해결 아이디어" name="title" defaultValue={draft.title} required />
           <div className="space-y-1.5">
             <label htmlFor="body" className="block text-sm font-semibold text-muted-foreground">내용</label>
             <Textarea id="body" name="body" defaultValue={text} rows={4} className={inputCls} required />

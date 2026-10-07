@@ -29,7 +29,7 @@ export default async function TakeoverPage({ params }: { params: Promise<{ id: s
         )}
         <p className="tnum mt-2 text-xs text-[var(--text-4)]">반응 {d.reactionCount} · 의견 {d.opinions.length} 연결</p>
       </div>
-      <NewCardForm parent={{ id: d.card.id, title: d.card.title, body: d.card.body, target: d.card.target, place: d.card.place, effect: d.card.effect }} />
+      <NewCardForm parent={{ id: d.card.id, title: d.card.title, body: d.card.body, target: d.card.target, place: d.card.place, effect: d.card.effect, problem: d.card.problem, topic: d.card.topic }} />
     </div>
   );
 }

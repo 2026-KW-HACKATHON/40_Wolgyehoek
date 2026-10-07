@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { REASON_TAGS } from "./types";
+import { REASON_TAGS, TOPICS, type Topic } from "./types";
 
 export const PRICE_MAX = 1_000_000;
 
@@ -22,6 +22,8 @@ export const cardInput = z.object({
   place: z.string().trim().max(100).default(""),
   effect: z.string().trim().max(200).default(""),
   weeks: z.coerce.number().int().min(1).max(8).default(2),
+  problem: z.string().trim().min(5, "어떤 동네 문제인지 5자 이상 적어 주세요.").max(80, "동네 문제는 80자 이하로 적어 주세요."),
+  topic: z.enum(Object.keys(TOPICS) as [Topic, ...Topic[]], { message: "어떤 분야의 문제인지 골라 주세요." }),
   goal: z.coerce.number({ message: "목표 인원을 숫자로 적어 주세요." }).int().min(2, "목표 인원은 2명 이상이어야 해요.").max(1000, "목표 인원은 1,000명 이하여야 해요.").default(30),
 });
 

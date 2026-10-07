@@ -11,6 +11,7 @@ import {BrandMark} from "./BrandMark";
 import {CardBackdrop} from "./CardMedia";
 import {cn} from "@/lib/utils";
 import {cardSurface} from "@/lib/surface";
+import {TOPICS,topicLabel,type Topic} from "@/lib/domain/types";
 
 function Progress({card}:{card:SwipeCard}){
  if(card.succeededAt) return <p className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[13px] font-extrabold text-primary"><PartyPopper className="size-4"/>성사 · {card.pledges}명 함께</p>;
@@ -30,15 +31,16 @@ function CardFront({card,index=0,onPick,playing=true}:{card:SwipeCard;index?:num
   <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/30 to-transparent"/>
   <div className="absolute inset-x-0 bottom-0 p-6 pr-16 text-white">
    <Progress card={card}/>
-   <p className="mb-2 flex items-center gap-1 text-sm font-semibold text-white/90"><MapPin className="size-4"/>{card.place||"월계1동"}</p>
-   <h2 className="text-[30px] font-extrabold leading-[1.18] tracking-[-0.04em] [text-wrap:balance]">{card.title}</h2>
-   <p className="mt-2.5 line-clamp-2 text-[15px] leading-6 text-white/85">{card.body}</p>
+   <p className="mb-2.5 flex items-center gap-2 text-sm font-semibold text-white/90">{topicLabel(card.topic)&&<span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold backdrop-blur">{topicLabel(card.topic)}</span>}<span className="flex items-center gap-1"><MapPin className="size-4"/>{card.place||"월계1동"}</span></p>
+   {card.problem&&<p className="mb-2 text-[16px] font-semibold leading-snug text-white/90 [text-wrap:balance]">“{card.problem}”</p>}
+   <h2 className="text-[30px] font-extrabold leading-[1.18] tracking-[-0.04em] [text-wrap:balance]">{card.problem&&<span aria-hidden="true" className="mr-1.5 text-white/60">→</span>}{card.title}</h2>
+   {!card.problem&&<p className="mt-2.5 line-clamp-2 text-[15px] leading-6 text-white/85">{card.body}</p>}
   </div>
  </>;
 }
 
 function CardBack({card,onFlip}:{card:SwipeCard;onFlip:()=>void}){
- const rows=[["목표",card.succeededAt?`성사 · ${card.pledges}명 함께`:`${card.goal}명 중 ${card.pledges}명 모임`],["대상",card.target],["장소",card.place],["기대 효과",card.effect],["제안",card.proposerName]].filter(([,v])=>v);
+ const rows=[["문제",card.problem],["분야",topicLabel(card.topic)],["목표",card.succeededAt?`성사 · ${card.pledges}명 함께`:`${card.goal}명 중 ${card.pledges}명 모임`],["대상",card.target],["장소",card.place],["기대 효과",card.effect],["제안",card.proposerName]].filter(([,v])=>v);
  return <div className="absolute inset-0 flex flex-col bg-[#2d2219] text-white">
   <div aria-hidden="true" className="absolute inset-x-0 top-0 h-40 opacity-60" style={{background:cardSurface(card.id),maskImage:"linear-gradient(to bottom,black,transparent)"}}/>
   <div className="relative flex min-h-0 flex-1 flex-col p-6">
@@ -53,8 +55,10 @@ function CardBack({card,onFlip}:{card:SwipeCard;onFlip:()=>void}){
 export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;requestedUnavailable?:boolean}){
  const [cards,setCards]=useState(initial.cards);const [balance,setBalance]=useState(initial.balance);const [choice,setChoice]=useState<"RIGHT"|"LEFT"|null>(null);
  const [reason,setReason]=useState("");const [error,setError]=useState("");const [notice,setNotice]=useState(requestedUnavailable?"이미 참여했거나 마감된 카드예요":"");const [dx,setDx]=useState(0);const [dragging,setDragging]=useState(false);const [pending,start]=useTransition();
+ const [topic,setTopic]=useState<Topic|"ALL">("ALL");
  const [flippedId,setFlippedId]=useState<string|null>(null);const [celebrate,setCelebrate]=useState<{title:string;goal:number}|null>(null);const [mediaPos,setMediaPos]=useState<{id:string;i:number}|null>(null);
- const pointer=useRef<{id:number;x:number;y:number}|null>(null);const dialog=useRef<HTMLDialogElement>(null);const router=useRouter();const card=cards[0];const next=cards[1];
+ const pointer=useRef<{id:number;x:number;y:number}|null>(null);const dialog=useRef<HTMLDialogElement>(null);const router=useRouter();const shown=topic==="ALL"?cards:cards.filter(c=>c.topic===topic);const card=shown[0];const next=shown[1];
+ const present=(Object.keys(TOPICS) as Topic[]).filter(t=>cards.some(c=>c.topic===t));
  const flipped=!!card&&flippedId===card.id;const mediaIndex=card&&mediaPos?.id===card.id?mediaPos.i:0;
  function flip(){if(card)setFlippedId(f=>f===card.id?null:card.id);}
  useEffect(()=>{if(choice&&!dialog.current?.open)dialog.current?.showModal();else if(!choice&&dialog.current?.open)dialog.current.close();},[choice]);
@@ -66,6 +70,7 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
  const valid=reason.replace(/\s/g,"").length>=10&&reason.length<=500;
  const lean=Math.min(1,Math.abs(dx)/90);
  return <div className="px-3 pt-1">
+  {present.length>0&&<div role="tablist" aria-label="동네 문제 분야" className="-mx-3 mb-2.5 flex gap-1.5 overflow-x-auto px-3 pb-0.5 [scrollbar-width:none]">{(["ALL",...present] as const).map(t=><button key={t} type="button" role="tab" aria-selected={topic===t} onClick={()=>setTopic(t)} className={cn("shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-bold transition-colors",topic===t?"bg-foreground text-background":"bg-muted text-muted-foreground hover:bg-[#efe3d3]")}>{t==="ALL"?"전체":TOPICS[t]}</button>)}</div>}
   <div className="swipe-stage relative">
    <div role="status" aria-live="polite" className={notice?"absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/75 px-4 py-2 text-sm font-bold text-white backdrop-blur":"sr-only"}>{notice||`내 잔액 ${balance}C`}</div>
    {!initial.enabled?<div className="flex h-full flex-col items-center justify-center text-center"><p className="text-lg font-bold">준비 중이에요</p></div>:card?<>
@@ -86,7 +91,7 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
       </div>
      </div>
     </article>
-   </>:<div className="flex h-full flex-col items-center justify-center text-center">
+   </>:topic!=="ALL"&&cards.length?<div className="flex h-full flex-col items-center justify-center gap-5 text-center"><h2 className="text-xl font-extrabold tracking-tight">이 분야는 다 봤어요</h2><Button variant="soft" size="lg" onClick={()=>setTopic("ALL")}>전체 보기</Button></div>:<div className="flex h-full flex-col items-center justify-center text-center">
     <div className="relative mb-8 flex size-28 items-center justify-center"><span aria-hidden="true" className="pulse-ring absolute inset-0 rounded-full bg-primary/30 motion-reduce:hidden"/><span className="bg-brand relative flex size-24 items-center justify-center rounded-full text-white shadow-float"><BrandMark className="size-11"/></span></div>
     <h2 className="text-xl font-extrabold tracking-tight">새 카드가 없어요</h2>
     <div className="mt-7 flex w-full max-w-[280px] flex-col gap-2"><Button asChild size="lg"><Link href="/rewards">혜택 보기</Link></Button><Button variant="soft" size="lg" disabled={pending} onClick={samples}><RotateCcw/>시연 카드 받기</Button></div>
