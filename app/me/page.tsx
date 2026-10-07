@@ -28,7 +28,7 @@ export default async function MePage() {
         <span aria-hidden="true" className={`mt-2 size-2 shrink-0 rounded-full ${n.readAt ? "bg-transparent" : "bg-primary"}`} />
         <div className="min-w-0 flex-1">
           <Link href={`/cards/${n.cardId}`} className="block truncate text-[15px] font-bold hover:text-primary">{n.cardTitle}</Link>
-          <p className="mt-0.5 truncate text-xs text-muted-foreground">{n.kind === "conclusion" ? (s?.latest ? `${DECISION_LABELS[s.latest.decision as Decision]}${s.latest.reason ? ` · ${s.latest.reason}` : ""}` : "결론 도착") : "다시 시작됨"}</p>
+          <p className="mt-0.5 truncate text-xs text-muted-foreground">{n.kind === "conclusion" ? (s?.latest ? `${DECISION_LABELS[s.latest.decision as Decision]}${s.latest.reason ? ` · ${s.latest.reason}` : ""}` : "결론 도착") : n.kind === "success" ? "성사됐어요!" : n.kind === "schedule" ? (s?.card.successNote ?? "일정이 정해졌어요") : "다시 시작됨"}</p>
         </div>
         <span className="shrink-0 text-xs text-[var(--text-4)] tnum">{fmtDate(n.createdAt)}{!n.readAt && <span className="sr-only"> 새 소식</span>}</span>
       </li>; })}</ul> : <p className="py-6 text-center text-sm text-[var(--text-4)]">아직 없어요</p>}

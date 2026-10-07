@@ -22,6 +22,7 @@ export const cardInput = z.object({
   place: z.string().trim().max(100).default(""),
   effect: z.string().trim().max(200).default(""),
   weeks: z.coerce.number().int().min(1).max(8).default(2),
+  goal: z.coerce.number({ message: "목표 인원을 숫자로 적어 주세요." }).int().min(2, "목표 인원은 2명 이상이어야 해요.").max(1000, "목표 인원은 1,000명 이하여야 해요.").default(30),
 });
 
 export const conclusionInput = z

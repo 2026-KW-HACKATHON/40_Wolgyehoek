@@ -7,12 +7,13 @@ export interface Card {
   id: string; title: string; body: string; target: string; place: string; effect: string;
   proposerName: string; startsAt: Date; endsAt: Date; parentId: string | null; takeoverNote: string | null;
   isSeed: boolean; hidden: boolean; reportPublishedAt: Date | null; reportSummary: string | null; createdAt: Date;
-  media: Media[];
+  media: Media[]; goal: number; succeededAt: string | null; successNote: string | null; pledges: number;
 }
 export interface Conclusion { id: string; decision: Decision; reasonTags: string[]; reason: string; createdAt: Date }
 export interface Opinion { id: string; stance: Stance; body: string; condition: string; authorName: string; createdAt: Date; hidden: boolean }
 export interface CardSummary { card: Card; status: CardStatus; reactionCount: number; opinionCount: number; latest: Conclusion | null }
-export interface Notice { id: string; kind: "conclusion" | "restart"; cardId: string; cardTitle: string; createdAt: Date; readAt: Date | null }
+export type NoticeKindView = "conclusion" | "restart" | "success" | "schedule";
+export interface Notice { id: string; kind: NoticeKindView; cardId: string; cardTitle: string; createdAt: Date; readAt: Date | null }
 interface RawSummary extends Omit<CardSummary, "card" | "latest"> { card: Card; latest: Conclusion | null }
 interface RawValidation {
   stepCounts: number[]; canManage: boolean;
@@ -41,9 +42,10 @@ export async function getCard(id: string) {
     throw e;
   }
 }
+const NOTICE_KINDS: Record<string, NoticeKindView> = { CONCLUSION: "conclusion", TAKEOVER: "restart", SUCCESS: "success", SUCCESS_NOTE: "schedule" };
 export async function myActivity() {
   const a = await api<{ mine: RawSummary[]; joined: RawSummary[]; notices: Notice[] }>("/api/views/me");
-  return { mine: a.mine.map(summary), joined: a.joined.map(summary), notices: a.notices.map(n => ({ ...n, kind: n.kind.toUpperCase() === "CONCLUSION" ? "conclusion" as const : "restart" as const, createdAt: date(n.createdAt), readAt: n.readAt ? date(n.readAt) : null })) };
+  return { mine: a.mine.map(summary), joined: a.joined.map(summary), notices: a.notices.map(n => ({ ...n, kind: NOTICE_KINDS[n.kind.toUpperCase()] ?? "restart", createdAt: date(n.createdAt), readAt: n.readAt ? date(n.readAt) : null })) };
 }
 export async function unreadCount() { return (await api<{ count: number }>("/api/me/notices/unread-count")).count; }
 export async function openFlags() {

@@ -1,4 +1,4 @@
-import { ChevronLeft, Heart, MapPin, X } from "lucide-react";
+import { ChevronLeft, Heart, MapPin, PartyPopper, X } from "lucide-react";
 import { getCreditInsight } from "@/lib/credits";
 import { RecordProgress } from "@/components/RecordProgress";
 import { Button } from "@/components/ui/Button";
@@ -39,7 +39,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         <CardBackdrop cardId={card.id} media={card.media[0]} />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
         <Link href="/" aria-label="뒤로" className="absolute left-4 top-4 flex size-10 items-center justify-center rounded-full bg-black/20 backdrop-blur hover:bg-black/30"><ChevronLeft className="size-5" /></Link>
-        <div className="absolute right-4 top-6 flex items-center gap-1.5 text-[11px] font-bold"><span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">{STATUS_LABELS[status]}</span>{card.isSeed && <span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">예시</span>}</div>
+        <div className="absolute right-4 top-6 flex items-center gap-1.5 text-[11px] font-bold"><span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">{card.succeededAt ? "성사" : STATUS_LABELS[status]}</span>{card.isSeed && <span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">예시</span>}</div>
         <div className="relative">
           <p className="mb-2 flex items-center gap-1 text-sm font-semibold text-white/90"><MapPin className="size-4" />{card.place || "월계1동"}</p>
           <h1 className="text-[30px] font-extrabold leading-[1.18] tracking-[-0.04em] [text-wrap:balance]">{card.title}</h1>
@@ -80,14 +80,23 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
 
       {insight.campaign ? <section>
         <SectionTitle sub={card.reportPublishedAt ? <span role="status" className="text-xs font-bold text-primary">공개 · {fmtDate(card.reportPublishedAt)}</span> : null}>반응</SectionTitle>
-        {insight.mine ? <div className="rounded-2xl bg-muted p-4"><p className="flex items-center gap-2 text-[15px] font-bold">{insight.mine.direction === "RIGHT" ? <Heart className="size-4 fill-[var(--like)] text-[var(--like)]" /> : <X className="size-4 text-[var(--nope)]" strokeWidth={3} />}{insight.mine.direction === "RIGHT" ? "관심" : "패스"}<span className="ml-auto text-sm text-primary">+{insight.mine.reward}C</span></p>{insight.mine.reason && <p className="mt-2 text-sm leading-6">{insight.mine.reason}</p>}</div>
+        <div className="mb-4 rounded-2xl bg-muted p-4">
+          {insight.succeededAt ? <>
+            <p className="flex items-center gap-1.5 text-[15px] font-extrabold text-primary"><PartyPopper className="size-4" />성사 · {insight.pledges}명 함께</p>
+            {insight.successNote && <p className="mt-2 text-sm leading-6">{insight.successNote}</p>}
+          </> : <>
+            <div className="flex items-baseline justify-between text-sm font-bold"><span>성사까지 {Math.max(0, insight.goal - insight.pledges)}명</span><span className="tnum text-xs text-muted-foreground">{insight.pledges}/{insight.goal}</span></div>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-background"><div className="bg-brand h-full rounded-full" style={{ width: `${Math.min(100, Math.round((insight.pledges / Math.max(1, insight.goal)) * 100))}%` }} /></div>
+          </>}
+        </div>
+        {insight.mine ? <div className="rounded-2xl bg-muted p-4"><p className="flex items-center gap-2 text-[15px] font-bold">{insight.mine.direction === "RIGHT" ? <Heart className="size-4 fill-[var(--like)] text-[var(--like)]" /> : <X className="size-4 text-[var(--nope)]" strokeWidth={3} />}{insight.mine.direction === "RIGHT" ? "함께해요" : "패스"}<span className="ml-auto text-sm text-primary">+{insight.mine.reward}C</span></p>{insight.mine.reason && <p className="mt-2 text-sm leading-6">{insight.mine.reason}</p>}</div>
           : canManage ? <ButtonLink href={me?.isOperator ? "/admin" : "/team"} variant="secondary">{me?.isOperator ? "운영자 공간" : "팀 공간에서 관리"}</ButtonLink>
           : insight.accepting ? <Button asChild size="lg" className="w-full"><Link href={`/?idea=${card.id}`}>스와이프하러 가기</Link></Button>
           : <p className="text-sm text-[var(--text-4)]">{status === "open" ? "예산 준비 중" : "참여 종료"}</p>}
         {insight.visible ? <div className="mt-6">
           <div className="flex items-end justify-between text-sm font-bold tnum"><span className="flex items-center gap-1.5 text-[var(--like)]"><Heart className="size-4 fill-current" />{insight.likes}</span><span className="text-xs font-medium text-[var(--text-4)]">{insight.total}명{insight.showRatio && !!insight.total && ` · 관심 ${likeRatio}%`}</span><span className="flex items-center gap-1.5 text-[var(--nope)]">{insight.passes}<X className="size-4" strokeWidth={3} /></span></div>
           {insight.showRatio && !!insight.total && <div className="mt-2 flex h-2 overflow-hidden rounded-full bg-[var(--nope)]"><div className="h-full bg-[var(--like)]" style={{ width: `${likeRatio}%` }} /></div>}
-          {!!insight.responses?.length && <ul className="mt-4 space-y-2">{insight.responses.map((r, i) => <li key={i} className="flex gap-2.5 rounded-2xl bg-muted p-3">{r.direction === "RIGHT" ? <Heart aria-label="관심" className="mt-1 size-4 shrink-0 fill-[var(--like)] text-[var(--like)]" /> : <X aria-label="패스" className="mt-1 size-4 shrink-0 text-[var(--nope)]" strokeWidth={3} />}<p className="text-sm leading-6">{r.reason}</p></li>)}</ul>}
+          {!!insight.responses?.length && <ul className="mt-4 space-y-2">{insight.responses.map((r, i) => <li key={i} className="flex gap-2.5 rounded-2xl bg-muted p-3">{r.direction === "RIGHT" ? <Heart aria-label="함께해요" className="mt-1 size-4 shrink-0 fill-[var(--like)] text-[var(--like)]" /> : <X aria-label="패스" className="mt-1 size-4 shrink-0 text-[var(--nope)]" strokeWidth={3} />}<p className="text-sm leading-6">{r.reason}</p></li>)}</ul>}
           <p className="mt-3 text-[11px] text-[var(--text-4)]">비공식 반응 · 대표성 없음</p>
         </div> : <p className="mt-4 text-sm text-[var(--text-4)]">결과는 종료 후 공개돼요</p>}
         {canManage && status !== "open" && !card.reportPublishedAt && <div className="mt-5"><ReportPublishForm cardId={card.id} /></div>}

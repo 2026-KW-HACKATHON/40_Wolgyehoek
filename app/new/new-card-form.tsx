@@ -98,6 +98,10 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
               ))}
             </select>
           </div>
+          <div className="space-y-1.5">
+            <label htmlFor="goal" className="block text-sm font-semibold text-muted-foreground">몇 명이 모이면 열까요?</label>
+            <Input id="goal" name="goal" type="number" inputMode="numeric" min={2} max={1000} defaultValue={30} className={inputCls} required />
+          </div>
           <FormMessage state={state} />
           <Button type="submit" size="lg" disabled={publishing || uploading} className="w-full">
             {publishing ? "게시하는 중…" : uploading ? "올리는 중…" : parent ? "이어받기" : "게시"}

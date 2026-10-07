@@ -85,6 +85,13 @@ describe("validation", () => {
     const p = cardInput.parse({ title: "야간 조명", body: "경춘선숲길 밤길이 어두워요 조명이 필요해요", target: "", place: "", effect: "" });
     expect(p.weeks).toBe(2);
   });
+  it("성사 목표 인원은 기본 30명, 2~1000명만 허용", () => {
+    const base = { title: "야간 조명", body: "경춘선숲길 밤길이 어두워요 조명이 필요해요" };
+    expect(cardInput.parse(base).goal).toBe(30);
+    expect(cardInput.parse({ ...base, goal: "12" }).goal).toBe(12);
+    expect(cardInput.safeParse({ ...base, goal: "1" }).success).toBe(false);
+    expect(cardInput.safeParse({ ...base, goal: "1001" }).success).toBe(false);
+  });
 });
 
 describe("draftFromText", () => {

@@ -69,6 +69,10 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 .credit-sheet::backdrop { background:rgb(15 15 20 / .5); backdrop-filter:blur(2px); }
 @keyframes pulse-ring { 0% { transform: scale(.6); opacity: .5; } 100% { transform: scale(1.6); opacity: 0; } }
 .pulse-ring { animation: pulse-ring 2.2s ease-out infinite; }
+@keyframes pop-in { 0% { transform: scale(.4); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+.pop-in { animation: pop-in .6s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes confetti { 0% { transform: translateY(-10vh) rotate(0); } 100% { transform: translateY(110vh) rotate(720deg); } }
+.confetti { animation: confetti 2.6s linear infinite; }
 /* WebKit은 backface-visibility를 무시할 때가 있어, 회전 절반(90°) 시점에 면을 바꾼다. */
 .flip-face { transition: visibility 0s linear 250ms; }
 @media (prefers-reduced-motion: reduce) { .flip-face { transition: none; } }
