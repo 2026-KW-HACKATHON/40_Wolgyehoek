@@ -69,7 +69,7 @@ public class CreditService {
     @Transactional
     public Map<String,Object> end(String device,String cardId) {
         requireDemo(); Card card=cards.findLockedById(cardId).orElseThrow(()->new CardNotFoundException(cardId));
-        if(card.isHidden() || !card.isProposedBy(device)) throw new ForbiddenException("내 아이디어만 마감할 수 있어요.");
+        if(!card.isProposedBy(device)) throw new ForbiddenException("내 아이디어만 마감할 수 있어요.");
         ensureWallet(device);
         var rows=db.queryForList("SELECT remaining FROM credit_campaigns WHERE card_id=? FOR UPDATE",cardId);
         int refund=rows.isEmpty()?0:((Number)rows.getFirst().get("remaining")).intValue();
@@ -121,10 +121,10 @@ public class CreditService {
         if (!enabled) return Map.of("enabled",false,"balance",0,"campaigns",List.of());
         ensureWallet(device);
         var list=db.queryForList("""
-            SELECT c.id,c.title,c.ends_at AS "endsAt",c.latest_decision AS decision,(c.ends_at>now() AND c.latest_decision IS NULL) AS open,COALESCE(f.remaining,0) AS remaining,COALESCE(f.funded,0) AS funded,COALESCE(f.returned,0) AS returned,
+            SELECT c.id,c.title,c.ends_at AS "endsAt",c.latest_decision AS decision,c.hidden,(NOT c.hidden AND c.ends_at>now() AND c.latest_decision IS NULL) AS open,COALESCE(f.remaining,0) AS remaining,COALESCE(f.funded,0) AS funded,COALESCE(f.returned,0) AS returned,
               (SELECT count(*) FROM idea_swipes s WHERE s.card_id=c.id AND s.direction='RIGHT') AS likes,
               (SELECT count(*) FROM idea_swipes s WHERE s.card_id=c.id AND s.direction='LEFT') AS passes
-            FROM cards c LEFT JOIN credit_campaigns f ON c.id=f.card_id WHERE c.proposer_id=? AND NOT c.hidden ORDER BY c.created_at DESC
+            FROM cards c LEFT JOIN credit_campaigns f ON c.id=f.card_id WHERE c.proposer_id=? ORDER BY c.created_at DESC
             """,device);
         for(var row:list) row.put("responses",db.queryForList("SELECT direction,reason,reward,created_at AS \"createdAt\" FROM idea_swipes WHERE card_id=? ORDER BY created_at DESC",row.get("id")));
         return Map.of("enabled",true,"balance",teamBalance(device),"campaigns",list,"ledger",db.queryForList("SELECT amount,description,created_at AS \"createdAt\" FROM credit_ledger WHERE device_id=? AND kind IN ('DEMO_TOPUP','FUND','RETURN') ORDER BY created_at DESC,id DESC LIMIT 30",device));
@@ -171,13 +171,15 @@ public class CreditService {
     }
     @Transactional
     public Map<String,Object> insight(String device,String cardId) {
-        Card card=cards.findById(cardId).filter(c->!c.isHidden()).orElseThrow(()->new CardNotFoundException(cardId));
+        boolean operator=devices.getOrCreate(device).operator();
+        Card card=cards.findById(cardId).filter(c->!c.isHidden() || operator).orElseThrow(()->new CardNotFoundException(cardId));
         boolean campaign=Boolean.TRUE.equals(db.queryForObject("SELECT EXISTS(SELECT 1 FROM credit_campaigns WHERE card_id=?)",Boolean.class,cardId));
-        boolean canManage=card.canBeManagedBy(device,devices.getOrCreate(device).operator());
+        boolean canManage=card.canBeManagedBy(device,operator);
         boolean visible=canManage || (!card.isOpen(Instant.now()) && card.isReportPublished());
         var mine=db.queryForList("SELECT direction,reason,reward FROM idea_swipes WHERE card_id=? AND device_id=?",cardId,device);
         var result=new LinkedHashMap<String,Object>(); result.put("campaign",campaign); result.put("visible",visible);
         result.put("mine",mine.isEmpty()?null:mine.getFirst());
+        result.put("accepting",enabled && !card.isHidden() && card.isOpen(Instant.now()) && !card.isProposedBy(device) && mine.isEmpty() && Boolean.TRUE.equals(db.queryForObject("SELECT EXISTS(SELECT 1 FROM credit_campaigns WHERE card_id=? AND remaining>=30)",Boolean.class,cardId)));
         if(visible){
             var responses=db.queryForList("SELECT direction,reason FROM idea_swipes WHERE card_id=? ORDER BY created_at DESC",cardId);
             long likes=responses.stream().filter(r->r.get("direction").equals("RIGHT")).count();

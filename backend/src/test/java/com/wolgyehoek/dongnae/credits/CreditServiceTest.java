@@ -20,6 +20,7 @@ class CreditServiceTest {
  @Autowired CardRepository cards;
  @Autowired JdbcTemplate db;
  @Autowired DeviceService devices;
+ @Autowired com.wolgyehoek.dongnae.device.DeviceRepository deviceRepository;
  @Autowired ConclusionService conclusions;
  @Autowired NoticeRepository notices;
  String id(){return "d_"+UUID.randomUUID().toString().replace("-","").substring(0,16);}
@@ -43,9 +44,9 @@ class CreditServiceTest {
   assertThat(db.queryForObject("SELECT count(*) FROM idea_swipes WHERE card_id=?",Integer.class,c.getId())).isEqualTo(1);
  }
  @Test void exhaustedBudgetRejectsWithoutPartialAward(){
-  Card c=funded(id(),30);credits.swipe(id(),c.getId(),"LEFT","이런 시간대라면 참여하기 어려울 것 같아요.");String u=id();
+  Card c=funded(id(),30);assertThat(credits.insight(id(),c.getId()).get("accepting")).isEqualTo(true);credits.swipe(id(),c.getId(),"LEFT","이런 시간대라면 참여하기 어려울 것 같아요.");String u=id();
   assertThatThrownBy(()->credits.swipe(u,c.getId(),"RIGHT","")).isInstanceOf(BadRequestException.class);
-  assertThat(balance(u)).isZero();assertThat(remaining(c)).isZero();
+  assertThat(balance(u)).isZero();assertThat(remaining(c)).isZero();assertThat(credits.insight(u,c.getId()).get("accepting")).isEqualTo(false);
  }
  @Test void malformedReasonsAndDirectionsCannotSpendBudget(){
   Card c=funded(id(),100);
@@ -55,6 +56,7 @@ class CreditServiceTest {
  }
  @Test void ownerAndOtherTeamCannotManipulateCampaign(){
   String owner=id();Card c=funded(owner,100);
+  assertThat(credits.insight(owner,c.getId()).get("accepting")).isEqualTo(false);
   assertThatThrownBy(()->credits.swipe(owner,c.getId(),"RIGHT","")).isInstanceOf(BadRequestException.class);
   assertThatThrownBy(()->credits.fund(id(),c.getId(),30)).isInstanceOf(ForbiddenException.class);
   assertThatThrownBy(()->credits.fund(owner,c.getId(),500)).isInstanceOf(BadRequestException.class);
@@ -126,6 +128,20 @@ class CreditServiceTest {
   String u=id();credits.topup(u,500);assertThat(balance(u)).isZero();
   assertThat(credits.team(u).get("balance")).isEqualTo(500);
   assertThatThrownBy(()->credits.buy(u,"coffee",UUID.randomUUID().toString())).isInstanceOf(BadRequestException.class);
+ }
+ @Test void hiddenCampaignStillAllowsOwnerRefundButNeverParticipation(){
+  String owner=id();Card c=funded(owner,100);c.hide();cards.save(c);
+  var team=credits.team(owner);assertThat((List<?>)team.get("campaigns")).hasSize(1);
+  assertThat(credits.end(owner,c.getId()).get("returned")).isEqualTo(100);
+  assertThat(credits.team(owner).get("balance")).isEqualTo(500);
+  assertThatThrownBy(()->credits.swipe(id(),c.getId(),"LEFT","")).isInstanceOf(CardNotFoundException.class);
+ }
+ @Test void hiddenInsightPreservesOperatorAccessAndRejectsOtherDevices(){
+  Card c=funded(id(),100);c.hide();cards.save(c);String operator=id();devices.getOrCreate(operator);
+  var op=deviceRepository.findById(operator).orElseThrow();op.becomeOperator();deviceRepository.save(op);
+  assertThat(credits.insight(operator,c.getId()).get("visible")).isEqualTo(true);
+  assertThat(credits.insight(operator,c.getId()).get("accepting")).isEqualTo(false);
+  assertThatThrownBy(()->credits.insight(id(),c.getId())).isInstanceOf(CardNotFoundException.class);
  }
  @Test void disabledDemoCannotIssueCredits(){
   CreditService disabled=new CreditService(db,cards,devices,false);

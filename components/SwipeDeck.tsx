@@ -8,7 +8,7 @@ import {prepareSamples,swipeIdea} from "@/app/credit-actions";
 import {Button} from "./ui/Button";
 import {Textarea} from "./ui/Textarea";
 
-export function SwipeDeck({initial}:{initial:Deck}){
+export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;requestedUnavailable?:boolean}){
  const [cards,setCards]=useState(initial.cards);const [balance,setBalance]=useState(initial.balance);const [choice,setChoice]=useState<"RIGHT"|"LEFT"|null>(null);
  const [reason,setReason]=useState("");const [error,setError]=useState("");const [notice,setNotice]=useState("");const [dx,setDx]=useState(0);const [pending,start]=useTransition();
  const pointer=useRef<{id:number;x:number;y:number}|null>(null);const dialog=useRef<HTMLDialogElement>(null);const router=useRouter();const card=cards[0];
@@ -18,6 +18,7 @@ export function SwipeDeck({initial}:{initial:Deck}){
  function samples(){setError("");start(async()=>{const r=await prepareSamples();if(!r.ok){setError(r.error);return;}setCards(r.data.cards);setBalance(r.data.balance);router.refresh();});}
  const valid=reason.replace(/\s/g,"").length>=10&&reason.length<=500;
  return <div className="px-5 pb-4">
+  {requestedUnavailable&&<p role="status" className="mb-4 rounded-xl bg-muted p-3 text-xs leading-6 text-muted-foreground">요청한 카드는 지금 참여할 수 없어요. 이미 참여했거나 모집·예산 준비가 끝난 카드일 수 있어요. 아래에서 다른 아이디어를 만나보세요.</p>}
   <div className="mb-4"><p className="mb-1 text-[9px] font-semibold tracking-wide text-primary">YOUR THOUGHTS, OUR NEIGHBORHOOD</p><div className="flex items-start justify-between"><h1 className="text-[24px] font-bold leading-[1.3] tracking-tight">동네의 다음 아이디어</h1><span className="mt-1 rounded-full bg-muted px-2.5 py-1.5 text-[11px] text-muted-foreground">월계1동</span></div><p className="mt-2 text-[11px] leading-5 text-muted-foreground">가볍게 넘기고, 생각을 더하고, 동네 혜택을 모아요.</p></div>
   <div className="mb-4 flex items-center justify-between rounded-xl bg-[var(--brand-soft)] px-3 py-3 text-[11px]"><span className="flex items-center gap-1.5 font-semibold text-primary"><Coins className="size-4"/>반응 10C · 이유까지 30C</span><span className="text-muted-foreground">긍정·부정 보상 동일</span></div>
   <div role="status" aria-live="polite" className={notice?"mb-3 rounded-xl border border-primary/20 bg-primary/5 p-3 text-xs text-primary":"sr-only"}>{notice||`내 잔액 ${balance}C`}</div>
