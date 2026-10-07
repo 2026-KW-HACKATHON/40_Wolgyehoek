@@ -59,6 +59,13 @@ jobs:
       DEMO_SEED: 'true'
     steps:
       - uses: actions/checkout@v4
+      - name: Validate public deployment configuration
+        env:
+          PUBLIC_DOMAIN: validation.example.org
+          ACME_EMAIL: operator@example.org
+        run: |
+          docker compose -f compose.yaml -f compose.public.yaml config --quiet
+          docker compose -f compose.yaml -f compose.public.yaml run --rm --no-deps caddy caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
       - run: docker compose up --build -d
       - name: Verify database, API and rendered web
         run: |

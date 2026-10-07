@@ -1,0 +1,30 @@
+# Use with: docker compose -f compose.yaml -f compose.public.yaml ...
+# The existing 3000/8080 bindings remain loopback-only; only HTTPS is public.
+services:
+  backend:
+    environment:
+      OPERATOR_CODE: ${OPERATOR_CODE:?Set a private OPERATOR_CODE for early closing}
+      DEMO_SEED: "false"
+  web:
+    environment:
+      COOKIE_SECURE: "true"
+    ports: !override
+      - "127.0.0.1:3000:3000"
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:?Set PUBLIC_DOMAIN to the public DNS hostname}
+      ACME_EMAIL: ${ACME_EMAIL:?Set ACME_EMAIL for certificate issuance}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+    restart: unless-stopped
+volumes:
+  caddy-data:
+  caddy-config:
