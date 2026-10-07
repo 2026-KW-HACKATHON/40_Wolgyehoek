@@ -69,4 +69,7 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 .credit-sheet::backdrop { background:rgb(15 15 20 / .5); backdrop-filter:blur(2px); }
 @keyframes pulse-ring { 0% { transform: scale(.6); opacity: .5; } 100% { transform: scale(1.6); opacity: 0; } }
 .pulse-ring { animation: pulse-ring 2.2s ease-out infinite; }
+/* WebKit은 backface-visibility를 무시할 때가 있어, 회전 절반(90°) 시점에 면을 바꾼다. */
+.flip-face { transition: visibility 0s linear 250ms; }
+@media (prefers-reduced-motion: reduce) { .flip-face { transition: none; } }
 @media(min-width:481px) { html { background:#f3f4f6; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }

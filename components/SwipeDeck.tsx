@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {useEffect,useRef,useState,useTransition} from "react";
 import {useRouter} from "next/navigation";
-import {Heart,Info,MapPin,RotateCcw,Users,X} from "lucide-react";
+import {ChevronRight,Heart,Info,MapPin,RotateCcw,X} from "lucide-react";
 import type {Deck,SwipeCard} from "@/lib/credits";
 import {prepareSamples,swipeIdea} from "@/app/credit-actions";
 import {Button} from "./ui/Button";
@@ -10,6 +10,7 @@ import {Textarea} from "./ui/Textarea";
 import {BrandMark} from "./BrandMark";
 import {CardBackdrop} from "./CardMedia";
 import {cn} from "@/lib/utils";
+import {cardSurface} from "@/lib/surface";
 
 function CardFront({card,index=0,onPick,playing=true}:{card:SwipeCard;index?:number;onPick?:(i:number)=>void;playing?:boolean}){
  const media=card.media??[];
@@ -18,20 +19,34 @@ function CardFront({card,index=0,onPick,playing=true}:{card:SwipeCard;index?:num
   {media.length>0&&<div aria-hidden="true" className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/35 to-transparent"/>}
   {media.length>1&&<div className="absolute inset-x-3 top-1 z-10 flex gap-1">{media.map((m,i)=><button key={m.id} type="button" tabIndex={onPick?0:-1} aria-label={`${i+1}번째 사진·영상`} aria-pressed={i===index} onClick={()=>onPick?.(i)} className="flex-1 py-2"><span className={cn("block h-1 rounded-full transition-colors",i===index?"bg-white":"bg-white/40")}/></button>)}</div>}
   <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/30 to-transparent"/>
-  <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+  <div className="absolute inset-x-0 bottom-0 p-6 pr-16 text-white">
    <p className="mb-2 flex items-center gap-1 text-sm font-semibold text-white/90"><MapPin className="size-4"/>{card.place||"월계1동"}</p>
    <h2 className="text-[30px] font-extrabold leading-[1.18] tracking-[-0.04em] [text-wrap:balance]">{card.title}</h2>
-   <p className="mt-2.5 line-clamp-3 text-[15px] leading-6 text-white/85">{card.body}</p>
-   {card.target&&<p className="mt-3 flex items-center gap-1.5 text-[13px] text-white/75"><Users className="size-4 shrink-0"/><span className="line-clamp-1">{card.target}</span></p>}
+   <p className="mt-2.5 line-clamp-2 text-[15px] leading-6 text-white/85">{card.body}</p>
   </div>
  </>;
+}
+
+function CardBack({card,onFlip}:{card:SwipeCard;onFlip:()=>void}){
+ const rows=[["대상",card.target],["장소",card.place],["기대 효과",card.effect],["제안",card.proposerName]].filter(([,v])=>v);
+ return <div className="absolute inset-0 flex flex-col bg-[#1d2129] text-white">
+  <div aria-hidden="true" className="absolute inset-x-0 top-0 h-40 opacity-60" style={{background:cardSurface(card.id),maskImage:"linear-gradient(to bottom,black,transparent)"}}/>
+  <div className="relative flex min-h-0 flex-1 flex-col p-6">
+   <div className="flex items-start gap-3"><h2 className="flex-1 text-[24px] font-extrabold leading-[1.25] tracking-[-0.04em]">{card.title}</h2><button type="button" onClick={onFlip} aria-label="앞면 보기" className="-mr-2 -mt-1 flex size-10 shrink-0 items-center justify-center rounded-full bg-white/15 hover:bg-white/25"><RotateCcw className="size-[18px]"/></button></div>
+   <p className="mt-4 min-h-0 flex-1 overflow-y-auto whitespace-pre-line text-[15px] leading-7 text-white/85">{card.body}</p>
+   <dl className="mt-4 divide-y divide-white/10 border-t border-white/10 text-sm">{rows.map(([k,v])=><div key={k} className="flex gap-4 py-2.5"><dt className="w-16 shrink-0 text-white/50">{k}</dt><dd className="min-w-0 flex-1 font-medium">{v}</dd></div>)}</dl>
+   <Link href={`/cards/${card.id}`} className="mt-4 flex h-12 items-center justify-center gap-1 rounded-full bg-white text-[15px] font-bold text-foreground">자세히 보기<ChevronRight className="size-4"/></Link>
+  </div>
+ </div>;
 }
 
 export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;requestedUnavailable?:boolean}){
  const [cards,setCards]=useState(initial.cards);const [balance,setBalance]=useState(initial.balance);const [choice,setChoice]=useState<"RIGHT"|"LEFT"|null>(null);
  const [reason,setReason]=useState("");const [error,setError]=useState("");const [notice,setNotice]=useState(requestedUnavailable?"이미 참여했거나 마감된 카드예요":"");const [dx,setDx]=useState(0);const [dragging,setDragging]=useState(false);const [pending,start]=useTransition();
- const [mediaPos,setMediaPos]=useState<{id:string;i:number}|null>(null);
- const pointer=useRef<{id:number;x:number;y:number}|null>(null);const dialog=useRef<HTMLDialogElement>(null);const router=useRouter();const card=cards[0];const next=cards[1];const mediaIndex=card&&mediaPos?.id===card.id?mediaPos.i:0;
+ const [flippedId,setFlippedId]=useState<string|null>(null);const [mediaPos,setMediaPos]=useState<{id:string;i:number}|null>(null);
+ const pointer=useRef<{id:number;x:number;y:number}|null>(null);const dialog=useRef<HTMLDialogElement>(null);const router=useRouter();const card=cards[0];const next=cards[1];
+ const flipped=!!card&&flippedId===card.id;const mediaIndex=card&&mediaPos?.id===card.id?mediaPos.i:0;
+ function flip(){if(card)setFlippedId(f=>f===card.id?null:card.id);}
  useEffect(()=>{if(choice&&!dialog.current?.open)dialog.current?.showModal();else if(!choice&&dialog.current?.open)dialog.current.close();},[choice]);
  useEffect(()=>{if(!notice)return;const t=setTimeout(()=>setNotice(""),2600);return()=>clearTimeout(t);},[notice]);
  function choose(direction:"RIGHT"|"LEFT"){if(!card||pending)return;setDx(0);setChoice(direction);setReason("");setError("");}
@@ -45,14 +60,21 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
    <div role="status" aria-live="polite" className={notice?"absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/75 px-4 py-2 text-sm font-bold text-white backdrop-blur":"sr-only"}>{notice||`내 잔액 ${balance}C`}</div>
    {!initial.enabled?<div className="flex h-full flex-col items-center justify-center text-center"><p className="text-lg font-bold">준비 중이에요</p></div>:card?<>
     {next&&<div aria-hidden="true" className="absolute inset-0 overflow-hidden rounded-[22px] transition-transform duration-200" style={{transform:`scale(${0.94+lean*0.06}) translateY(${(1-lean)*14}px)`}}><CardFront card={next} playing={false}/></div>}
-    <article tabIndex={0} aria-label={`${card.title}, 왼쪽은 패스, 오른쪽은 관심`} className={cn("swipe-card absolute inset-0 overflow-hidden rounded-[22px] shadow-float outline-offset-4",!dragging&&"transition-transform duration-300 ease-out")} style={{transform:`translateX(${dx}px) rotate(${dx/18}deg)`}} onKeyDown={e=>{if(e.key==="ArrowLeft"){e.preventDefault();choose("LEFT");}if(e.key==="ArrowRight"){e.preventDefault();choose("RIGHT");}}}
+    <article tabIndex={0} aria-label={`${card.title}, 왼쪽은 패스, 오른쪽은 관심, 엔터는 뒤집기`} className={cn("swipe-card absolute inset-0 rounded-[22px] shadow-float outline-offset-4 perspective-[1400px]",!dragging&&"transition-transform duration-300 ease-out")} style={{transform:`translateX(${dx}px) rotate(${dx/18}deg)`}} onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==="ArrowLeft"){e.preventDefault();choose("LEFT");}if(e.key==="ArrowRight"){e.preventDefault();choose("RIGHT");}if(e.key==="Enter"||e.key===" "){e.preventDefault();flip();}}}
      onPointerDown={e=>{if((e.target as HTMLElement).closest("a,button")||pending||choice)return;pointer.current={id:e.pointerId,x:e.clientX,y:e.clientY};setDragging(true);e.currentTarget.setPointerCapture(e.pointerId);}}
      onPointerMove={e=>{const p=pointer.current;if(!p||p.id!==e.pointerId)return;const delta=e.clientX-p.x;if(Math.abs(e.clientY-p.y)>Math.abs(delta)+15){release();return;}setDx(Math.max(-160,Math.min(160,delta)));}}
-     onPointerUp={e=>{const p=pointer.current;release();if(p&&Math.abs(e.clientX-p.x)>75&&Math.abs(e.clientX-p.x)>Math.abs(e.clientY-p.y))choose(e.clientX>p.x?"RIGHT":"LEFT");}} onPointerCancel={release}>
-     <CardFront card={card} index={mediaIndex} onPick={i=>setMediaPos({id:card.id,i})}/>
-     <span aria-hidden="true" className="absolute left-6 top-8 z-10 -rotate-[18deg] rounded-xl border-[5px] border-[var(--like)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--like)]" style={{opacity:dx>0?lean:0}}>관심</span>
-     <span aria-hidden="true" className="absolute right-6 top-8 z-10 rotate-[18deg] rounded-xl border-[5px] border-[var(--nope)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--nope)]" style={{opacity:dx<0?lean:0}}>패스</span>
-     <Link href={`/cards/${card.id}`} aria-label="자세히 보기" className="absolute bottom-6 right-5 z-10 flex size-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition-colors hover:bg-white/30"><Info className="size-5"/></Link>
+     onPointerUp={e=>{const p=pointer.current;release();if(!p)return;if(Math.hypot(e.clientX-p.x,e.clientY-p.y)<6){flip();return;}if(Math.abs(e.clientX-p.x)>75&&Math.abs(e.clientX-p.x)>Math.abs(e.clientY-p.y))choose(e.clientX>p.x?"RIGHT":"LEFT");}} onPointerCancel={release}>
+     <div className={cn("relative size-full transform-3d transition-transform duration-500 ease-in-out motion-reduce:transition-none",flipped&&"rotate-y-180")}>
+      <div aria-hidden={flipped} className={cn("flip-face absolute inset-0 overflow-hidden rounded-[22px] backface-hidden",flipped&&"invisible")}>
+       <CardFront card={card} index={mediaIndex} onPick={i=>setMediaPos({id:card.id,i})}/>
+       <span aria-hidden="true" className="absolute left-6 top-8 z-10 -rotate-[18deg] rounded-xl border-[5px] border-[var(--like)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--like)]" style={{opacity:dx>0?lean:0}}>관심</span>
+       <span aria-hidden="true" className="absolute right-6 top-8 z-10 rotate-[18deg] rounded-xl border-[5px] border-[var(--nope)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--nope)]" style={{opacity:dx<0?lean:0}}>패스</span>
+       <button type="button" onClick={flip} tabIndex={flipped?-1:0} aria-label="뒷면 보기" className="absolute bottom-6 right-5 z-10 flex size-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition-colors hover:bg-white/30"><Info className="size-5"/></button>
+      </div>
+      <div aria-hidden={!flipped} inert={!flipped} className={cn("flip-face absolute inset-0 overflow-hidden rounded-[22px] backface-hidden rotate-y-180",!flipped&&"invisible")}>
+       <CardBack card={card} onFlip={flip}/>
+      </div>
+     </div>
     </article>
    </>:<div className="flex h-full flex-col items-center justify-center text-center">
     <div className="relative mb-8 flex size-28 items-center justify-center"><span aria-hidden="true" className="pulse-ring absolute inset-0 rounded-full bg-primary/30 motion-reduce:hidden"/><span className="bg-brand relative flex size-24 items-center justify-center rounded-full text-white shadow-float"><BrandMark className="size-11"/></span></div>
