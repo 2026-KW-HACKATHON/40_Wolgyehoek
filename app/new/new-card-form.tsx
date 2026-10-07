@@ -35,28 +35,25 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
   return (
     <div className="space-y-8">
       {!parent && (
-        <section className="rounded-2xl border border-border/80 bg-white p-5 ">
-          <label htmlFor="text" className="mb-2 block text-sm font-medium">1. 아이디어를 자유롭게 적어 주세요</label>
-          <Textarea id="text" value={text} onChange={(e) => setText(e.target.value)} rows={5} placeholder="예) 광운로 공터에서 주말마다 주민 플리마켓을 열면 좋겠어요." className={inputCls} />
-          <div className="mt-3 flex items-center gap-3">
-            <Button type="button" onClick={runDraft} disabled={pending || text.trim().length < 10} className={btnSecondary}>
-              {pending ? "정리하는 중…" : "초안으로 정리하기"}
-            </Button>
-            {draftError && <p className="text-sm text-[var(--stop-fg)]">{draftError}</p>}
-          </div>
+        <section>
+          <label htmlFor="text" className="sr-only">아이디어</label>
+          <Textarea id="text" value={text} onChange={(e) => setText(e.target.value)} rows={6} placeholder="우리 동네에 이런 게 있다면?" className={`${inputCls} rounded-[22px] p-5 text-[17px] leading-7`} />
+          <Button type="button" onClick={runDraft} disabled={pending || text.trim().length < 10} className={`${draft ? btnSecondary : btnPrimary} mt-3 w-full`}>
+            {pending ? "정리하는 중…" : draft ? "다시 정리하기" : "카드로 만들기"}
+          </Button>
+          {draftError && <p className="mt-2 text-sm text-[var(--stop-fg)]">{draftError}</p>}
         </section>
       )}
 
       {similar.length > 0 && (
-        <section className="rounded-lg bg-subtle p-5 ring-line">
-          <h2 className="text-sm font-semibold">비슷한 과거 카드가 있어요</h2>
-          <p className="mt-1 text-sm text-ink-2">같은 내용이면 기존 카드에 반응을 더하거나, 멈춘 카드를 이어받을 수 있어요.</p>
-          <ul className="mt-3 space-y-2">
+        <section>
+          <h2 className="mb-2 text-lg font-extrabold tracking-tight">비슷한 카드</h2>
+          <ul className="divide-y divide-border">
             {similar.map((s) => (
-              <li key={s.id} className="flex items-center gap-3 rounded-md bg-white px-3 py-2.5 ring-line">
+              <li key={s.id} className="flex items-center gap-3 py-3">
                 <StatusBadge status={s.status} />
-                <Link href={`/cards/${s.id}`} className="flex-1 text-sm font-medium hover:underline">{s.title}</Link>
-                <span className="tnum font-mono text-[12px] text-ink-3">반응 {s.reactionCount}</span>
+                <Link href={`/cards/${s.id}`} className="min-w-0 flex-1 truncate text-[15px] font-bold hover:text-primary">{s.title}</Link>
+                <span className="tnum shrink-0 text-xs text-[var(--text-4)]">반응 {s.reactionCount}</span>
               </li>
             ))}
           </ul>
@@ -64,39 +61,39 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
       )}
 
       {draft && (
-        <form onSubmit={onSubmit} className="space-y-5 rounded-2xl border border-primary/20 bg-white p-5 ">
+        <form onSubmit={onSubmit} className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium">{parent ? "이어받을 카드 내용" : "2. 정리된 초안을 확인하고 고쳐 주세요"}</h2>
-            <span className="font-mono text-[11px] uppercase tracking-wider text-ink-3">{draft.source === "llm" ? "AI 초안 · 확인 필요" : draft.source === "rule" ? "자동 정리 · 확인 필요" : "원본 연결"}</span>
+            <h2 className="text-lg font-extrabold tracking-tight">{parent ? "새 카드" : "초안"}</h2>
+            <span className="rounded-full bg-muted px-2.5 py-1 text-[11px] font-bold text-muted-foreground">{draft.source === "llm" ? "AI" : draft.source === "rule" ? "자동" : "원본 연결"}</span>
           </div>
           {parent && <input type="hidden" name="parentId" value={parent.id} />}
           <Field label="제목" name="title" defaultValue={draft.title} required />
           <div className="space-y-1.5">
-            <label htmlFor="body" className="block text-sm font-medium">아이디어 원문</label>
+            <label htmlFor="body" className="block text-sm font-semibold text-muted-foreground">내용</label>
             <Textarea id="body" name="body" defaultValue={text} rows={4} className={inputCls} required />
           </div>
-          <div className="grid gap-4 ">
+          <div className="grid gap-4">
             <Field label="대상" name="target" defaultValue={draft.target} />
             <Field label="장소" name="place" defaultValue={draft.place} />
             <Field label="기대 효과" name="effect" defaultValue={draft.effect} />
           </div>
           {parent && (
             <div className="space-y-1.5">
-              <label htmlFor="takeoverNote" className="block text-sm font-medium">멈춘 사유에 대해 무엇이 달라졌나요? (필수)</label>
+              <label htmlFor="takeoverNote" className="block text-sm font-semibold text-muted-foreground">달라진 점</label>
               <Textarea id="takeoverNote" name="takeoverNote" rows={2} placeholder="예) 광운대 학생팀이 운영을 맡습니다." className={inputCls} required />
             </div>
           )}
           <div className="space-y-1.5">
-            <label htmlFor="weeks" className="block text-sm font-medium">검증 기간</label>
-            <select id="weeks" name="weeks" defaultValue="2" className={inputCls}>
+            <label htmlFor="weeks" className="block text-sm font-semibold text-muted-foreground">기간</label>
+            <select id="weeks" name="weeks" defaultValue="2" className={`${inputCls} appearance-none`}>
               {[1, 2, 3, 4, 6, 8].map((w) => (
                 <option key={w} value={w}>{w}주</option>
               ))}
             </select>
           </div>
           <FormMessage state={state} />
-          <Button type="submit" disabled={publishing} className={`${btnPrimary} w-full `}>
-            {publishing ? "게시하는 중…" : parent ? "이어받아 다시 검증 시작" : "검증 카드 게시"}
+          <Button type="submit" size="lg" disabled={publishing} className="w-full">
+            {publishing ? "게시하는 중…" : parent ? "이어받기" : "게시"}
           </Button>
         </form>
       )}
@@ -107,7 +104,7 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
 function Field({ label, name, defaultValue, required }: { label: string; name: string; defaultValue: string; required?: boolean }) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={name} className="block text-sm font-medium">{label}</label>
+      <label htmlFor={name} className="block text-sm font-semibold text-muted-foreground">{label}</label>
       <Input id={name} name={name} defaultValue={defaultValue} required={required} className={inputCls} />
     </div>
   );

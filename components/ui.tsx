@@ -7,13 +7,13 @@ const STATUS_VARIANT: Record<CardStatus, BadgeProps["variant"]> = {
   open: "info", closed: "outline", go: "success", hold: "warning", stop: "destructive", stale: "default",
 };
 export function StatusBadge({ status }: { status: CardStatus }) {
-  return <Badge variant={STATUS_VARIANT[status]} className="text-xs">{STATUS_LABELS[status]}</Badge>;
+  return <Badge variant={STATUS_VARIANT[status]} className="shrink-0 px-2 py-0.5 text-[11px] font-bold">{STATUS_LABELS[status]}</Badge>;
 }
-export function Pill({ children }: { children: React.ReactNode }) { return <Badge className="text-xs">{children}</Badge>; }
+export function Pill({ children }: { children: React.ReactNode }) { return <Badge className="px-2 py-0.5 text-[11px] font-bold">{children}</Badge>; }
 
 export function Disclaimer({ total }: { total?: number }) {
   return (
-    <p className="rounded-md bg-subtle px-3 py-2 font-mono text-[12px] leading-5 text-ink-3 ring-line">
+    <p className="text-xs leading-5 text-ink-3">
       {typeof total === "number" && <span className="tnum mr-2 text-ink">참여 {total}명</span>}
       {DISCLAIMER}
     </p>
@@ -21,11 +21,11 @@ export function Disclaimer({ total }: { total?: number }) {
 }
 
 export function ButtonLink({ href, children, variant = "primary" }: { href: string; children: React.ReactNode; variant?: "primary" | "secondary" }) {
-  return <Button asChild variant={variant === "primary" ? "default" : "outline"} size="lg" className="h-11 rounded-xl px-4 text-sm"><Link href={href}>{children}</Link></Button>;
+  return <Button asChild variant={variant === "primary" ? "default" : "soft"} className="h-12 px-6 text-[15px]"><Link href={href}>{children}</Link></Button>;
 }
-export const btnPrimary = "h-11 rounded-xl px-4 text-sm";
-export const btnSecondary = "h-11 rounded-xl border border-input bg-background px-4 text-sm text-foreground hover:bg-accent";
-export const inputCls = "w-full min-h-11 rounded-lg border border-input bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring";
+export const btnPrimary = "h-12 px-6 text-[15px] font-bold";
+export const btnSecondary = "h-12 bg-none bg-muted px-6 text-[15px] text-foreground hover:bg-[#e9ebee]";
+export const inputCls = "w-full min-h-12 rounded-2xl border-0 bg-muted px-4 py-3 text-base text-foreground placeholder:text-[var(--text-4)] focus-visible:ring-2 focus-visible:ring-primary";
 
 export function FormMessage({ state }: { state: { ok: boolean; error?: string; message?: string } | null }) {
   if (!state || (!state.error && !state.message)) return null;
@@ -38,8 +38,8 @@ export function FormMessage({ state }: { state: { ok: boolean; error?: string; m
 
 export function SectionTitle({ children, sub }: { children: React.ReactNode; sub?: React.ReactNode }) {
   return (
-    <div className="mb-4 flex items-end justify-between gap-3">
-      <h2 className="text-xl font-semibold tracking-[-0.02em]">{children}</h2>
+    <div className="mb-3 flex items-center justify-between gap-3">
+      <h2 className="text-lg font-extrabold tracking-[-0.02em]">{children}</h2>
       {sub && <div className="text-sm text-ink-3">{sub}</div>}
     </div>
   );

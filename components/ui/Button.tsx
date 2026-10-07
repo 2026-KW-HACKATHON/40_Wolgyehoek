@@ -10,22 +10,23 @@ import { cn } from "@/lib/utils"
 
 
 const buttonVariants = cva(
-  "min-h-11 inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-md text-base font-medium transition-[color,background-color,border-color,box-shadow,transform] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "min-h-11 inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full text-base font-semibold transition-[color,background-color,border-color,box-shadow,transform] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90",
+          "bg-[image:var(--brand-gradient)] text-primary-foreground hover:brightness-105",
         destructive:
           "bg-destructive text-[var(--destructive-on-solid)] hover:bg-destructive/90",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        soft: "bg-muted text-foreground hover:bg-[#e9ebee]",
         ghost: "hover:bg-accent hover:text-accent-foreground",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-sm",
-        lg: "h-12 rounded-md px-8 [&_svg]:size-5",
+        default: "h-11 px-5 py-2",
+        sm: "h-9 px-4 text-sm",
+        lg: "h-14 px-8 text-[17px] font-bold [&_svg]:size-5",
       },
       active: {
         true: "",

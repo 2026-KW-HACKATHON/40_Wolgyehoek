@@ -72,7 +72,7 @@ jobs:
         run: |
           curl --retry 30 --retry-delay 2 --retry-connrefused --retry-all-errors --fail http://localhost:8080/api/health
           curl --retry 30 --retry-delay 2 --retry-connrefused --retry-all-errors --fail http://localhost:3000/ > /tmp/home.html
-          python3 -c 'from pathlib import Path; s = Path("/tmp/home.html").read_text(); assert "동네의 다음 아이디어" in s and "화면을 불러오지 못했어요" not in s'
+          python3 -c 'from pathlib import Path; s = Path("/tmp/home.html").read_text(); assert "주 메뉴" in s and "동네서랍" in s and "문제가 생겼어요" not in s'
       - run: docker compose logs --tail 100
         if: always()
       - run: docker compose down
