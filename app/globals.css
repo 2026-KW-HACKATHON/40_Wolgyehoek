@@ -2,24 +2,24 @@
 
 /* Jangkki neutral palette, semantic colors, control sizes; see docs/UI-PORT.md. */
 :root {
-  --background: #fff8f0; --foreground: #2b1a10; --card: #fff8f0; --card-foreground: #2b1a10;
-  --border: #f1dcc4; --muted: #fdecd8; --muted-foreground: #7c5a43; --field-bg: #fdecd8;
-  --primary: #ec5b13; --primary-foreground: #fff;
+  --background: #ffffff; --foreground: #212124; --card: #ffffff; --card-foreground: #212124;
+  --border: #eaebee; --muted: #f2f3f6; --muted-foreground: #4d5159; --field-bg: #f2f3f6;
+  --primary: #ff6f0f; --primary-foreground: #fff;
   --primary-hover: color-mix(in oklab, var(--primary) 86%, black);
   --accent: #f2f4f6; --accent-foreground: #191f28;
-  --input: #efd6bb; --ring: #ec5b13; --destructive: #c42b1c; --destructive-on-solid: #fff;
-  --destructive-surface: #fdecea; --destructive-foreground: #c42b1c;
-  --success: #e3f5e9; --success-foreground: #1f7a45;
-  --warning: #fff1d6; --warning-foreground: #a15c00; --info: #e6f4ea; --info-foreground: #2f7a47;
-  --shell-frame-bg: #fff8f0;
+  --input: #dcdee3; --ring: #ff6f0f; --destructive: #fa2314; --destructive-on-solid: #fff;
+  --destructive-surface: #fff0ef; --destructive-foreground: #e0190b;
+  --success: #e6f6f0; --success-foreground: #138860;
+  --warning: #fff1d6; --warning-foreground: #a15c00; --info: #e5f5fd; --info-foreground: #0080c2;
+  --shell-frame-bg: #ffffff;
   --surface: var(--background); --surface-subtle: var(--muted); --text: var(--foreground);
-  --text-2: var(--muted-foreground); --text-3: #9a7660; --text-4: #b8957c;
-  --divider: var(--border); --link: #ec5b13; --focus: var(--primary);
+  --text-2: var(--muted-foreground); --text-3: #868b94; --text-4: #adb1ba;
+  --divider: var(--border); --link: #ff6f0f; --focus: var(--primary);
   --badge-bg: var(--info); --badge-fg: var(--info-foreground);
   --go-bg: var(--success); --go-fg: var(--success-foreground);
   --hold-bg: var(--warning); --hold-fg: var(--warning-foreground);
   --stop-bg: var(--destructive-surface); --stop-fg: var(--destructive-foreground);
-  --step-1: #b8957c; --step-2: #4f9a5b; --step-3: #f5a623; --step-4: #ec5b13;
+  --step-1: #adb1ba; --step-2: #009ceb; --step-3: #1aa174; --step-4: #ff6f0f;
   --shadow-ring: 0 0 0 1px var(--border);
   --shadow-card: var(--shadow-ring); --shadow-featured: var(--shadow-ring);
 }
@@ -46,19 +46,19 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 
 /* Service identity: tangerine-to-persimmon gradient on warm cream paper, swipe-first layout. */
 :root {
-  --brand-gradient: linear-gradient(135deg, #ff9a3c 0%, #ec5b13 100%);
-  --like: #23a05f; --nope: #e5484d;
-  --brand-deep: #c2410c;
-  --brand-paper: #fff1e2;
-  --brand-paper-border: #f5d7b8;
-  --brand-highlight: #ffd9ad;
-  --brand-mist: #ffe2c4;
-  --brand-soft: #fff0df;
-  --muted-hover: #fbdfc0;
-  --card-back: #33170a;
-  --shadow-float: 0 2px 6px rgb(140 60 10 / .08), 0 12px 30px rgb(140 60 10 / .16);
+  --brand-gradient: linear-gradient(#ff6f0f, #ff6f0f);
+  --like: #ff6f0f; --nope: #4d5159;
+  --brand-deep: #e14d00;
+  --brand-paper: #fff5f0;
+  --brand-paper-border: #ffd9c2;
+  --brand-highlight: #ffe2d2;
+  --brand-mist: #ffe2d2;
+  --brand-soft: #fff5f0;
+  --muted-hover: #eaebee;
+  --card-back: #212124;
+  --shadow-float: 0 5px 10px rgb(0 0 0 / .05), 0 15px 25px rgb(0 0 0 / .07);
 }
-.card-scrim { background: linear-gradient(to top, rgb(74 24 4 / .8) 0%, rgb(74 24 4 / .35) 45%, transparent 100%); }
+.card-scrim { background: linear-gradient(to top, rgb(0 0 0 / .72) 0%, rgb(0 0 0 / .3) 45%, transparent 100%); }
 @utility bg-brand { background-image: var(--brand-gradient); }
 @utility text-brand { background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @utility shadow-float { box-shadow: var(--shadow-float); }
@@ -79,4 +79,4 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 /* WebKit은 backface-visibility를 무시할 때가 있어, 회전 절반(90°) 시점에 면을 바꾼다. */
 .flip-face { transition: visibility 0s linear 250ms; }
 @media (prefers-reduced-motion: reduce) { .flip-face { transition: none; } }
-@media(min-width:481px) { html { background:#f8e4cc; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }
+@media(min-width:481px) { html { background:#f2f3f6; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }

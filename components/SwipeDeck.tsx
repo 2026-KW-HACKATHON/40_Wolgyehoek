@@ -82,8 +82,8 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
      <div className={cn("relative size-full transform-3d transition-transform duration-500 ease-in-out motion-reduce:transition-none",flipped&&"rotate-y-180")}>
       <div aria-hidden={flipped} className={cn("flip-face absolute inset-0 overflow-hidden rounded-[22px] backface-hidden",flipped&&"invisible")}>
        <CardFront card={card} index={mediaIndex} onPick={i=>setMediaPos({id:card.id,i})}/>
-       <span aria-hidden="true" className="absolute left-6 top-8 z-10 -rotate-[18deg] rounded-xl border-[5px] border-[var(--like)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--like)]" style={{opacity:dx>0?lean:0}}>함께</span>
-       <span aria-hidden="true" className="absolute right-6 top-8 z-10 rotate-[18deg] rounded-xl border-[5px] border-[var(--nope)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--nope)]" style={{opacity:dx<0?lean:0}}>패스</span>
+       <span aria-hidden="true" className="absolute left-6 top-8 z-10 -rotate-[18deg] rounded-xl border-[5px] bg-white border-[var(--like)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--like)]" style={{opacity:dx>0?lean:0}}>함께</span>
+       <span aria-hidden="true" className="absolute right-6 top-8 z-10 rotate-[18deg] rounded-xl border-[5px] bg-white border-[var(--nope)] px-3 py-1 text-[34px] font-black tracking-tight text-[var(--nope)]" style={{opacity:dx<0?lean:0}}>패스</span>
        <button type="button" onClick={flip} tabIndex={flipped?-1:0} aria-label="뒷면 보기" className="absolute bottom-6 right-5 z-10 flex size-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur transition-colors hover:bg-white/30"><Info className="size-5"/></button>
       </div>
       <div aria-hidden={!flipped} inert={!flipped} className={cn("flip-face absolute inset-0 overflow-hidden rounded-[22px] backface-hidden rotate-y-180",!flipped&&"invisible")}>
@@ -117,7 +117,7 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
    <Button variant="ghost" disabled={pending} onClick={()=>submit(false)} className="mt-1 h-12 w-full text-[15px] text-muted-foreground">그냥 넘기기 +10C</Button>
   </dialog>
   {celebrate&&<div role="dialog" aria-modal="true" aria-labelledby="success-title" className="bg-brand fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden px-8 text-center text-white">
-   {Array.from({length:18},(_,i)=><span key={i} aria-hidden="true" className="confetti absolute top-0 block h-3 w-2 rounded-sm" style={{left:`${(i*53)%100}%`,background:["#fff","#ffe066","#ffd0a8","#c8e6b0"][i%4],animationDelay:`${(i*0.17)%1.6}s`}}/>)}
+   {Array.from({length:18},(_,i)=><span key={i} aria-hidden="true" className="confetti absolute top-0 block h-3 w-2 rounded-sm" style={{left:`${(i*53)%100}%`,background:["#fff","#ffe2d2","#ffc39e","#212124"][i%4],animationDelay:`${(i*0.17)%1.6}s`}}/>)}
    <PartyPopper aria-hidden="true" className="pop-in size-14"/>
    <h2 id="success-title" className="pop-in mt-4 text-[64px] font-black leading-none tracking-[-0.05em]">성사!</h2>
    <p className="mt-5 text-xl font-extrabold [text-wrap:balance]">{celebrate.title}</p>

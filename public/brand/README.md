@@ -7,6 +7,6 @@
 | `mark.svg` | 살구·주황 그라데이션 둥근 사각형 위에 흰 서랍과 하트 카드 | 헤더 로고(`components/BrandMark.tsx`의 `BrandLogo`), 파비콘(`app/icon.tsx`) |
 | `glyph.svg` | 배경 없는 흰 서랍과 하트 카드 | 카드 워터마크·빈 화면(`BrandMark`), 홈 화면 아이콘(`app/apple-icon.tsx`, 그라데이션 위에 합성) |
 
-- 그라데이션: `#ff9a3c → #ec5b13` (135°, 귤 → 감). 앱의 `--brand-gradient`와 같은 값이다.
+- 색: 당근 오렌지 `#ff6f0f` 단색. 앱의 `--primary`·`--brand-gradient`와 같은 값이다.
 - 그리드: 64×64. 두 파일의 서랍·카드 도형은 같은 좌표를 쓴다. 한쪽을 고치면 다른 쪽도 맞춘다.
 - 워드마크는 이미지가 아니라 Pretendard 900 텍스트에 같은 그라데이션을 입혀 쓴다.

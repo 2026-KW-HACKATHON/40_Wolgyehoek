@@ -3,7 +3,7 @@
 현재 제품은 모바일 카드 참여 서비스다. [모바일 크레딧 흐름](docs/MOBILE-CREDITS.md)이 현재 화면과 참여 정책의 기준이다. 장끼의 실제 UI 컴포넌트 재사용 기록은 [UI-PORT.md](docs/UI-PORT.md)에 남긴다.
 
 - 모든 경로는 최대 480px 모바일 캔버스다. 데스크톱에도 동일한 화면과 하단 메뉴를 제공한다.
-- Pretendard(굵은 제목 800~900), 흰 본문, 크림 바탕(`--background: #fff8f0`)에 귤→감 그라데이션 `--brand-gradient`(`#ff9a3c → #ec5b13`)와 주황 `--primary: #ec5b13`, 함께해요 `--like`·패스 `--nope`를 사용한다. 카드 배경은 감·노을·홍시·꿀·단풍의 선명한 그라데이션(`lib/surface.ts`)이고, 글자 아래는 검정이 아닌 짙은 적갈색 그림자(`.card-scrim`)로 받친다. 회색이 섞인 갈색·흰 광택 등 색을 탁하게 만드는 처리는 쓰지 않는다. 색은 의미 토큰으로 관리한다.
+- 색은 당근 SEED 디자인 시스템의 조합을 따른다. 흰 바탕(`#ffffff`), 글자 `#212124`, 보조 글자 `#4d5159`·`#868b94`, 구분선 `#eaebee`, 면 `#f2f3f6`, 강조는 당근 오렌지 `--primary: #ff6f0f` 하나다. 그라데이션 없이 오렌지를 단색으로 쓰고, 주 버튼·활성 상태·함께해요(`--like`)에만 아낀다. 카드 배경(`lib/surface.ts`)은 오렌지와 회색 계열, 글자 아래는 중립 검정 그림자(`.card-scrim`)다. 근거: [SEED](https://seed-design.io/), [daangn/seed-design](https://github.com/daangn/seed-design).
 - 카드는 화면을 채우는 그라데이션 표면(`lib/surface.ts`)에 흰 글씨를 올리고, 안내 문구는 동작에 꼭 필요한 것만 둔다. 하단 메뉴는 아이콘만 표시하고 이름은 접근성 레이블로 제공한다.
 - 장끼 Button/Input/Textarea/Badge/Card/Tabs의 구현을 공용 정본으로 사용한다. 주 액션, outline, ghost, destructive의 위계를 유지한다.
 - 첫 화면은 카드 한 장과 관심/패스 버튼이다. 가로 스와이프·좌우 키보드·버튼으로 같은 선택 창을 연다. 세로 드래그는 긴 카드의 읽기를 허용한다.
