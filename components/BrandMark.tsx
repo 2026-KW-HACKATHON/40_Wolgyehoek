@@ -1,10 +1,11 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+// 원본: public/brand/*.svg (설명은 public/brand/README.md)
 export function BrandMark({ className }: { className?: string }) {
-  return <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" className={cn("size-8 shrink-0", className)}>
-    <path d="M5 7.5h22v18H5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-    <path d="M3 4.5h26v6H3z" fill="currentColor" />
-    <path d="M12 16h8M5 21h22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    <path d="M13 25.5v3m6-3v3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-  </svg>;
+  return <Image src="/brand/glyph.svg" alt="" aria-hidden="true" width={64} height={64} unoptimized className={cn("size-8 shrink-0 select-none", className)} draggable={false} />;
+}
+
+export function BrandLogo({ className }: { className?: string }) {
+  return <Image src="/brand/mark.svg" alt="" aria-hidden="true" width={64} height={64} unoptimized priority className={cn("size-8 shrink-0", className)} />;
 }

@@ -15,7 +15,7 @@ function CardFace({card}:{card:SwipeCard}){
  return <>
   <div aria-hidden="true" className="absolute inset-0" style={{background:cardSurface(card.id)}}/>
   <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgb(255_255_255/.28),transparent_45%)]"/>
-  <BrandMark className="pointer-events-none absolute -right-12 top-10 size-72 rotate-[14deg] text-white/[0.07]"/>
+  <BrandMark className="pointer-events-none absolute -right-12 top-10 size-72 rotate-[14deg] opacity-[0.12]"/>
   <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/70 via-black/30 to-transparent"/>
   <div className="absolute inset-x-0 bottom-0 p-6 text-white">
    <p className="mb-2 flex items-center gap-1 text-sm font-semibold text-white/90"><MapPin className="size-4"/>{card.place||"월계1동"}</p>
