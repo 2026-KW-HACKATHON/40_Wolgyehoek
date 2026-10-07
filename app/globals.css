@@ -2,24 +2,24 @@
 
 /* Jangkki neutral palette, semantic colors, control sizes; see docs/UI-PORT.md. */
 :root {
-  --background: #fff; --foreground: #21262e; --card: #fff; --card-foreground: #21262e;
-  --border: #e9ebee; --muted: #f3f4f6; --muted-foreground: #656e7b; --field-bg: #f3f4f6;
-  --primary: #fe3c72; --primary-foreground: #fff;
+  --background: #fffaf3; --foreground: #2d2219; --card: #fffaf3; --card-foreground: #2d2219;
+  --border: #ecdfcf; --muted: #f5ecdf; --muted-foreground: #75665a; --field-bg: #f5ecdf;
+  --primary: #d9622b; --primary-foreground: #fff;
   --primary-hover: color-mix(in oklab, var(--primary) 86%, black);
   --accent: #f2f4f6; --accent-foreground: #191f28;
-  --input: #e5e8eb; --ring: #fe3c72; --destructive: #c42b1c; --destructive-on-solid: #fff;
+  --input: #e6d9c8; --ring: #d9622b; --destructive: #c42b1c; --destructive-on-solid: #fff;
   --destructive-surface: #fdecea; --destructive-foreground: #c42b1c;
   --success: #e9f8ef; --success-foreground: #0a7f3f;
-  --warning: #fff4d6; --warning-foreground: #8a5a00; --info: #ebf5ff; --info-foreground: #0068d6;
-  --shell-frame-bg: #fff;
+  --warning: #fff4d6; --warning-foreground: #8a5a00; --info: #eaf2e3; --info-foreground: #4d7a3a;
+  --shell-frame-bg: #fffaf3;
   --surface: var(--background); --surface-subtle: var(--muted); --text: var(--foreground);
-  --text-2: var(--muted-foreground); --text-3: #7c8591; --text-4: #a3aab4;
-  --divider: var(--border); --link: #fe3c72; --focus: var(--primary);
+  --text-2: var(--muted-foreground); --text-3: #8a7a6c; --text-4: #ab9c8d;
+  --divider: var(--border); --link: #d9622b; --focus: var(--primary);
   --badge-bg: var(--info); --badge-fg: var(--info-foreground);
   --go-bg: var(--success); --go-fg: var(--success-foreground);
   --hold-bg: var(--warning); --hold-fg: var(--warning-foreground);
   --stop-bg: var(--destructive-surface); --stop-fg: var(--destructive-foreground);
-  --step-1: #a3aab4; --step-2: #4f8cff; --step-3: #ff9f1c; --step-4: #fe3c72;
+  --step-1: #ab9c8d; --step-2: #6f8f5c; --step-3: #e0a03a; --step-4: #d9622b;
   --shadow-ring: 0 0 0 1px var(--border);
   --shadow-card: var(--shadow-ring); --shadow-featured: var(--shadow-ring);
 }
@@ -44,17 +44,17 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 .ring-card, .ring-featured, .ring-line { box-shadow: var(--shadow-ring); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; } }
 
-/* Service identity: one coral gradient, neutral surfaces, swipe-first layout. */
+/* Service identity: warm apricot-to-terracotta gradient on beige paper, swipe-first layout. */
 :root {
-  --brand-gradient: linear-gradient(135deg, #fd267a 0%, #ff6036 100%);
-  --like: #12c98a; --nope: #ff4458;
-  --brand-deep: #e8235f;
-  --brand-paper: #f7f8fa;
-  --brand-paper-border: #e9ebee;
-  --brand-highlight: #ffd5df;
-  --brand-mist: #ffe3ea;
-  --brand-soft: #fff1f4;
-  --shadow-float: 0 2px 6px rgb(33 38 46 / .06), 0 10px 28px rgb(33 38 46 / .10);
+  --brand-gradient: linear-gradient(135deg, #f29a4a 0%, #d9572b 100%);
+  --like: #3e9b63; --nope: #d64f3a;
+  --brand-deep: #b54b25;
+  --brand-paper: #fff4e6;
+  --brand-paper-border: #efd8c5;
+  --brand-highlight: #ffe0b2;
+  --brand-mist: #ffe4ce;
+  --brand-soft: #fdeedd;
+  --shadow-float: 0 2px 6px rgb(73 45 20 / .06), 0 10px 28px rgb(73 45 20 / .12);
 }
 @utility bg-brand { background-image: var(--brand-gradient); }
 @utility text-brand { background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -66,7 +66,7 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 .swipe-card { user-select:none; cursor:grab; touch-action: pan-y; }
 .swipe-card:active { cursor:grabbing; }
 .credit-sheet { margin: auto auto 0; max-height:calc(100dvh - 32px); overflow-y:auto; }
-.credit-sheet::backdrop { background:rgb(15 15 20 / .5); backdrop-filter:blur(2px); }
+.credit-sheet::backdrop { background:rgb(40 25 15 / .5); backdrop-filter:blur(2px); }
 @keyframes pulse-ring { 0% { transform: scale(.6); opacity: .5; } 100% { transform: scale(1.6); opacity: 0; } }
 .pulse-ring { animation: pulse-ring 2.2s ease-out infinite; }
 @keyframes pop-in { 0% { transform: scale(.4); opacity: 0; } 60% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
@@ -76,4 +76,4 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 /* WebKit은 backface-visibility를 무시할 때가 있어, 회전 절반(90°) 시점에 면을 바꾼다. */
 .flip-face { transition: visibility 0s linear 250ms; }
 @media (prefers-reduced-motion: reduce) { .flip-face { transition: none; } }
-@media(min-width:481px) { html { background:#f3f4f6; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }
+@media(min-width:481px) { html { background:#f2e9dd; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }

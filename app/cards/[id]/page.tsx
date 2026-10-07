@@ -64,7 +64,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
           ))}
         </dl>
         {d.parent && (
-          <Link href={`/cards/${d.parent.id}`} className="block rounded-2xl bg-muted p-4 text-sm hover:bg-[#e9ebee]">
+          <Link href={`/cards/${d.parent.id}`} className="block rounded-2xl bg-muted p-4 text-sm hover:bg-[#efe3d3]">
             <span className="text-muted-foreground">이어받은 카드 · </span><span className="font-bold">{d.parent.title}</span>
             {card.takeoverNote && <span className="mt-1 block text-muted-foreground">{card.takeoverNote}</span>}
           </Link>

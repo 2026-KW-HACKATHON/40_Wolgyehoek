@@ -46,7 +46,7 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
             const s = i + 1;
             const on = step === s;
             return (
-              <label key={s} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 relative flex min-h-[68px] cursor-pointer flex-col justify-between rounded-2xl p-3.5 text-sm transition-colors ${on ? "bg-[var(--brand-soft)] ring-2 ring-primary" : "bg-muted hover:bg-[#e9ebee]"}`}>
+              <label key={s} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 relative flex min-h-[68px] cursor-pointer flex-col justify-between rounded-2xl p-3.5 text-sm transition-colors ${on ? "bg-[var(--brand-soft)] ring-2 ring-primary" : "bg-muted hover:bg-[#efe3d3]"}`}>
                 <input type="radio" name="step" value={s} checked={on} onChange={() => setStep(s)} className="sr-only" />
                 <span className="font-bold">{label}</span>
                 <span className="tnum text-xs text-muted-foreground">{counts[i]}명</span>

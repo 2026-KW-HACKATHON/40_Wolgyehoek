@@ -39,7 +39,7 @@ function CardFront({card,index=0,onPick,playing=true}:{card:SwipeCard;index?:num
 
 function CardBack({card,onFlip}:{card:SwipeCard;onFlip:()=>void}){
  const rows=[["목표",card.succeededAt?`성사 · ${card.pledges}명 함께`:`${card.goal}명 중 ${card.pledges}명 모임`],["대상",card.target],["장소",card.place],["기대 효과",card.effect],["제안",card.proposerName]].filter(([,v])=>v);
- return <div className="absolute inset-0 flex flex-col bg-[#1d2129] text-white">
+ return <div className="absolute inset-0 flex flex-col bg-[#2d2219] text-white">
   <div aria-hidden="true" className="absolute inset-x-0 top-0 h-40 opacity-60" style={{background:cardSurface(card.id),maskImage:"linear-gradient(to bottom,black,transparent)"}}/>
   <div className="relative flex min-h-0 flex-1 flex-col p-6">
    <div className="flex items-start gap-3"><h2 className="flex-1 text-[24px] font-extrabold leading-[1.25] tracking-[-0.04em]">{card.title}</h2><button type="button" onClick={onFlip} aria-label="앞면 보기" className="-mr-2 -mt-1 flex size-10 shrink-0 items-center justify-center rounded-full bg-white/15 hover:bg-white/25"><RotateCcw className="size-[18px]"/></button></div>
@@ -112,7 +112,7 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
    <Button variant="ghost" disabled={pending} onClick={()=>submit(false)} className="mt-1 h-12 w-full text-[15px] text-muted-foreground">그냥 넘기기 +10C</Button>
   </dialog>
   {celebrate&&<div role="dialog" aria-modal="true" aria-labelledby="success-title" className="bg-brand fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden px-8 text-center text-white">
-   {Array.from({length:18},(_,i)=><span key={i} aria-hidden="true" className="confetti absolute top-0 block h-3 w-2 rounded-sm" style={{left:`${(i*53)%100}%`,background:["#fff","#ffe066","#7cf5c8","#ffd5df"][i%4],animationDelay:`${(i*0.17)%1.6}s`}}/>)}
+   {Array.from({length:18},(_,i)=><span key={i} aria-hidden="true" className="confetti absolute top-0 block h-3 w-2 rounded-sm" style={{left:`${(i*53)%100}%`,background:["#fff","#ffe066","#ffd0a8","#c8e6b0"][i%4],animationDelay:`${(i*0.17)%1.6}s`}}/>)}
    <PartyPopper aria-hidden="true" className="pop-in size-14"/>
    <h2 id="success-title" className="pop-in mt-4 text-[64px] font-black leading-none tracking-[-0.05em]">성사!</h2>
    <p className="mt-5 text-xl font-extrabold [text-wrap:balance]">{celebrate.title}</p>
