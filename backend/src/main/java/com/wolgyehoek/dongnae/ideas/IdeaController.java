@@ -15,9 +15,16 @@ public class IdeaController {
     }
 
     private final IdeaGraphService graph;
+    private final KnowledgeGraphService knowledge;
 
-    public IdeaController(IdeaGraphService graph) {
+    public IdeaController(IdeaGraphService graph, KnowledgeGraphService knowledge) {
         this.graph = graph;
+        this.knowledge = knowledge;
+    }
+
+    @GetMapping("/graph")
+    public KnowledgeGraphService.Graph knowledgeGraph() {
+        return knowledge.graph();
     }
 
     @PostMapping("/check")

@@ -55,7 +55,7 @@ public class IdeaGraphService {
     public record IdeaMap(List<Label> zones, List<Cell> cells, List<Cluster> clusters, int total) {
     }
 
-    private record Node(Card card, Profile profile, Set<String> grams, Conclusion latest, CardStatus status, int year) {
+    record Node(Card card, Profile profile, Set<String> grams, Conclusion latest, CardStatus status, int year) {
         boolean archivedWithoutOutcome() {
             return latest == null && !card.getOrigin().isEmpty();
         }
@@ -158,7 +158,7 @@ public class IdeaGraphService {
         return Math.min(1, 0.55 * concept + (sameZone ? 0.2 : 0) + 0.6 * text);
     }
 
-    private static Outcome outcome(List<Node> nodes) {
+    static Outcome outcome(List<Node> nodes) {
         int stopped = (int) nodes.stream().filter(Node::stopped).count();
         int going = (int) nodes.stream().filter(n -> !n.stopped() && n.going()).count();
         List<Reason> reasons = nodes.stream().filter(Node::stopped).map(Node::latest).filter(Objects::nonNull)
@@ -184,7 +184,7 @@ public class IdeaGraphService {
                 c.getSucceededAt() != null, n.status().canTakeOver(), Math.round(score * 100) / 100.0);
     }
 
-    private List<Node> nodes() {
+    List<Node> nodes() {
         Instant now = Instant.now();
         List<Card> visible = cards.findByHiddenFalse();
         Map<String, Conclusion> latest = new HashMap<>();
