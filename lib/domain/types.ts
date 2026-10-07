@@ -4,6 +4,7 @@ export type RespondentType = "resident" | "work_study" | "visitor";
 export type Stance = "pro" | "con" | "conditional";
 export interface Media { id: string; kind: "IMAGE" | "VIDEO"; contentType: string }
 export const MEDIA_MAX = 4;
+export const POINTS = { reason: 10, conclusion: 30, takeover: 20 } as const;
 export const TOPICS = { CARE: "돌봄", COMMERCE: "골목상권", SAFETY: "안전", ENVIRONMENT: "환경", YOUTH: "청년", NEIGHBOR: "이웃" } as const;
 export type Topic = keyof typeof TOPICS;
 export const topicLabel = (topic: string | null | undefined) => (topic && topic in TOPICS ? TOPICS[topic as Topic] : "");

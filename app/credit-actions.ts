@@ -9,11 +9,5 @@ async function write<T>(path:string,body?:unknown):Promise<CreditResult<T>> {
 }
 export async function swipeIdea(id:string,direction:"RIGHT"|"LEFT",reason:string){return write<{reward:number;balance:number;duplicate:boolean;pledges?:number;goal?:number;succeeded?:boolean}>(`/api/credits/campaigns/${encodeURIComponent(id)}/swipe`,{direction,reason});}
 export async function prepareSamples(){return write<Deck>("/api/credits/samples");}
-export async function topupCredits(amount:number){return write<{balance:number}>("/api/credits/topup",{amount});}
-export async function fundIdea(id:string,amount:number){return write<{balance:number}>(`/api/credits/campaigns/${encodeURIComponent(id)}/fund`,{amount});}
-export async function buyVoucher(productId:string,requestId:string){return write<{voucherId:string;balance:number}>("/api/credits/vouchers",{productId,requestId});}
-export async function redeemVoucher(id:string){return write<{ok:boolean}>(`/api/credits/vouchers/${encodeURIComponent(id)}/redeem`);}
-
 export async function announceSuccess(id:string,note:string){return write<{notified:number}>(`/api/credits/campaigns/${encodeURIComponent(id)}/success-note`,{note});}
-
-export async function endIdea(id:string){return write<{balance:number;returned:number}>(`/api/credits/campaigns/${encodeURIComponent(id)}/end`);}
+export async function endIdea(id:string){return write<{closed:boolean}>(`/api/credits/campaigns/${encodeURIComponent(id)}/end`);}

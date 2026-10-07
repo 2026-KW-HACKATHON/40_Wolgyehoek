@@ -35,7 +35,7 @@ export async function publishCard(_: ActionState, form: FormData): Promise<Actio
     } else { id = (await api<{ id: string }>("/api/cards", { method: "POST", body: card })).id; }
   } catch (e) { return fail(errorMessage(e)); }
   refresh(parentId || id);
-  redirect("/team");
+  redirect(`/cards/${id}`);
 }
 
 export async function upsertReaction(cardId: string, _: ActionState, form: FormData): Promise<ActionState> {

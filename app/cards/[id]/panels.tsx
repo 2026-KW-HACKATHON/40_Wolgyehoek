@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { Send } from "lucide-react";
+import { announceSuccess, endIdea } from "@/app/credit-actions";
 import { addOpinion, flagTarget, publishReport, recordConclusion, upsertReaction, type ActionState } from "@/app/actions";
 import { isInsideWolgye1 } from "@/lib/domain/geo";
 import { REASON_TAGS, RESPONDENT_LABELS, STEP_LABELS, type RespondentType } from "@/lib/domain/types";
@@ -166,5 +169,33 @@ export function FlagForm({ targetType, targetId, cardId, label = "신고" }: { t
       <Button variant="soft" size="sm" type="submit" disabled={pending}>접수</Button>
       <FormMessage state={state} />
     </form>
+  );
+}
+
+export function OwnerControls({ cardId, open, succeeded, pledges }: { cardId: string; open: boolean; succeeded: boolean; pledges: number }) {
+  const [pending, start] = useTransition();
+  const [confirm, setConfirm] = useState(false);
+  const [note, setNote] = useState("");
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const router = useRouter();
+  const run = (job: () => Promise<{ ok: true } | { ok: false; error: string }>, done: string) => start(async () => {
+    const r = await job();
+    setMsg(r.ok ? { ok: true, text: done } : { ok: false, text: r.error });
+    if (r.ok) { setConfirm(false); setNote(""); router.refresh(); }
+  });
+  return (
+    <div className="space-y-3">
+      {succeeded && (
+        <div className="rounded-2xl bg-[var(--brand-soft)] p-4">
+          <label htmlFor="success-note" className="sr-only">일정 안내</label>
+          <Textarea id="success-note" rows={2} maxLength={200} value={note} onChange={(e) => setNote(e.target.value)} placeholder="언제, 어디서 열리나요?" className="rounded-2xl border-0 bg-background px-4 py-3 text-[15px]" />
+          <Button disabled={pending || note.trim().length < 2} onClick={() => run(() => announceSuccess(cardId, note), "안내했어요")} className="mt-2 w-full"><Send />함께한 {pledges}명에게 알리기</Button>
+        </div>
+      )}
+      {open && (confirm
+        ? <div className="grid grid-cols-2 gap-2"><Button variant="soft" disabled={pending} onClick={() => setConfirm(false)}>취소</Button><Button disabled={pending} onClick={() => run(() => endIdea(cardId), "마감했어요")} className="bg-none bg-foreground">마감</Button></div>
+        : <Button variant="soft" disabled={pending} onClick={() => setConfirm(true)} className="w-full">모집 마감하기</Button>)}
+      {msg && <p role={msg.ok ? "status" : "alert"} className={msg.ok ? "text-sm font-bold text-primary" : "text-sm text-destructive"}>{msg.text}</p>}
+    </div>
   );
 }

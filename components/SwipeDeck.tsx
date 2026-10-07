@@ -64,7 +64,7 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
  useEffect(()=>{if(choice&&!dialog.current?.open)dialog.current?.showModal();else if(!choice&&dialog.current?.open)dialog.current.close();},[choice]);
  useEffect(()=>{if(!notice)return;const t=setTimeout(()=>setNotice(""),2600);return()=>clearTimeout(t);},[notice]);
  function choose(direction:"RIGHT"|"LEFT"){if(!card||pending)return;setDx(0);setChoice(direction);setReason("");setError("");}
- function submit(withReason:boolean){if(!card||!choice)return;setError("");start(async()=>{const r=await swipeIdea(card.id,choice,withReason?reason:"");if(!r.ok){setError(r.error);return;}setCards(c=>c.filter(x=>x.id!==card.id));setBalance(r.data.balance);setNotice(r.data.duplicate?"이미 반영된 카드예요":`+${r.data.reward}C`);setChoice(null);if(r.data.succeeded)setCelebrate({title:card.title,goal:r.data.goal??card.goal});router.refresh();});}
+ function submit(withReason:boolean){if(!card||!choice)return;setError("");start(async()=>{const r=await swipeIdea(card.id,choice,withReason?reason:"");if(!r.ok){setError(r.error);return;}setCards(c=>c.filter(x=>x.id!==card.id));setBalance(r.data.balance);setNotice(r.data.duplicate?"이미 반영된 카드예요":r.data.reward>0?`+${r.data.reward}P`:choice==="RIGHT"?"함께해요":"패스");setChoice(null);if(r.data.succeeded)setCelebrate({title:card.title,goal:r.data.goal??card.goal});router.refresh();});}
  function samples(){setError("");start(async()=>{const r=await prepareSamples();if(!r.ok){setError(r.error);return;}setCards(r.data.cards);setBalance(r.data.balance);router.refresh();});}
  function release(){pointer.current=null;setDragging(false);setDx(0);}
  const valid=reason.replace(/\s/g,"").length>=10&&reason.length<=500;
@@ -72,8 +72,8 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
  return <div className="px-3 pt-1">
   {present.length>0&&<div role="tablist" aria-label="동네 문제 분야" className="-mx-3 mb-2.5 flex gap-1.5 overflow-x-auto px-3 pb-0.5 [scrollbar-width:none]">{(["ALL",...present] as const).map(t=><button key={t} type="button" role="tab" aria-selected={topic===t} onClick={()=>setTopic(t)} className={cn("shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-bold transition-colors",topic===t?"bg-foreground text-background":"bg-muted text-muted-foreground hover:bg-[var(--muted-hover)]")}>{t==="ALL"?"전체":TOPICS[t]}</button>)}</div>}
   <div className="swipe-stage relative">
-   <div role="status" aria-live="polite" className={notice?"absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/75 px-4 py-2 text-sm font-bold text-white backdrop-blur":"sr-only"}>{notice||`내 잔액 ${balance}C`}</div>
-   {!initial.enabled?<div className="flex h-full flex-col items-center justify-center text-center"><p className="text-lg font-bold">준비 중이에요</p></div>:card?<>
+   <div role="status" aria-live="polite" className={notice?"absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/75 px-4 py-2 text-sm font-bold text-white backdrop-blur":"sr-only"}>{notice||(initial.enabled?`기록 포인트 ${balance}P`:"")}</div>
+   {card?<>
     {next&&<div aria-hidden="true" className="absolute inset-0 overflow-hidden rounded-[22px] transition-transform duration-200" style={{transform:`scale(${0.94+lean*0.06}) translateY(${(1-lean)*14}px)`}}><CardFront card={next} playing={false}/></div>}
     <article tabIndex={0} aria-label={`${card.title}, 왼쪽은 패스, 오른쪽은 함께해요, 엔터는 뒤집기`} className={cn("swipe-card absolute inset-0 rounded-[22px] shadow-float outline-offset-4 perspective-[1400px]",!dragging&&"transition-transform duration-300 ease-out")} style={{transform:`translateX(${dx}px) rotate(${dx/18}deg)`}} onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==="ArrowLeft"){e.preventDefault();choose("LEFT");}if(e.key==="ArrowRight"){e.preventDefault();choose("RIGHT");}if(e.key==="Enter"||e.key===" "){e.preventDefault();flip();}}}
      onPointerDown={e=>{if((e.target as HTMLElement).closest("a,button")||pending||choice)return;pointer.current={id:e.pointerId,x:e.clientX,y:e.clientY};setDragging(true);e.currentTarget.setPointerCapture(e.pointerId);}}
@@ -94,10 +94,10 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
    </>:topic!=="ALL"&&cards.length?<div className="flex h-full flex-col items-center justify-center gap-5 text-center"><h2 className="text-xl font-extrabold tracking-tight">이 분야는 다 봤어요</h2><Button variant="soft" size="lg" onClick={()=>setTopic("ALL")}>전체 보기</Button></div>:<div className="flex h-full flex-col items-center justify-center text-center">
     <div className="relative mb-8 flex size-28 items-center justify-center"><span aria-hidden="true" className="pulse-ring absolute inset-0 rounded-full bg-primary/30 motion-reduce:hidden"/><span className="bg-brand relative flex size-24 items-center justify-center rounded-full text-white shadow-float"><BrandMark className="size-11"/></span></div>
     <h2 className="text-xl font-extrabold tracking-tight">새 카드가 없어요</h2>
-    <div className="mt-7 flex w-full max-w-[280px] flex-col gap-2"><Button asChild size="lg"><Link href="/rewards">혜택 보기</Link></Button><Button variant="soft" size="lg" disabled={pending} onClick={samples}><RotateCcw/>시연 카드 받기</Button></div>
+    <div className="mt-7 flex w-full max-w-[280px] flex-col gap-2"><Button asChild size="lg"><Link href="/">서랍 보기</Link></Button><Button variant="soft" size="lg" disabled={pending} onClick={samples}><RotateCcw/>시연 카드 받기</Button></div>
    </div>}
   </div>
-  {initial.enabled&&card&&<div className="mt-5 flex items-center justify-center gap-7">
+  {card&&<div className="mt-5 flex items-center justify-center gap-7">
    <button disabled={pending} onClick={()=>choose("LEFT")} aria-label="패스" className="flex size-16 items-center justify-center rounded-full border border-border bg-background text-[var(--nope)] shadow-float transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"><X className="size-8" strokeWidth={3}/></button>
    <button disabled={pending} onClick={()=>choose("RIGHT")} aria-label="함께해요" className="flex size-16 items-center justify-center rounded-full border border-border bg-background text-[var(--like)] shadow-float transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"><Heart className="size-8 fill-current" strokeWidth={0}/></button>
   </div>}
@@ -113,8 +113,8 @@ export function SwipeDeck({initial,requestedUnavailable=false}:{initial:Deck;req
    <Textarea id="swipe-reason" value={reason} onChange={e=>setReason(e.target.value)} maxLength={500} disabled={pending} rows={4} className="rounded-2xl border-0 bg-muted px-4 py-3 text-[15px] focus-visible:ring-2 focus-visible:ring-primary" placeholder={choice==="RIGHT"?"어떤 조건이면 함께할까요?":"어떤 점이 아쉬웠나요?"}/>
    <p className="mt-2 text-right text-xs text-[var(--text-4)] tnum">{valid?`${reason.length}/500`:"10자 이상"}</p>
    {error&&<div className="mt-2"><p role="alert" className="text-sm text-destructive">{error}</p><button className="mt-1 min-h-10 text-sm font-semibold text-primary" disabled={pending} onClick={()=>{setCards(c=>c.filter(x=>x.id!==card?.id));setChoice(null);setError("");}}>이 카드 건너뛰기</button></div>}
-   <Button size="lg" disabled={!valid||pending} onClick={()=>submit(true)} className="mt-4 w-full">{pending?"저장 중…":"이유와 함께 +30C"}</Button>
-   <Button variant="ghost" disabled={pending} onClick={()=>submit(false)} className="mt-1 h-12 w-full text-[15px] text-muted-foreground">그냥 넘기기 +10C</Button>
+   <Button size="lg" disabled={!valid||pending} onClick={()=>submit(true)} className="mt-4 w-full">{pending?"저장 중…":initial.enabled?"이유 남기기 +10P":"이유 남기기"}</Button>
+   <Button variant="ghost" disabled={pending} onClick={()=>submit(false)} className="mt-1 h-12 w-full text-[15px] text-muted-foreground">이유 없이 넘기기</Button>
   </dialog>
   {celebrate&&<div role="dialog" aria-modal="true" aria-labelledby="success-title" className="bg-brand fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden px-8 text-center text-white">
    {Array.from({length:18},(_,i)=><span key={i} aria-hidden="true" className="confetti absolute top-0 block h-3 w-2 rounded-sm" style={{left:`${(i*53)%100}%`,background:["#fff","#ffe2d2","#ffc39e","#212124"][i%4],animationDelay:`${(i*0.17)%1.6}s`}}/>)}

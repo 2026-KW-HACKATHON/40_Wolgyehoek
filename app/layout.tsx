@@ -24,5 +24,5 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const me = await currentDevice();
   const unread = me ? await unreadCount() : 0;
   const wallet = me ? await getWallet() : null;
-  return <html lang="ko" className={pretendard.variable}><body className="antialiased"><AppShell balance={wallet?.balance ?? 0} unread={unread} nickname={me?.nickname} operator={!!me?.isOperator}>{children}</AppShell></body></html>;
+  return <html lang="ko" className={pretendard.variable}><body className="antialiased"><AppShell balance={wallet?.balance ?? 0} points={!!wallet?.enabled} unread={unread} nickname={me?.nickname} operator={!!me?.isOperator}>{children}</AppShell></body></html>;
 }

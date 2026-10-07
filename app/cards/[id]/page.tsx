@@ -15,7 +15,7 @@ import { DECISION_LABELS, RESPONDENT_LABELS, STANCE_LABELS, STATUS_LABELS, STEP_
 import { closeNow } from "@/app/actions";
 import { CardBackdrop } from "@/components/CardMedia";
 import { ButtonLink, Disclaimer, Pill, SectionTitle, StatusBadge, fmtDate, fmtWon } from "@/components/ui";
-import { ConclusionForm, FlagForm, OpinionForm, ReactionPanel, ReportPublishForm } from "./panels";
+import { ConclusionForm, FlagForm, OpinionForm, OwnerControls, ReactionPanel, ReportPublishForm } from "./panels";
 
 export default async function CardPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -105,9 +105,9 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-background"><div className="bg-brand h-full rounded-full" style={{ width: `${Math.min(100, Math.round((insight.pledges / Math.max(1, insight.goal)) * 100))}%` }} /></div>
           </>}
         </div>
-        {insight.mine ? <div className="rounded-2xl bg-muted p-4"><p className="flex items-center gap-2 text-[15px] font-bold">{insight.mine.direction === "RIGHT" ? <Heart className="size-4 fill-[var(--like)] text-[var(--like)]" /> : <X className="size-4 text-[var(--nope)]" strokeWidth={3} />}{insight.mine.direction === "RIGHT" ? "함께해요" : "패스"}<span className="ml-auto text-sm text-primary">+{insight.mine.reward}C</span></p>{insight.mine.reason && <p className="mt-2 text-sm leading-6">{insight.mine.reason}</p>}</div>
-          : canManage ? <ButtonLink href={me?.isOperator ? "/admin" : "/team"} variant="secondary">{me?.isOperator ? "운영자 공간" : "팀 공간에서 관리"}</ButtonLink>
-          : insight.accepting ? <Button asChild size="lg" className="w-full"><Link href={`/?idea=${card.id}`}>스와이프하러 가기</Link></Button>
+        {insight.mine ? <div className="rounded-2xl bg-muted p-4"><p className="flex items-center gap-2 text-[15px] font-bold">{insight.mine.direction === "RIGHT" ? <Heart className="size-4 fill-[var(--like)] text-[var(--like)]" /> : <X className="size-4 text-[var(--nope)]" strokeWidth={3} />}{insight.mine.direction === "RIGHT" ? "함께해요" : "패스"}{insight.mine.reward > 0 && <span className="ml-auto text-sm text-primary">+{insight.mine.reward}P</span>}</p>{insight.mine.reason && <p className="mt-2 text-sm leading-6">{insight.mine.reason}</p>}</div>
+          : canManage ? (insight.owner ? <OwnerControls cardId={card.id} open={status === "open"} succeeded={!!insight.succeededAt} pledges={insight.pledges} /> : <ButtonLink href="/admin" variant="secondary">운영자 공간</ButtonLink>)
+          : insight.accepting ? <Button asChild size="lg" className="w-full"><Link href={`/discover?idea=${card.id}`}>스와이프하러 가기</Link></Button>
           : <p className="text-sm text-[var(--text-4)]">{status === "open" ? "예산 준비 중" : "참여 종료"}</p>}
         {insight.visible ? <div className="mt-6">
           <div className="flex items-end justify-between text-sm font-bold tnum"><span className="flex items-center gap-1.5 text-[var(--like)]"><Heart className="size-4 fill-current" />{insight.likes}</span><span className="text-xs font-medium text-[var(--text-4)]">{insight.total}명{insight.showRatio && !!insight.total && ` · 관심 ${likeRatio}%`}</span><span className="flex items-center gap-1.5 text-[var(--nope)]">{insight.passes}<X className="size-4" strokeWidth={3} /></span></div>
