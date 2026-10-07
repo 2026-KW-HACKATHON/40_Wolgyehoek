@@ -66,6 +66,7 @@ public class TakeoverService {
 
         CardResponse created = cardService.create(request.card(), actor.id(), actor.nickname(),
                 parentId, request.takeoverNote().trim());
+        credits.award(actor.id(), com.wolgyehoek.dongnae.credits.CreditService.TAKEOVER_POINTS, "RECORD", parent.getTitle() + " · 이어받기");
 
         Set<String> targets = new HashSet<>();
         reactionRepository.findByCardId(parentId).forEach(r -> targets.add(r.getDeviceId()));

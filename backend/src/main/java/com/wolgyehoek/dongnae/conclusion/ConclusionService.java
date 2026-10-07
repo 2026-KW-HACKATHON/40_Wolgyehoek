@@ -74,9 +74,14 @@ public class ConclusionService {
             throw new BadRequestException("보류·중단은 사유 태그와 사유를 모두 적어야 저장돼요.");
         }
 
+        boolean firstByActor = conclusionRepository.findByCardIdOrderByCreatedAtDesc(cardId).stream()
+                .noneMatch(c -> c.getDecidedBy().equals(actor.id()));
         Conclusion conclusion = conclusionRepository.save(
                 new Conclusion(Ids.newId(), cardId, request.decision(), tags, reason, actor.id()));
         card.conclude(request.decision());
+        if (firstByActor) {
+            credits.award(actor.id(), com.wolgyehoek.dongnae.credits.CreditService.CONCLUSION_POINTS, "RECORD", card.getTitle() + " · 결론 기록");
+        }
 
         Set<String> targets = new HashSet<>();
         reactionRepository.findByCardId(cardId).forEach(r -> targets.add(r.getDeviceId()));
