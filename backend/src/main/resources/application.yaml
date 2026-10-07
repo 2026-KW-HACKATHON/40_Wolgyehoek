@@ -18,6 +18,7 @@ spring:
     show-sql: false
 dongnae:
   demo-seed: ${DEMO_SEED:false}
+  archive-seed: ${ARCHIVE_SEED:true}
   media:
     dir: ${MEDIA_DIR:./data/media}
   operator-code: ${OPERATOR_CODE:}

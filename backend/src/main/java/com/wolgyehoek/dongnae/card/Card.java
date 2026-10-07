@@ -36,6 +36,11 @@ public class Card {
     private String problem = "";
     private String topic = "";
 
+    private String origin = "";
+    private String sourceTitle = "";
+    private String sourceUrl = "";
+    private Integer sourceYear;
+
     private int goal = 30;
     private Instant succeededAt;
     private String successNote;
@@ -115,6 +120,22 @@ public class Card {
 
     public String getTopic() {
         return topic;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getSourceTitle() {
+        return sourceTitle;
+    }
+
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    public Integer getSourceYear() {
+        return sourceYear;
     }
 
     public void setGoal(int goal) {

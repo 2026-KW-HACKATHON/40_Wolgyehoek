@@ -38,7 +38,7 @@ public class ViewsController {
                            String proposerName, Instant startsAt, Instant endsAt, String parentId, String takeoverNote,
                            boolean isSeed, boolean hidden, Instant reportPublishedAt, String reportSummary, Instant createdAt,
                            List<MediaView> media, int goal, Instant succeededAt, String successNote, long pledges,
-                           String problem, String topic) {}
+                           String problem, String topic, String origin, String sourceTitle, String sourceUrl, Integer sourceYear) {}
     public record Summary(CardView card, CardStatus status, int reactionCount, int opinionCount, ConclusionResponse latest) {}
     public record Detail(Summary summary, ReportViewResponse validation, List<OpinionResponse> opinions,
                          List<ConclusionResponse> conclusions, CardView parent, List<CardView> children) {}
@@ -49,7 +49,7 @@ public class ViewsController {
                 c.getProposerName(), c.getStartsAt(), c.getEndsAt(), c.getParentId(), c.getTakeoverNote(),
                 c.isSeed(), c.isHidden(), c.getReportPublishedAt(), c.getReportSummary(), c.getCreatedAt(),
                 media.forCard(c.getId()), c.getGoal(), c.getSucceededAt(), c.getSuccessNote(), credits.pledgeCount(c.getId()),
-                c.getProblem(), c.getTopic());
+                c.getProblem(), c.getTopic(), c.getOrigin(), c.getSourceTitle(), c.getSourceUrl(), c.getSourceYear());
     }
     private Summary summary(Card c) {
         var history = conclusions.findByCardIdOrderByCreatedAtDesc(c.getId());

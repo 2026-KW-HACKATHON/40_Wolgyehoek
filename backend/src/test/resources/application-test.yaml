@@ -3,3 +3,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/dongnae_test
   flyway:
     clean-disabled: false
+dongnae:
+  archive-seed: false
