@@ -1,11 +1,13 @@
-import { ChevronLeft, Heart, MapPin, PartyPopper, X } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, Heart, MapPin, PartyPopper, X } from "lucide-react";
 import { getCreditInsight } from "@/lib/credits";
 import { RecordProgress } from "@/components/RecordProgress";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCard } from "@/lib/queries";
+import { getCard, relatedIdeas } from "@/lib/queries";
+import { ORIGIN_LABELS } from "@/lib/domain/ideas";
+import { IdeaLineage } from "@/components/IdeaLineage";
 import { currentDevice } from "@/lib/device";
 import type { Report } from "@/lib/domain/report";
 import { canTakeOver } from "@/lib/domain/status";
@@ -19,8 +21,10 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const [d, me] = await Promise.all([getCard(id), currentDevice()]);
   if (!d || (d.card.hidden && !me?.isOperator)) notFound();
-  const insight = await getCreditInsight(id);
+  const [insight, lineage] = await Promise.all([getCreditInsight(id), relatedIdeas(id)]);
   const { card, status } = d;
+  const archived = card.origin !== "";
+  const statusText = card.succeededAt ? "성사" : archived && !d.latest ? "결과 미확인" : archived && status === "go" ? "시행" : STATUS_LABELS[status];
   const canManage = d.canManage;
   const mine = d.mine;
   const reportVisible = d.report !== null;
@@ -39,11 +43,11 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         <CardBackdrop cardId={card.id} media={card.media[0]} />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[rgb(74_24_4/.78)] via-transparent to-[rgb(74_24_4/.22)]" />
         <Link href="/" aria-label="뒤로" className="absolute left-4 top-4 flex size-10 items-center justify-center rounded-full bg-black/20 backdrop-blur hover:bg-black/30"><ChevronLeft className="size-5" /></Link>
-        <div className="absolute right-4 top-6 flex items-center gap-1.5 text-[11px] font-bold"><span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">{card.succeededAt ? "성사" : STATUS_LABELS[status]}</span>{card.isSeed && <span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">예시</span>}</div>
+        <div className="absolute right-4 top-6 flex items-center gap-1.5 text-[11px] font-bold"><span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">{statusText}</span>{card.isSeed && <span className="rounded-full bg-white/25 px-2.5 py-1 backdrop-blur">예시</span>}</div>
         <div className="relative">
           <p className="mb-2 flex items-center gap-1 text-sm font-semibold text-white/90"><MapPin className="size-4" />{card.place || "월계1동"}</p>
           <h1 className="text-[30px] font-extrabold leading-[1.18] tracking-[-0.04em] [text-wrap:balance]">{card.title}</h1>
-          <p className="mt-2 text-sm text-white/75 tnum">{card.proposerName} · {fmtDate(card.startsAt)} ~ {fmtDate(card.endsAt)}</p>
+          <p className="mt-2 text-sm text-white/75 tnum">{card.proposerName} · {archived ? `${card.sourceYear}년` : `${fmtDate(card.startsAt)} ~ ${fmtDate(card.endsAt)}`}</p>
         </div>
       </header>
 
@@ -69,6 +73,12 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
             <div key={k} className="flex gap-4 py-3 text-[15px]"><dt className="w-16 shrink-0 text-muted-foreground">{k}</dt><dd className="font-medium">{v}</dd></div>
           ))}
         </dl>
+        {card.sourceUrl && (
+          <a href={card.sourceUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-2xl bg-muted p-4 text-sm hover:bg-[var(--muted-hover)]">
+            <span className="min-w-0 flex-1"><span className="block text-xs text-muted-foreground">{ORIGIN_LABELS[card.origin] ?? "기록"} · {card.sourceYear}</span><span className="mt-0.5 block truncate font-bold">{card.sourceTitle}</span></span>
+            <ArrowUpRight className="size-4 shrink-0 text-muted-foreground" />
+          </a>
+        )}
         {d.parent && (
           <Link href={`/cards/${d.parent.id}`} className="block rounded-2xl bg-muted p-4 text-sm hover:bg-[var(--muted-hover)]">
             <span className="text-muted-foreground">이어받은 카드 · </span><span className="font-bold">{d.parent.title}</span>
@@ -82,7 +92,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         )}
       </section>
 
-      {!insight.campaign && <RecordProgress status={status} reactions={d.reactionCount} published={!!card.reportPublishedAt} concluded={d.conclusions.length > 0} />}
+      {!insight.campaign && !archived && <RecordProgress status={status} reactions={d.reactionCount} published={!!card.reportPublishedAt} concluded={d.conclusions.length > 0} />}
 
       {insight.campaign ? <section>
         <SectionTitle sub={card.reportPublishedAt ? <span role="status" className="text-xs font-bold text-primary">공개 · {fmtDate(card.reportPublishedAt)}</span> : null}>반응</SectionTitle>
@@ -106,7 +116,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
           <p className="mt-3 text-[11px] text-[var(--text-4)]">비공식 반응 · 대표성 없음</p>
         </div> : <p className="mt-4 text-sm text-[var(--text-4)]">결과는 종료 후 공개돼요</p>}
         {canManage && status !== "open" && !card.reportPublishedAt && <div className="mt-5"><ReportPublishForm cardId={card.id} /></div>}
-      </section> : <section>
+      </section> : !archived && <section>
         <SectionTitle sub={<span className="tnum">{report.total}</span>}>써보실 건가요?</SectionTitle>
         <ReactionPanel
           cardId={card.id}
@@ -175,7 +185,9 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         </section>
       )}
 
-      <section>
+      <IdeaLineage check={lineage} mode="detail" />
+
+      {(!archived || d.opinions.length > 0) && <section>
         <SectionTitle sub={d.opinions.filter((o) => !o.hidden).length}>의견</SectionTitle>
         {status === "open" && <OpinionForm cardId={card.id} />}
         <ul className="mt-2 divide-y divide-border">
@@ -198,7 +210,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
             </li>
           ))}
         </ul>
-      </section>
+      </section>}
 
       <footer className="border-t border-border pt-2">
         <FlagForm targetType="card" targetId={card.id} cardId={card.id} label="이 카드 신고" />

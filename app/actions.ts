@@ -3,8 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
-import { listCards } from "@/lib/queries";
 import type { Draft } from "@/lib/domain/draft";
+import type { IdeaCheck } from "@/lib/domain/ideas";
 import { cardInput, conclusionInput, opinionInput, validatePrice } from "@/lib/domain/validation";
 
 export type ActionState = { ok: boolean; error?: string; message?: string };
@@ -17,10 +17,8 @@ export async function createDraft(text: string) {
   if (clean.length < 10 || clean.length > 2000) return { ok: false as const, error: "아이디어를 10~2000자로 적어 주세요." };
   try {
     const draft = await api<Draft>("/api/assist/draft", { method: "POST", body: { text: clean } });
-    const sims = await api<{ card: { id: string } }[]>("/api/assist/similar", { method: "POST", body: { title: draft.title, body: clean } });
-    const cards = await listCards({ tab: "all" });
-    return { ok: true as const, draft: { ...draft, source: draft.source.toLowerCase() as Draft["source"] },
-      similar: sims.flatMap(s => { const c = cards.find(c => c.card.id === s.card.id); return c ? [{ id: c.card.id, title: c.card.title, status: c.status, reactionCount: c.reactionCount, reason: c.latest?.reason ?? null }] : []; }) };
+    const check = await api<IdeaCheck>("/api/ideas/check", { method: "POST", body: { title: draft.title, body: clean, place: draft.place } });
+    return { ok: true as const, draft: { ...draft, source: draft.source.toLowerCase() as Draft["source"] }, check };
   } catch (e) { return { ok: false as const, error: errorMessage(e) }; }
 }
 

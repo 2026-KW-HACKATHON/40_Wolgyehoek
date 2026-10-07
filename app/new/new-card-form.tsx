@@ -3,22 +3,21 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 
-import Link from "next/link";
 import { useActionState, useState, useTransition } from "react";
 import { createDraft, publishCard, type ActionState } from "@/app/actions";
-import { FormMessage, StatusBadge, btnPrimary, btnSecondary, inputCls } from "@/components/ui";
+import { FormMessage, btnPrimary, btnSecondary, inputCls } from "@/components/ui";
+import { IdeaLineage } from "@/components/IdeaLineage";
+import type { IdeaCheck } from "@/lib/domain/ideas";
 import { useFormSubmit } from "@/components/use-form-submit";
 import { MediaPicker, type PickedMedia } from "@/components/MediaPicker";
-import { TOPICS, type CardStatus, type Topic } from "@/lib/domain/types";
-
-type Similar = { id: string; title: string; status: CardStatus; reactionCount: number; reason: string | null };
+import { TOPICS, type Topic } from "@/lib/domain/types";
 
 export function NewCardForm({ parent }: { parent?: { id: string; title: string; body: string; target: string; place: string; effect: string; problem: string; topic: string } }) {
   const [text, setText] = useState(parent?.body ?? "");
   const [draft, setDraft] = useState<null | { title: string; target: string; place: string; effect: string; source: string }>(
     parent ? { title: parent.title, target: parent.target, place: parent.place, effect: parent.effect, source: "takeover" } : null,
   );
-  const [similar, setSimilar] = useState<Similar[]>([]);
+  const [check, setCheck] = useState<IdeaCheck | null>(null);
   const [media, setMedia] = useState<PickedMedia[]>([]);
   const uploading = media.some((m) => !m.id && !m.error);
   const picker = <MediaPicker items={media} onChange={setMedia} />;
@@ -33,7 +32,7 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
       const r = await createDraft(text);
       if (!r.ok) return setDraftError(r.error);
       setDraft(r.draft);
-      setSimilar(r.similar.filter((s) => s.id !== parent?.id));
+      setCheck(r.check);
     });
 
   return (
@@ -50,20 +49,7 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
         </section>
       )}
 
-      {similar.length > 0 && (
-        <section>
-          <h2 className="mb-2 text-lg font-extrabold tracking-tight">비슷한 카드</h2>
-          <ul className="divide-y divide-border">
-            {similar.map((s) => (
-              <li key={s.id} className="flex items-center gap-3 py-3">
-                <StatusBadge status={s.status} />
-                <Link href={`/cards/${s.id}`} className="min-w-0 flex-1 truncate text-[15px] font-bold hover:text-primary">{s.title}</Link>
-                <span className="tnum shrink-0 text-xs text-[var(--text-4)]">반응 {s.reactionCount}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      {check && <IdeaLineage check={check} mode="draft" />}
 
       {draft && (
         <form onSubmit={onSubmit} className="space-y-4">

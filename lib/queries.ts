@@ -2,13 +2,14 @@ import "server-only";
 import { api, ApiError } from "./api";
 import type { CardStatus, Decision, Media, Stance, RespondentType } from "./domain/types";
 import type { Report } from "./domain/report";
+import type { IdeaCheck, IdeaMap } from "./domain/ideas";
 
 export interface Card {
   id: string; title: string; body: string; target: string; place: string; effect: string;
   proposerName: string; startsAt: Date; endsAt: Date; parentId: string | null; takeoverNote: string | null;
   isSeed: boolean; hidden: boolean; reportPublishedAt: Date | null; reportSummary: string | null; createdAt: Date;
   media: Media[]; goal: number; succeededAt: string | null; successNote: string | null; pledges: number;
-  problem: string; topic: string;
+  problem: string; topic: string; origin: string; sourceTitle: string; sourceUrl: string; sourceYear: number | null;
 }
 export interface Conclusion { id: string; decision: Decision; reasonTags: string[]; reason: string; createdAt: Date }
 export interface Opinion { id: string; stance: Stance; body: string; condition: string; authorName: string; createdAt: Date; hidden: boolean }
@@ -48,6 +49,8 @@ export async function myActivity() {
   const a = await api<{ mine: RawSummary[]; joined: RawSummary[]; notices: Notice[] }>("/api/views/me");
   return { mine: a.mine.map(summary), joined: a.joined.map(summary), notices: a.notices.map(n => ({ ...n, kind: NOTICE_KINDS[n.kind.toUpperCase()] ?? "restart", createdAt: date(n.createdAt), readAt: n.readAt ? date(n.readAt) : null })) };
 }
+export const ideaMap = () => api<IdeaMap>("/api/ideas/map");
+export const relatedIdeas = (id: string) => api<IdeaCheck>(`/api/ideas/${encodeURIComponent(id)}/related`);
 export async function unreadCount() { return (await api<{ count: number }>("/api/me/notices/unread-count")).count; }
 export async function openFlags() {
   const flags = await api<{ id: string; targetType: string; targetId: string; reason: string; createdAt: Date }[]>("/api/operator/flags");
