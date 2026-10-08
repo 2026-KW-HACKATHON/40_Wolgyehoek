@@ -8,6 +8,7 @@ import com.wolgyehoek.dongnae.notice.*;
 import com.wolgyehoek.dongnae.opinion.*;
 import com.wolgyehoek.dongnae.reaction.*;
 import com.wolgyehoek.dongnae.report.*;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
@@ -27,11 +28,14 @@ public class ViewsController {
     private final NoticeService notices;
     private final com.wolgyehoek.dongnae.credits.CreditService credits;
     private final MediaService media;
+    private final NamedParameterJdbcTemplate sql;
 
     public ViewsController(CardRepository cards, ReactionRepository reactions, OpinionRepository opinions,
-                           ConclusionRepository conclusions, DeviceService devices, ReportService reports, NoticeService notices, com.wolgyehoek.dongnae.credits.CreditService credits, MediaService media) {
+                           ConclusionRepository conclusions, DeviceService devices, ReportService reports, NoticeService notices, com.wolgyehoek.dongnae.credits.CreditService credits, MediaService media,
+                           NamedParameterJdbcTemplate sql) {
         this.cards = cards; this.reactions = reactions; this.opinions = opinions;
         this.conclusions = conclusions; this.devices = devices; this.reports = reports; this.notices = notices; this.credits = credits; this.media = media;
+        this.sql = sql;
     }
 
     public record CardView(String id, String title, String body, String target, String place, String effect,
@@ -45,10 +49,13 @@ public class ViewsController {
     public record Activity(List<Summary> mine, List<Summary> joined, List<NoticeResponse> notices) {}
 
     private CardView view(Card c) {
+        return view(c, media.forCard(c.getId()), credits.pledgeCount(c.getId()));
+    }
+    private CardView view(Card c, List<MediaView> files, long pledges) {
         return new CardView(c.getId(), c.getTitle(), c.getBody(), c.getTarget(), c.getPlace(), c.getEffect(),
                 c.getProposerName(), c.getStartsAt(), c.getEndsAt(), c.getParentId(), c.getTakeoverNote(),
                 c.isSeed(), c.isHidden(), c.getReportPublishedAt(), c.getReportSummary(), c.getCreatedAt(),
-                media.forCard(c.getId()), c.getGoal(), c.getSucceededAt(), c.getSuccessNote(), credits.pledgeCount(c.getId()),
+                files, c.getGoal(), c.getSucceededAt(), c.getSuccessNote(), pledges,
                 c.getProblem(), c.getTopic(), c.getOrigin(), c.getSourceTitle(), c.getSourceUrl(), c.getSourceYear());
     }
     private Summary summary(Card c) {
@@ -57,9 +64,32 @@ public class ViewsController {
                 opinions.findByCardIdAndHiddenFalseOrderByCreatedAtDesc(c.getId()).size(),
                 history.isEmpty() ? null : ConclusionResponse.from(history.getFirst()));
     }
+
+    // 목록은 카드마다 5번씩 쿼리하면 DB 왕복 지연이 카드 수만큼 쌓이므로, 연관 데이터를 카드 묶음 단위로 한 번에 읽는다.
     private List<Summary> summaries(Stream<Card> stream) {
-        return stream.filter(c -> !c.isHidden()).sorted(Comparator.comparing(Card::getCreatedAt).reversed())
-                .map(this::summary).toList();
+        List<Card> list = stream.filter(c -> !c.isHidden()).sorted(Comparator.comparing(Card::getCreatedAt).reversed()).toList();
+        if (list.isEmpty()) return List.of();
+        var ids = Map.of("ids", list.stream().map(Card::getId).toList());
+        Map<String, List<MediaView>> files = new HashMap<>();
+        sql.query("SELECT card_id, id, kind, content_type FROM card_media WHERE card_id IN (:ids) ORDER BY position", ids, rs -> {
+            files.computeIfAbsent(rs.getString("card_id"), k -> new ArrayList<>())
+                    .add(new MediaView(rs.getString("id"), rs.getString("kind"), rs.getString("content_type")));
+        });
+        var pledges = counts("SELECT card_id, count(*) AS n FROM idea_swipes WHERE direction = 'RIGHT' AND card_id IN (:ids) GROUP BY card_id", ids);
+        var reactionCounts = counts("SELECT card_id, count(*) AS n FROM reactions WHERE card_id IN (:ids) GROUP BY card_id", ids);
+        var opinionCounts = counts("SELECT card_id, count(*) AS n FROM opinions WHERE NOT hidden AND card_id IN (:ids) GROUP BY card_id", ids);
+        Map<String, Conclusion> latest = new HashMap<>();
+        conclusions.findByCardIdInOrderByCreatedAtDesc(ids.get("ids")).forEach(x -> latest.putIfAbsent(x.getCardId(), x));
+        Instant now = Instant.now();
+        return list.stream().map(c -> new Summary(
+                view(c, files.getOrDefault(c.getId(), List.of()), pledges.getOrDefault(c.getId(), 0L)), c.status(now),
+                reactionCounts.getOrDefault(c.getId(), 0L).intValue(), opinionCounts.getOrDefault(c.getId(), 0L).intValue(),
+                latest.containsKey(c.getId()) ? ConclusionResponse.from(latest.get(c.getId())) : null)).toList();
+    }
+    private Map<String, Long> counts(String query, Map<String, ?> params) {
+        Map<String, Long> out = new HashMap<>();
+        sql.query(query, params, rs -> { out.put(rs.getString("card_id"), rs.getLong("n")); });
+        return out;
     }
 
     @GetMapping("/cards")
