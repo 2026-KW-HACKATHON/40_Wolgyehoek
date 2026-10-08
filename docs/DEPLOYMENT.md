@@ -16,7 +16,8 @@ Next는 데이터를 직접 저장하지 않는다. `SPRING_API_URL`은 서버 �
 | 백엔드(Spring) | Render 무료 웹 서비스 `dongne-seorap-api`(싱가포르) → https://dongne-seorap-api.onrender.com | GitHub `main`의 `backend/Dockerfile`을 자동 빌드·배포 |
 | DB | Supabase 무료 프로젝트 `dongne-seorap`(서울), IPv4 세션 풀러 5432 | Data API 접근은 막음(전 테이블 RLS, anon·authenticated 권한 회수) |
 
-- Render 무료 인스턴스는 15분 동안 요청이 없으면 잠든다. `.github/workflows/keepalive.yml`이 10분마다 `/api/health`를 호출해 깨워 둔다(GitHub 예약 실행은 지연될 수 있다).
+- Render 무료 인스턴스는 15분 동안 요청이 없으면 잠든다. 주 깨우기는 Supabase DB의 예약 작업이다: `pg_cron` 작업 `keep-render-awake`가 5분마다 `pg_net`으로 `/api/health`를 호출한다(응답 기록: `net._http_response`).
+- `.github/workflows/keepalive.yml`(10분마다)은 보조다. GitHub 예약 실행은 새 저장소에서 오래 지연되거나 빠질 수 있어, 2026-10-08에 한 번도 자동 실행되지 않아 백엔드가 잠들었다.
 - Supabase 무료 프로젝트는 7일 동안 활동이 없으면 일시 중지된다. 위 깨우기 호출이 DB도 함께 쓴다.
 - 싱가포르 Supabase 풀러는 Render에서 접속할 때 TLS 핸드셰이크가 끊겨(5432·6543 모두) 서울 DB를 쓴다. 지역 간 왕복 지연은 목록 API를 묶음 조회로 바꿔 흡수했다.
 - 비밀번호·API 키는 Render·Vercel 환경변수에만 둔다. 저장소에 넣지 않는다.
