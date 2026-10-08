@@ -54,7 +54,7 @@ export async function myActivity() {
   return { mine: a.mine.map(summary), joined: a.joined.map(summary), notices: a.notices.map(n => ({ ...n, kind: NOTICE_KINDS[n.kind.toUpperCase()] ?? "restart", createdAt: date(n.createdAt), readAt: n.readAt ? date(n.readAt) : null })) };
 }
 export const ideaMap = () => api<IdeaMap>("/api/ideas/map", { shared: true });
-export const relatedIdeas = (id: string) => api<IdeaCheck>(`/api/ideas/${encodeURIComponent(id)}/related`);
+export const relatedIdeas = (id: string) => api<IdeaCheck>(`/api/ideas/${encodeURIComponent(id)}/related`, { shared: true });
 export async function unreadCount() { return (await api<{ count: number }>("/api/me/notices/unread-count")).count; }
 export async function openFlags() {
   const flags = await api<{ id: string; targetType: string; targetId: string; reason: string; createdAt: Date }[]>("/api/operator/flags");
