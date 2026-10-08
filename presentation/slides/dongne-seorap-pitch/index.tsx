@@ -163,8 +163,7 @@ const Cover: Page = () => (
     <Column left={PAD_X} width={780}>
       <img src={mark} alt="" style={{ width: 128, height: 128 }} />
       <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 'var(--osd-size-hero)', fontWeight: 900, letterSpacing: '-0.05em', lineHeight: 1.05, margin: '40px 0 0' }}>동네서랍</h1>
-      <p style={{ fontSize: 56, fontWeight: 850, color: accentText, margin: '28px 0 0', letterSpacing: '-0.03em' }}>아이디어 전에, 문제부터</p>
-      <p style={{ fontSize: 32, fontWeight: 750, color: sub, margin: '22px 0 0', lineHeight: 1.4 }}>정책·예산·이해관계인·선례를 대신 찾아 주는<br />지역 문제 조사 에이전트</p>
+      <p style={{ fontSize: 46, fontWeight: 850, color: accentText, margin: '30px 0 0', letterSpacing: '-0.03em', lineHeight: 1.35 }}>정책·예산·이해관계인·선례를<br />대신 찾아 주는 지역 문제 조사 에이전트</p>
       <p style={{ fontSize: 26, fontWeight: 600, color: muted, margin: '56px 0 0' }}>2026 KW해커톤 · 40조 월계획</p>
     </Column>
     <Browser src={deskExplore} path="" width={900} left={900} top={250} />
@@ -173,7 +172,6 @@ const Cover: Page = () => (
 
 /* 2. 저희 이야기: 처음 아이디어였던 광운대 앞 플리마켓 */
 const ourOrder = ['문제를 고른다', '아이디어를 낸다', '설문을 돌린다', '발표한다'];
-const skipped = ['정책', '예산', '이해관계인', '선례'];
 const ourPast = [
   { y: '2019', t: '광운대 주민 플리마켓' },
   { y: '2022', t: '주민 협업 플리마켓' },
@@ -191,22 +189,12 @@ const Hook: Page = () => (
       ))}
     </div>
     <p style={{ position: 'absolute', left: PAD_X, top: 436, margin: 0, fontSize: 26, fontWeight: 700, color: '#868b94' }}>한 학기 동안 저희가 밟은 순서입니다</p>
-    <div style={{ position: 'absolute', left: PAD_X, top: 520, right: PAD_X, borderTop: '2px solid #34343a', paddingTop: 44 }}>
-      <div style={{ fontSize: 34, fontWeight: 850, color: '#ff6f0f' }}>한 번도 확인하지 않은 것</div>
-      <div style={{ display: 'flex', gap: 20, marginTop: 24 }}>
-        {skipped.map((k) => (
-          <div key={k} style={{ flex: 1, border: '3px dashed #ff6f0f', borderRadius: 28, padding: '28px 0', textAlign: 'center' }}>
-            <div style={{ fontSize: 40, fontWeight: 900 }}>{k}</div>
-            <div style={{ fontSize: 24, fontWeight: 750, color: '#868b94', marginTop: 8 }}>확인 못 함</div>
-          </div>
-        ))}
-      </div>
-    </div>
-    <div style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 810 }}>
-      <div style={{ fontSize: 28, fontWeight: 800, color: '#b0b3ba' }}>그래서 몰랐습니다 — 같은 플리마켓이 이미 세 번 열렸다는 것을</div>
+    <p style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 790, margin: 0, textAlign: 'center', fontSize: 46, fontWeight: 900 }}>그러면 아이디어보다 <span style={{ color: '#ff6f0f' }}>무엇을 먼저 봤어야</span> 했을까요?</p>
+    <div style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 560 }}>
+      <div style={{ fontSize: 34, fontWeight: 850, color: '#ffffff' }}>그래서 몰랐습니다 — 같은 플리마켓이 이미 세 번 열렸다는 것을</div>
       <div style={{ display: 'flex', gap: 16, marginTop: 16 }}>
         {ourPast.map((p) => (
-          <span key={p.y} style={{ background: '#2a2a2f', borderRadius: 18, padding: '16px 24px', fontSize: 26, fontWeight: 800 }}>
+          <span key={p.y} style={{ background: '#2a2a2f', borderRadius: 18, padding: '20px 28px', fontSize: 30, fontWeight: 800 }}>
             <span style={{ color: '#ff6f0f', marginRight: 12 }}>{p.y}</span>{p.t}
           </span>
         ))}
@@ -268,7 +256,7 @@ const Pillar = ({ i }: { i: number }) => {
 };
 const Repeat: Page = () => (
   <div style={{ ...fill, background: soft }}>
-    <Title kicker="지역사회 문제의 특성">아이디어보다 먼저, 이 네 가지가 얽혀 있습니다</Title>
+    <Title kicker="먼저 봤어야 할 것">지역사회 문제에는, 이 네 가지가 얽혀 있습니다</Title>
     <div style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 330, display: 'flex', gap: 24 }}>
       {pillars.map((p, i) => (
         <div key={p.k} style={{ flex: 1, background: '#ffffff', borderRadius: 36, boxShadow: '0 20px 50px rgba(20,20,22,0.10)', padding: '34px 30px 30px', textAlign: 'center' }}>
@@ -279,7 +267,7 @@ const Repeat: Page = () => (
         </div>
       ))}
     </div>
-    <p style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 840, margin: 0, fontSize: 34, fontWeight: 850, textAlign: 'center' }}>네 가지가 서로 다른 곳에 흩어져 있어, 한 번에 보는 방법이 없습니다</p>
+    <p style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 840, margin: 0, fontSize: 34, fontWeight: 850, textAlign: 'center' }}>그런데 넷 중 가장 중요한 <span style={{ color: accentText }}>“왜 멈췄나”</span>는, 어디에도 정리돼 있지 않았습니다</p>
     <p style={{ position: 'absolute', left: PAD_X, bottom: 105, margin: 0, fontSize: 22, color: muted }}>월계1동·노원구 공개 자료를 원문으로 확인해 모은 기록 160건 · 출처 60곳</p>
     <Footer />
   </div>
@@ -289,7 +277,7 @@ const Repeat: Page = () => (
 const HID = { total: 160, reasons: 20, council: 17 };
 const Zero: Page = () => (
   <div style={{ ...fill, background: dark, color: '#ffffff' }}>
-    <Title kicker="그런데" onDark>멈춘 이유는, 회의록 속 답변에 묻혀 있었습니다</Title>
+    <Title kicker="찾아봤더니" onDark>멈춘 이유는, 회의록 속 답변에 묻혀 있었습니다</Title>
     <div style={{ position: 'absolute', left: PAD_X, top: 330, width: 700, display: 'grid', gridTemplateColumns: 'repeat(16, 1fr)', gap: 8 }}>
       {Array.from({ length: HID.total }, (_, i) => {
         const hit = i % 8 === 3 && i < HID.reasons * 8;
@@ -357,61 +345,112 @@ const Persona: Page = () => (
 );
 
 /* 6. 왜 지금 방법으로는 안 될까 */
-const alts = [
-  { n: '검색 · ChatGPT', d: '기사로 남은 성공만 찾음', ok: false },
-  { n: '사업 결과 보고서', d: '기관 안에 갇히고 제각각', ok: false },
-  { n: '동네서랍 에이전트', d: '회의록 속 이유까지 찾아 정리', ok: true },
+const sources = [
+  { t: '구청 공지 · 사업 계획', n: 57 },
+  { t: '구의회 회의록 · 행정사무감사', n: 25 },
+  { t: '주민참여예산 · 대학 · 청년 프로젝트', n: 78 },
+  { t: '국내외 기사 · 사례', n: 20 },
 ];
 const Alternatives: Page = () => (
   <div style={fill}>
-    <Title kicker="왜 지금 방법으론 안 될까">없는 기록은, AI도 찾을 수 없습니다</Title>
-    <div style={{ position: 'absolute', left: PAD_X, right: PAD_X, top: 380, display: 'flex', gap: 32 }}>
-      {alts.map((a) => (
-        <div key={a.n} style={{ flex: 1, height: 460, borderRadius: 'var(--osd-radius)', background: a.ok ? tint : soft, border: a.ok ? '4px solid #ff6f0f' : 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 22 }}>
-          <div style={{ fontSize: 40, fontWeight: 900, color: a.ok ? accentText : 'var(--osd-text)' }}>{a.n}</div>
-          <div style={{ width: 150, height: 150, borderRadius: '50%', background: a.ok ? '#ff6f0f' : '#ffffff', color: a.ok ? '#ffffff' : '#b0b3ba', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 92, fontWeight: 900 }}>{a.ok ? '✓' : '✕'}</div>
-          <div style={{ fontSize: 22, fontWeight: 800, color: muted }}>멈춘 이유</div>
-          <div style={{ fontSize: 30, fontWeight: 750, color: sub }}>{a.d}</div>
+    <Title kicker="에이전트 ①">흩어진 원문을, 에이전트가 모읍니다</Title>
+    <div style={{ position: 'absolute', left: PAD_X, top: 330, width: 620 }}>
+      {sources.map((s2) => (
+        <div key={s2.t} style={{ display: 'flex', alignItems: 'center', gap: 18, background: '#ffffff', borderRadius: 22, padding: '20px 24px', boxShadow: '0 10px 26px rgba(20,20,22,0.08)', marginBottom: 16 }}>
+          <svg width="46" height="56" viewBox="0 0 46 56"><rect x="3" y="3" width="40" height="50" rx="6" fill="#fff4ec" stroke="#ff6f0f" strokeWidth="3" /><rect x="12" y="16" width="22" height="4" rx="2" fill="#ffb37f" /><rect x="12" y="26" width="22" height="4" rx="2" fill="#ffb37f" /><rect x="12" y="36" width="14" height="4" rx="2" fill="#ffb37f" /></svg>
+          <span style={{ flex: 1, fontSize: 25, fontWeight: 800 }}>{s2.t}</span>
+          <span style={{ fontSize: 34, fontWeight: 900, color: accentText }}>{s2.n}</span>
         </div>
       ))}
+      <div style={{ fontSize: 22, fontWeight: 700, color: muted, marginTop: 6 }}>출처 60곳 · PDF·HTML·회의록 원문</div>
     </div>
+    <svg width={1180} height={560} viewBox="0 0 1180 560" style={{ position: 'absolute', left: 700, top: 330 }}>
+      {[70, 180, 290, 400].map((y, i) => <path key={i} d={'M0 ' + y + ' C120 ' + y + ', 150 270, 290 270'} fill="none" stroke="#ffb37f" strokeWidth="4" strokeDasharray="10 8" />)}
+      <circle cx="360" cy="270" r="74" fill="#ff6f0f" />
+      <text x="360" y="262" textAnchor="middle" fontSize="26" fontWeight="800" fill="#ffffff">원문 대조</text>
+      <text x="360" y="294" textAnchor="middle" fontSize="22" fontWeight="700" fill="#ffe3cf">사람이 확인</text>
+      <path d="M440 270 H540" stroke="#ff6f0f" strokeWidth="5" />
+      <polygon points="540,262 560,270 540,278" fill="#ff6f0f" />
+      {[0, 1, 2].map((k) => (
+        <g key={k}>
+          <rect x={600 + k * 18} y={170 + k * 16} width="320" height="200" rx="18" fill="#ffffff" stroke="#e6e7ea" strokeWidth="3" />
+        </g>
+      ))}
+      <rect x="636" y="202" width="320" height="200" rx="18" fill="#ffffff" stroke="#ff6f0f" strokeWidth="4" />
+      <text x="668" y="246" fontSize="24" fontWeight="800" fill="#212124">기록 카드 1건</text>
+      <text x="668" y="284" fontSize="20" fontWeight="700" fill="#5a5d66">제목 · 연도 · 주체 · 출처 URL</text>
+      <text x="668" y="316" fontSize="20" fontWeight="700" fill="#5a5d66">결과 · 멈춘 이유 원문</text>
+      <rect x="668" y="336" width="120" height="34" rx="17" fill="#fff4ec" />
+      <text x="728" y="359" textAnchor="middle" fontSize="19" fontWeight="800" fill="#ff6f0f">확인 완료</text>
+    </svg>
+    <p style={{ position: 'absolute', left: PAD_X, right: PAD_X, bottom: 150, margin: 0, fontSize: 30, fontWeight: 850 }}>검색이나 ChatGPT로는 찾을 수 없습니다 — 멈춘 이유는 애초에 정리된 적이 없으니까요</p>
+    <p style={{ position: 'absolute', left: PAD_X, bottom: 100, margin: 0, fontSize: 20, color: muted }}>지금은 사람이 원문을 확인해 모읍니다 · 정기 자동 수집은 다음 단계</p>
     <Footer />
   </div>
 );
 
 /* 7. 해결: 닫힌 고리 */
-const ring = [
-  { t: '수집', s: '공고·회의록·기사를 정기적으로', a: -90 },
-  { t: '팀이 남김', s: '과제를 내면 결과와 멈춘 이유가', a: 30 },
-  { t: '기관이 응답', s: '공감·지원·협력 의사를', a: 150 },
+const labelChips = [
+  { k: '니즈', v: '함께 쓰는 공간' },
+  { k: '장소', v: '월계1동' },
+  { k: '대상', v: '청년 · 주민' },
+  { k: '멈춘 이유', v: '예산·공간 부족' },
 ];
-const RC = { x: 960, y: 640, r: 280 };
+const simRows = [
+  { t: '개념 겹침', w: 0.86 },
+  { t: '장소 적합', w: 0.62 },
+  { t: '문장 유사도', w: 0.41 },
+];
 const Solution: Page = () => (
   <div style={fill}>
-    <Title kicker="에이전트는 계속 똑똑해집니다">수집하고, 남기고, 응답할수록 에이전트가 자랍니다</Title>
-    <svg width={1920} height={1080} style={{ position: 'absolute', inset: 0 }}>
-      <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff6f0f" /></marker></defs>
-      {ring.map((n, i) => {
-        const a1 = ((n.a + 26) * Math.PI) / 180;
-        const a2 = ((ring[(i + 1) % 3].a - 26 + (i === 2 ? 360 : 0)) * Math.PI) / 180;
-        const p = (a: number) => [RC.x + Math.cos(a) * RC.r, RC.y + Math.sin(a) * RC.r];
-        const [x1, y1] = p(a1);
-        const [x2, y2] = p(a2);
-        return <path key={n.t} d={'M' + x1 + ' ' + y1 + ' A' + RC.r + ' ' + RC.r + ' 0 0 1 ' + x2 + ' ' + y2} fill="none" stroke="#ff6f0f" strokeWidth={7} markerEnd="url(#ar2)" />;
-      })}
-    </svg>
-    <img src={mark} alt="" style={{ position: 'absolute', left: RC.x - 80, top: RC.y - 80, width: 160, height: 160 }} />
-    {ring.map((n) => {
-      const a = (n.a * Math.PI) / 180;
-      const x = RC.x + Math.cos(a) * RC.r;
-      const y = RC.y + Math.sin(a) * RC.r;
-      return (
-        <div key={n.t} style={{ position: 'absolute', left: x - 190, top: y - 62, width: 380, height: 124, borderRadius: 28, background: '#ffffff', boxShadow: '0 16px 40px rgba(20,20,22,0.10), 0 0 0 2px #ffd9bf', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ fontSize: 36, fontWeight: 900, color: accentText }}>{n.t}</div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: sub, marginTop: 4 }}>{n.s}</div>
+    <Title kicker="에이전트 ②">속성으로 라벨링하고, 유사도로 묶으며 자랍니다</Title>
+    <div style={{ position: 'absolute', left: PAD_X, top: 320, width: 560 }}>
+      <div style={{ fontSize: 26, fontWeight: 900, color: accentText }}>① 기록마다 속성 라벨</div>
+      <div style={{ background: '#ffffff', borderRadius: 26, boxShadow: '0 14px 34px rgba(20,20,22,0.10)', padding: '26px 28px', marginTop: 14 }}>
+        <div style={{ fontSize: 24, fontWeight: 800, color: muted }}>2026 · 노원구 청년정책과</div>
+        <div style={{ fontSize: 30, fontWeight: 900, marginTop: 6 }}>청년과 주민이 함께 쓰는 공부 공간</div>
+        <div style={{ marginTop: 16 }}>
+          {labelChips.map((c) => (
+            <span key={c.k} style={{ display: 'inline-block', background: tint, borderRadius: 999, padding: '10px 18px', fontSize: 21, fontWeight: 800, marginRight: 8, marginBottom: 8 }}>
+              <span style={{ color: accentText, marginRight: 8 }}>{c.k}</span>{c.v}
+            </span>
+          ))}
         </div>
-      );
-    })}
+      </div>
+      <div style={{ fontSize: 22, fontWeight: 700, color: muted, marginTop: 14, lineHeight: 1.4 }}>니즈 20 · 장소 15 · 대상 · 멈춘 이유 4종<br />온톨로지 사전으로 160건 전부 라벨링</div>
+    </div>
+    <div style={{ position: 'absolute', left: 700, top: 320, width: 480 }}>
+      <div style={{ fontSize: 26, fontWeight: 900, color: accentText }}>② 유사도로 같은 문제 판정</div>
+      <div style={{ marginTop: 18 }}>
+        {simRows.map((r) => (
+          <div key={r.t} style={{ marginBottom: 18 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 23, fontWeight: 800 }}><span>{r.t}</span><span style={{ color: accentText }}>{r.w.toFixed(2)}</span></div>
+            <div style={{ height: 18, borderRadius: 9, background: soft, marginTop: 8 }}>
+              <div style={{ width: r.w * 100 + '%', height: 18, borderRadius: 9, background: '#ff6f0f' }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ background: dark, color: '#ffffff', borderRadius: 22, padding: '20px 24px', marginTop: 8 }}>
+        <div style={{ fontSize: 22, fontWeight: 750, color: '#868b94' }}>자카드 유사도 + 개념 가중합</div>
+        <div style={{ fontSize: 26, fontWeight: 900, marginTop: 6 }}>점수 ≥ 기준 → 같은 문제로 연결</div>
+      </div>
+    </div>
+    <div style={{ position: 'absolute', left: 1260, top: 320, width: 560 }}>
+      <div style={{ fontSize: 26, fontWeight: 900, color: accentText }}>③ 쌓일수록 정확해짐</div>
+      <svg width={540} height={330} viewBox="0 0 540 330" style={{ marginTop: 10 }}>
+        {[[90, 90], [210, 60], [330, 110], [430, 70], [150, 200], [280, 215], [400, 190], [240, 290]].map(([x, y], i) => (
+          <g key={i}>
+            <line x1={260} y1={160} x2={x} y2={y} stroke="#ffd0ad" strokeWidth="3" />
+            <circle cx={x} cy={y} r={i < 4 ? 20 : 14} fill={i < 4 ? '#ffb37f' : '#ffd9bd'} />
+          </g>
+        ))}
+        <circle cx={260} cy={160} r="40" fill="#ff6f0f" />
+        <text x="260" y="168" textAnchor="middle" fontSize="20" fontWeight="800" fill="#ffffff">문제</text>
+      </svg>
+      <div style={{ fontSize: 24, fontWeight: 800, lineHeight: 1.45, marginTop: 4 }}>기록 160건 · 연결 880개<br />팀이 결과를 남기고 기관이 답할수록 연결이 늘고, 다음 사람의 답이 정확해집니다</div>
+    </div>
+    <p style={{ position: 'absolute', left: PAD_X, bottom: 100, margin: 0, fontSize: 20, color: muted }}>지금은 개념 사전과 문장 유사도 기반 · 임베딩 벡터 유사도는 다음 단계</p>
     <Footer />
   </div>
 );
@@ -623,7 +662,7 @@ const Closing: Page = () => (
   <div style={{ ...fill, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
     <img src={mark} alt="" style={{ width: 150, height: 150 }} />
     <h1 style={{ fontFamily: 'var(--osd-font-display)', fontSize: 150, fontWeight: 900, letterSpacing: '-0.05em', lineHeight: 1.05, margin: '34px 0 0' }}>동네서랍</h1>
-    <p style={{ fontSize: 50, fontWeight: 850, color: accentText, margin: '22px 0 0' }}>아이디어 전에, 문제부터</p>
+    <p style={{ fontSize: 40, fontWeight: 850, color: accentText, margin: '24px 0 0', textAlign: 'center', lineHeight: 1.35 }}>정책·예산·이해관계인·선례를 대신 찾아 주는<br />지역 문제 조사 에이전트</p>
     <div style={{ display: 'flex', alignItems: 'center', gap: 30, marginTop: 64, background: soft, borderRadius: 32, padding: '26px 44px' }}>
       <img src={qrTeams} alt="" style={{ width: 170, height: 170 }} />
       <div style={{ textAlign: 'left' }}>
@@ -645,8 +684,8 @@ export const notes: (string | undefined)[] = [
   `[0:30–0:48] 지역사회 문제는 아이디어 이전에 네 가지가 얽혀 있습니다. 이미 무엇이 있는지인 정책, 돈이 어디서 나오는지인 예산, 누가 쥐고 있는지인 이해관계인, 다른 동네는 어떻게 했는지인 선례입니다. 이 네 가지가 서로 다른 곳에 흩어져 있어서, 한 번에 보는 방법이 없습니다.`,
   `[0:48–1:05] 저희가 월계1동과 노원구를 끝까지 파 봤습니다. 공개 기록 160건을 모았는데, 멈춘 이유가 남은 건 20건뿐이었습니다. 그마저 17건은 구의회 회의록 속 답변에 묻혀 있었습니다. 무엇을 했는지는 남아도, 왜 멈췄는지는 찾아 읽어야만 나옵니다.`,
   `[1:05–1:22] 그래서 저희가 정의한 사용자는 이렇습니다. 지역사회 문제를 직접 풀어보려는 청년입니다. 수업 과제일 수도, 공모전일 수도, 그냥 불편해서일 수도 있습니다. 이 사람은 세 가지를 모릅니다. 무엇이 이미 있는지, 왜 멈췄는지, 누구에게 물어볼지. 그래서 결국 아이디어부터 내고, 발표날에 듣습니다. 그거, 운영할 사람이 없어서 멈췄었어요.`,
-  `[1:22–1:40] 검색이나 ChatGPT로 찾으면 되지 않을까요? 기사로 남는 건 잘된 행사뿐이고, 멈춘 이유는 애초에 기록이 없습니다. 사업 결과 보고서는 기관 안에 갇혀 있고 형식도 제각각입니다. 없는 기록은 AI도 찾을 수 없습니다.`,
-  `[1:40–1:58] 그래서 고리를 닫습니다. 시도가 끝날 때 결과와 멈춘 이유를 남기고, 서랍에 개념으로 쌓습니다. 다음 팀은 남의 프로젝트를 이어받는 게 아니라, 자기 아이디어 그대로 앞 팀이 멈춘 지점부터 시작합니다. 운영할 사람이 없어서 멈췄다면, 이번엔 운영 주체부터 구하고 시작하는 겁니다.`,
+  `[1:22–1:40] 그래서 에이전트가 먼저 하는 일은 모으는 것입니다. 구청 공지와 사업 계획 57건, 구의회 회의록 25건, 주민참여예산과 대학·청년 프로젝트 78건, 국내외 사례 20건을 출처 60곳의 원문과 대조해 기록 카드로 만들었습니다. 검색이나 ChatGPT로는 안 됩니다. 멈춘 이유는 애초에 정리된 적이 없으니까요.`,
+  `[1:40–1:58] 모은 다음에는 기록마다 속성을 붙입니다. 니즈, 장소, 대상, 멈춘 이유 네 가지 온톨로지로 160건을 전부 라벨링했습니다. 그리고 개념이 얼마나 겹치는지, 장소가 맞는지, 문장이 얼마나 비슷한지를 점수로 계산해 같은 문제로 묶습니다. 기록이 쌓이고 팀이 결과를 남길수록 연결이 늘고, 다음 사람이 받는 답이 정확해집니다. 지금은 개념 사전과 문장 유사도 기반이고, 임베딩 벡터는 다음 단계입니다.`,
   `[1:58–2:15] 쌓는 방식이 핵심입니다. 문제를 대상, 니즈, 장소, 멈춘 이유로 쪼개면, 홀몸 어르신 안부 문제가 월계, 대구, 전주, 도쿄의 시도와 이어집니다. 전주는 1년 시범 후 멈췄다는 것까지요. 지역 이름이 아니라 개념으로 쌓기 때문에 어느 동네에 붙여도 똑같이 작동합니다.`,
   `[2:15–2:35] 실제 화면입니다. 풀려는 문제를 한 줄 적으면, 에이전트가 같은 문제에 먼저 6번 시도됐다고 알려주고, 각 시도가 어떻게 끝났는지와 출처를 보여줍니다.`,
   `[2:35–2:55] 문제 화면도 같습니다. 같은 문제의 시도가 연도순으로 쌓이고, 그 아래에 기록이 남긴 확인거리와 물어볼 곳이 함께 나옵니다. 저희 의견이 아니라 지난 시도가 멈춘 이유에서 그대로 뽑은 것입니다.`,
