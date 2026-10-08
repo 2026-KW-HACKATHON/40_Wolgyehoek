@@ -41,7 +41,7 @@ const problemSummary = (p: Problem) => ({
   url: problemUrl(p.id),
 });
 const problemLine = (p: Problem) =>
-  `${p.need.label} · ${p.place.label} (${p.id}): ${p.counts.total}번 시도, 시행 ${p.counts.going}, 멈춤 ${p.counts.stopped}, 검증 중 ${p.counts.live}, 결과 미확인 ${p.counts.unknown}\n  장벽: ${p.barriers.slice(0, 3).map(b => `${b.label} ${b.count}번`).join(", ") || "기록 없음"}\n  시도: ${p.attempts.map(a => `${a.title} (${yearLabel(a.year)})`).join(", ")}\n  ${problemUrl(p.id)}`;
+  `${p.need.label} · ${p.place.label} (${p.id}): ${p.counts.total}번 시도, 시행 ${p.counts.going}, 멈춤 ${p.counts.stopped}, 검증 중 ${p.counts.live}, 결과 미확인 ${p.counts.unknown}\n  멈춘 이유: ${p.barriers.slice(0, 3).map(b => `${b.label} ${b.count}번`).join(", ") || "기록 없음"}\n  시도: ${p.attempts.map(a => `${a.title} (${yearLabel(a.year)})`).join(", ")}\n  ${problemUrl(p.id)}`;
 const precedentLine = (p: Precedent) =>
   `${p.title} (${yearLabel(p.year)}, ${p.country} · ${p.region}) · ${p.approach}\n  ${STATE_LABELS[p.outcome]}: ${p.reason || "이유 기록 없음"} · 대상: ${p.beneficiary} · 주체: ${p.by}\n  출처: ${p.sourceTitle || "제목 미확인"} ${p.sourceUrl || "(URL 기록 없음)"}`;
 const groupedPrecedents = (items: Precedent[]) => ({
@@ -72,7 +72,7 @@ async function execute(name: string, args: unknown) {
       const other = elsewhere(problems, p);
       const timeline = [...p.attempts].sort((a, b) => a.year - b.year).map(attempt);
       return result(
-        `## ${p.need.label} · ${p.place.label}\n${problemUrl(p.id)}\n### 지난 시도\n${lines(timeline, a => `${a.year ? `${a.year}년` : "연도 미확인"} · ${a.title} · ${a.stateLabel}\n  주체: ${a.actor || "기록 없음"} · 장벽: ${a.barriers.join(", ") || "기록 없음"}\n  ${a.url || ""} 출처: ${a.sourceUrl || "기록 없음"}`)}\n### 장벽\n${lines(p.barriers, b => `${b.label}: ${b.count}번`)}\n### 대상\n${lines(p.beneficiaries, b => `${b.label}: ${b.count}번`)}\n### 같은 니즈의 다른 장소\n${lines(other.local, problemLine, "같은 니즈를 다룬 다른 장소의 기록이 없습니다.")}\n${precedentSections(other.precedents)}`,
+        `## ${p.need.label} · ${p.place.label}\n${problemUrl(p.id)}\n### 지난 시도\n${lines(timeline, a => `${a.year ? `${a.year}년` : "연도 미확인"} · ${a.title} · ${a.stateLabel}\n  주체: ${a.actor || "기록 없음"} · 멈춘 이유: ${a.barriers.join(", ") || "기록 없음"}\n  ${a.url || ""} 출처: ${a.sourceUrl || "기록 없음"}`)}\n### 멈춘 이유\n${lines(p.barriers, b => `${b.label}: ${b.count}번`)}\n### 대상\n${lines(p.beneficiaries, b => `${b.label}: ${b.count}번`)}\n### 같은 니즈의 다른 장소\n${lines(other.local, problemLine, "같은 니즈를 다룬 다른 장소의 기록이 없습니다.")}\n${precedentSections(other.precedents)}`,
         { ...p, attempts: timeline, elsewhere: other.local.map(problemSummary), precedents: groupedPrecedents(other.precedents), url: problemUrl(p.id) },
       );
     }
@@ -107,7 +107,7 @@ async function execute(name: string, args: unknown) {
       const report = regionReport(graph, input.place);
       const url = `${siteUrl}/report${input.place ? `?place=${encodeURIComponent(input.place)}` : ""}`;
       return result(
-        `## ${report.place?.label ?? "전체 지역"} 보고서\n${url}\n총 ${report.totals.total}번 시도 · 시행 ${report.totals.going} · 멈춤 ${report.totals.stopped} · 검증 중 ${report.totals.live} · 결과 미확인 ${report.totals.unknown}\n### 주요 문제\n${lines(report.problems, problemLine)}\n### 장벽 분포\n${lines(report.barriers, b => `${b.label}: ${b.count}번`)}\n### 시도 기록이 없는 니즈\n${lines(report.whitespace, n => `${n.label} (${n.key})`)}\n기록이 없다는 뜻이며 실제 필요나 활동이 없다는 뜻은 아닙니다.\n### 검증 중인 시도\n${lines(report.live, a => `${a.title} (${yearLabel(a.year)}) ${absoluteHref(a.href) || ""}`)}\n### 신호\n${lines(report.signals, s => `${s.label} · ${s.title}: ${s.detail}`)}`,
+        `## ${report.place?.label ?? "전체 지역"} 보고서\n${url}\n총 ${report.totals.total}번 시도 · 시행 ${report.totals.going} · 멈춤 ${report.totals.stopped} · 검증 중 ${report.totals.live} · 결과 미확인 ${report.totals.unknown}\n### 주요 문제\n${lines(report.problems, problemLine)}\n### 멈춘 이유 분포\n${lines(report.barriers, b => `${b.label}: ${b.count}번`)}\n### 시도 기록이 없는 니즈\n${lines(report.whitespace, n => `${n.label} (${n.key})`)}\n기록이 없다는 뜻이며 실제 필요나 활동이 없다는 뜻은 아닙니다.\n### 검증 중인 시도\n${lines(report.live, a => `${a.title} (${yearLabel(a.year)}) ${absoluteHref(a.href) || ""}`)}\n### 신호\n${lines(report.signals, s => `${s.label} · ${s.title}: ${s.detail}`)}`,
         { ...report, problems: report.problems.map(problemSummary), live: report.live.map(attempt), url },
       );
     }

@@ -58,7 +58,7 @@ class KnowledgeGraphServiceTest {
     }
 
     @Test
-    void 멈춘_시도는_장벽_노드와_장벽_해결_신호를_만든다() {
+    void 멈춘_시도는_멈춘_이유_노드와_재도전_기회_신호를_만든다() {
         Instant past = Instant.now().minus(90, ChronoUnit.DAYS);
         Card c = cards.save(new Card(Ids.newId(), "광운대 앞 주말 플리마켓", "광운로에서 주말마다 학생과 주민이 플리마켓을 열어요.", "", "광운로", "",
                 "kg-test", "홍길동", past, past.plus(14, ChronoUnit.DAYS)));

@@ -7,7 +7,7 @@ import java.util.Map;
 public final class Ontology {
 
     public enum NodeType {
-        IDEA("시도"), NEED("문제 영역"), PLACE("장소"), ACTOR("주체"), BENEFICIARY("대상"), BARRIER("장벽"), SOURCE("출처");
+        IDEA("시도"), NEED("문제 영역"), PLACE("장소"), ACTOR("주체"), BENEFICIARY("대상"), BARRIER("멈춘 이유"), SOURCE("출처");
 
         private final String label;
 

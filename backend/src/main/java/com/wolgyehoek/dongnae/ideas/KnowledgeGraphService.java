@@ -164,7 +164,7 @@ public class KnowledgeGraphService {
             long unknown = list.stream().filter(i -> i.state() == State.UNKNOWN).count();
             if (stopped > 0 && list.size() >= 2) {
                 String barriers = list.stream().flatMap(i -> i.barriers().stream()).distinct().collect(Collectors.joining(", "));
-                out.add(new Signal("STALLED", "장벽 해결", name, list.size() + "번 시도 · " + stopped + "번 멈춤" + (barriers.isEmpty() ? "" : " · " + barriers),
+                out.add(new Signal("STALLED", "재도전 기회", name, list.size() + "번 시도 · " + stopped + "번 멈춤" + (barriers.isEmpty() ? "" : " · " + barriers),
                         60 + (int) stopped * 10 + list.size() * 3, focus));
             }
             if (unknown >= 2 && going == 0 && stopped == 0) {
