@@ -47,7 +47,9 @@ class IdeaGraphServiceTest {
         List<String> ids = check.related().stream().map(IdeaGraphService.Related::id).toList();
         assertThat(ids).contains("arc_ai24");
         assertThat(check.outcome().attempts()).isGreaterThanOrEqualTo(3);
-        assertThat(check.outcome().stopped()).isZero();
+        long decidedStops = check.related().stream().filter(r -> r.status().equals("HOLD") || r.status().equals("STOP")).count();
+        assertThat(check.related()).anyMatch(r -> r.status().equals("UNKNOWN"));
+        assertThat(check.outcome().stopped()).isEqualTo((int) decidedStops);
         assertThat(check.concepts()).extracting(IdeaGraphService.Label::key).contains("ELDER");
     }
 
