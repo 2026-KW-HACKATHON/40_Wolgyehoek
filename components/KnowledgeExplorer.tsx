@@ -1,13 +1,13 @@
 "use client";
 import { useI18n } from "@/lib/i18n/client";
 import { pick } from "@/lib/i18n/messages/common";
-import { graphNodeLabel, placeLabel, signalText } from "@/lib/i18n/messages/explore";
+import { graphNodeLabel, placeLabel } from "@/lib/i18n/messages/explore";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ArrowUpRight, ChevronRight, X } from "lucide-react";
-import type { GraphNode, GraphNodeType, KnowledgeGraph, Signal } from "@/lib/domain/graph";
-import { NODE_COLORS, SIGNAL_COLORS, STATE_LABELS, nodeColor } from "@/lib/domain/graph";
+import type { GraphNode, GraphNodeType, KnowledgeGraph } from "@/lib/domain/graph";
+import { NODE_COLORS, STATE_LABELS, nodeColor } from "@/lib/domain/graph";
 import { cn } from "@/lib/utils";
 
 const GraphCanvas = dynamic(() => import("./GraphCanvas"), { ssr: false, loading: () => <div className="size-full animate-pulse bg-[#141416]" /> });
@@ -76,16 +76,15 @@ export function KnowledgeExplorer({ graph, side }: { graph: KnowledgeGraph; side
 
     <aside className="space-y-6 lg:max-h-[600px] lg:overflow-y-auto lg:pr-1">
     {main && <Insight node={main} title={title} pair={focus.length > 1 ? focus.map((f) => byId.get(f)!).filter(Boolean) : null}
-      ideas={ideas} hubs={[...highlight].map((id) => byId.get(id)!).filter((n) => n && n.type !== "IDEA" && !focus.includes(n.id))}
-      signals={graph.signals.filter((s) => focus.every((f) => s.focus.includes(f)) && s.focus.length > 0)} onPick={select} />}
+      ideas={ideas} hubs={[...highlight].map((id) => byId.get(id)!).filter((n) => n && n.type !== "IDEA" && !focus.includes(n.id))} onPick={select} />}
 
     {side}
     </aside>
   </div>;
 }
 
-function Insight({ node, title, pair, ideas, hubs, signals, onPick }: {
-  node: GraphNode; title: string | null; pair: GraphNode[] | null; ideas: GraphNode[]; hubs: GraphNode[]; signals: Signal[];
+function Insight({ node, title, pair, ideas, hubs, onPick }: {
+  node: GraphNode; title: string | null; pair: GraphNode[] | null; ideas: GraphNode[]; hubs: GraphNode[];
   onPick: (ids: string[], label?: string | null) => void;
 }) {
   const { t, locale } = useI18n();
@@ -96,7 +95,7 @@ function Insight({ node, title, pair, ideas, hubs, signals, onPick }: {
   const problemHref = needKey && placeKey ? `/problems/${needKey}.${placeKey}` : needKey ? `/problems?need=${needKey}` : placeKey ? `/report?place=${placeKey}` : null;
   const grouped = (["NEED", "PLACE", "ACTOR", "BENEFICIARY", "BARRIER", "SOURCE"] as GraphNodeType[])
     .map((t) => ({ t, list: hubs.filter((h) => h.type === t) })).filter((g) => g.list.length);
-  const counts = s ? [[t.explore.attempts, s.attempts], [t.explore.going, s.going], [t.explore.stopped, s.stopped], [t.explore.testing, s.live], [t.explore.unknown, s.unknown], [t.explore.responses, s.demand]].filter(([, v], i) => i === 0 || Number(v) > 0) as [string, number][] : [];
+  const counts = s ? [[t.explore.attempts, s.attempts], [t.explore.going, s.going], [t.explore.stopped, s.stopped], [t.explore.testing, s.live], [t.explore.unknown, s.unknown]].filter(([, v], i) => i === 0 || Number(v) > 0) as [string, number][] : [];
 
   return <section className="rounded-[22px] bg-muted p-5">
     <p className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground">
@@ -115,9 +114,7 @@ function Insight({ node, title, pair, ideas, hubs, signals, onPick }: {
     </div>}
     {s && s.reasons.length > 0 && <div className="mt-3 flex flex-wrap gap-1.5">{s.reasons.map((r) => <span key={r.tag} className="rounded-full bg-background px-2.5 py-1 text-xs font-bold">{pick(t.common.barriers, r.tag, r.tag)}<span className="ml-1 text-[var(--nope)]">{r.count}</span></span>)}</div>}
 
-    {signals.length > 0 && <ul className="mt-4 space-y-1.5">{signals.slice(0, 3).map((g, i) => <li key={i} className="flex items-start gap-2 text-sm">
-      <span className="mt-1.5 size-2 shrink-0 rounded-full" style={{ background: SIGNAL_COLORS[g.kind] }} /><span><b>{pick(t.common.signals, g.kind, g.label)}</b> · {signalText(g, locale, t.common).detail}</span>
-    </li>)}</ul>}
+    
 
     {grouped.length > 0 && <div className="mt-4 space-y-2">{grouped.map(({ t: type, list }) => <div key={type} className="flex flex-wrap gap-1.5">
       {list.slice(0, 8).map((h) => <button key={h.id} type="button" onClick={() => onPick([h.id])} className="flex items-center gap-1.5 rounded-full bg-background px-2.5 py-1 text-xs font-bold hover:bg-[var(--muted-hover)]">
