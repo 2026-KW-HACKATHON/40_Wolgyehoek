@@ -16,7 +16,7 @@ export const RESPONDENT_LABELS: Record<RespondentType, string> = {
   work_study: "직장·학교",
   visitor: "방문",
 };
-export const STANCE_LABELS: Record<Stance, string> = { pro: "찬성", con: "반대", conditional: "조건부 찬성" };
+export const STANCE_LABELS: Record<Stance, string> = { pro: "공감", con: "반론", conditional: "보완" };
 export const DECISION_LABELS: Record<Decision, string> = { go: "진행", hold: "보류", stop: "중단" };
 export const STATUS_LABELS: Record<CardStatus, string> = {
   open: "검증 중",

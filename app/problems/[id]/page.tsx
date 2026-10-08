@@ -1,0 +1,125 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { getCard, knowledgeGraph, listCards } from "@/lib/queries";
+import { CountsBar } from "@/components/ProblemRow";
+import { STATE_LABELS } from "@/lib/domain/graph";
+import { buildProblems, elsewhere, type Precedent } from "@/lib/domain/problems";
+import { OPINION_KINDS } from "@/lib/domain/opinions";
+import { cn } from "@/lib/utils";
+
+const STATE_TONE: Record<string, string> = { GOING: "bg-[var(--brand-soft)] text-primary", STOPPED: "bg-foreground text-background", LIVE: "bg-muted text-foreground", UNKNOWN: "bg-muted text-muted-foreground" };
+const OUTCOME_LABEL: Record<Precedent["outcome"], string> = { GOING: "시행", STOPPED: "멈춤", UNKNOWN: "결과 미확인" };
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const p = buildProblems(await knowledgeGraph()).find((x) => x.id === decodeURIComponent(id));
+  return { title: p ? `${p.need.label} · ${p.place.label} · 동네서랍` : "문제 · 동네서랍" };
+}
+
+export default async function ProblemPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const [graph, cards] = await Promise.all([knowledgeGraph(), listCards({ tab: "all" })]);
+  const problems = buildProblems(graph);
+  const p = problems.find((x) => x.id === decodeURIComponent(id));
+  if (!p) notFound();
+  const other = elsewhere(problems, p);
+  const known = new Map(cards.map((s) => [s.card.id, s]));
+  const withOpinions = p.attempts.filter((a) => (known.get(a.id)?.opinionCount ?? 0) > 0).slice(0, 6);
+  const details = await Promise.all(withOpinions.map((a) => getCard(a.id)));
+  const opinions = details.flatMap((d, i) => (d?.opinions ?? []).filter((o) => !o.hidden).map((o) => ({ ...o, attempt: withOpinions[i] })));
+  const years = p.since && p.until ? (p.since === p.until ? `${p.since}` : `${p.since}–${p.until}`) : "";
+
+  return <div className="mx-auto w-full max-w-[1200px] px-8 pt-8">
+    <nav className="text-sm font-semibold text-muted-foreground"><Link href="/problems" className="hover:text-foreground">문제</Link> <ChevronRight className="inline size-3.5" /> {p.need.label}</nav>
+
+    <header className="mt-3 flex flex-wrap items-end justify-between gap-6">
+      <div className="min-w-0">
+        <h1 className="text-[34px] font-black leading-tight tracking-[-0.04em]">{p.need.label}<span className="ml-3 text-[26px] font-extrabold text-muted-foreground">{p.place.label}</span></h1>
+        <div className="mt-3 flex flex-wrap gap-1.5 text-[13px] font-bold">
+          <Link href={`/problems?need=${p.need.key}`} className="rounded-full bg-[var(--brand-soft)] px-3 py-1 text-primary">니즈 · {p.need.label}</Link>
+          <Link href={`/report?place=${p.place.key}`} className="rounded-full bg-muted px-3 py-1">장소 · {p.place.label}</Link>
+          {p.beneficiaries.map((b) => <span key={b.key} className="rounded-full bg-muted px-3 py-1">대상 · {b.label}</span>)}
+          {p.barriers.map((b) => <span key={b.label} className="rounded-full bg-foreground px-3 py-1 text-background">장벽 · {b.label} {b.count}</span>)}
+        </div>
+      </div>
+      <div className="flex items-center gap-3">
+        <div className="text-right"><p className="tnum text-[40px] font-black leading-none text-primary">{p.counts.total}번</p><p className="mt-1 text-xs font-semibold text-muted-foreground tnum">{years} 시도</p></div>
+        <Link href="/new" className="bg-brand rounded-full px-5 py-3 text-[15px] font-bold text-white">이 문제로 아이디어 등록</Link>
+      </div>
+    </header>
+    <div className="mt-4 flex items-center gap-4">
+      <CountsBar c={p.counts} className="h-2 flex-1" />
+      <p className="tnum shrink-0 text-sm font-semibold text-muted-foreground">시행 {p.counts.going} · 검증 중 {p.counts.live} · 미확인 {p.counts.unknown} · 멈춤 {p.counts.stopped}</p>
+    </div>
+
+    <div className="mt-10 grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_420px]">
+      <div className="space-y-10">
+        <section>
+          <h2 className="mb-3 text-xl font-extrabold tracking-tight">시도 계보</h2>
+          <ol className="relative space-y-3 border-l-2 border-border pl-6">
+            {p.attempts.map((a) => <li key={a.id} className="relative">
+              <span className={cn("absolute -left-[31px] top-5 size-3 rounded-full border-2 border-background", a.state === "STOPPED" ? "bg-foreground" : a.state === "GOING" ? "bg-primary" : "bg-[var(--text-4)]")} />
+              <div className="rounded-[18px] bg-muted p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="tnum text-xs font-bold text-muted-foreground">{a.year || ""}{a.actor ? ` · ${a.actor}` : ""}{a.place.key !== p.place.key ? ` · ${a.place.label}` : ""}</p>
+                    {a.href ? <Link href={a.href} className="mt-0.5 block text-[16px] font-extrabold hover:text-primary">{a.title}</Link> : <p className="mt-0.5 text-[16px] font-extrabold">{a.title}</p>}
+                  </div>
+                  <span className={cn("shrink-0 rounded-full px-2.5 py-1 text-xs font-bold", STATE_TONE[a.state])}>{STATE_LABELS[a.state]}</span>
+                </div>
+                {(a.barriers.length > 0 || a.sourceUrl || (a.href && a.state !== "GOING")) && <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                  {a.barriers.map((b) => <span key={b} className="rounded-full bg-background px-2.5 py-1 text-xs font-bold">멈춘 이유 · {b}</span>)}
+                  {a.sourceUrl && <a href={a.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 text-xs font-semibold text-muted-foreground hover:text-foreground">출처<ArrowUpRight className="size-3" /></a>}
+                  {a.href && (a.state === "STOPPED" || a.state === "UNKNOWN") && <Link href={`${a.href}/takeover`} className="bg-brand rounded-full px-3 py-1 text-xs font-bold text-white">이어받기</Link>}
+                </div>}
+              </div>
+            </li>)}
+          </ol>
+        </section>
+
+        <section>
+          <h2 className="mb-1 text-xl font-extrabold tracking-tight">의견 <span className="text-muted-foreground tnum">{opinions.length}</span></h2>
+          <p className="mb-3 text-sm text-muted-foreground">이 문제의 시도들에 남은 공감·반론·보완 의견이에요. 의견은 각 시도 화면에서 남길 수 있어요.</p>
+          {opinions.length
+            ? <ul className="space-y-2">{opinions.map((o) => <li key={o.id} className="rounded-[18px] border border-border p-4">
+              <p className="text-xs font-bold"><span className={OPINION_KINDS[o.stance].tone}>{OPINION_KINDS[o.stance].label}</span><span className="ml-2 font-semibold text-muted-foreground">{o.authorName} · {o.attempt.title}</span></p>
+              <p className="mt-1.5 text-[15px] leading-relaxed">{o.body}</p>
+              {o.condition && <p className="mt-1 text-sm text-muted-foreground">{o.condition}</p>}
+            </li>)}</ul>
+            : <p className="rounded-[18px] border border-dashed border-border p-6 text-center text-sm font-semibold text-muted-foreground">아직 의견이 없어요</p>}
+        </section>
+      </div>
+
+      <aside className="space-y-8 lg:sticky lg:top-24">
+        <section>
+          <h2 className="mb-1 text-lg font-extrabold tracking-tight">같은 니즈, 다른 장소</h2>
+          {other.local.length
+            ? <ul className="divide-y divide-border">{other.local.map((o) => <li key={o.id}>
+              <Link href={`/problems/${o.id}`} className="flex items-center justify-between gap-3 py-2.5 text-sm hover:text-primary">
+                <span className="truncate font-bold">{o.place.label}</span><span className="tnum shrink-0 text-xs font-semibold text-muted-foreground">{o.counts.total}번 · 멈춤 {o.counts.stopped}</span>
+              </Link>
+            </li>)}</ul>
+            : <p className="py-2 text-sm text-muted-foreground">이 동네의 다른 장소에는 아직 기록이 없어요</p>}
+        </section>
+
+        <section>
+          <h2 className="mb-1 text-lg font-extrabold tracking-tight">다른 지역 해법 <span className="text-muted-foreground tnum">{other.precedents.length}</span></h2>
+          <p className="mb-2 text-xs text-muted-foreground">같은 성질의 문제를 국내외 다른 지역이 푼 방법이에요.</p>
+          {other.precedents.length
+            ? <ul className="space-y-2">{other.precedents.map((x) => <li key={x.id} className="rounded-[16px] bg-muted p-3.5">
+              <p className="text-xs font-bold text-muted-foreground">{x.countryCode !== "KR" ? `${x.country} · ` : ""}{x.region} · {x.year}</p>
+              <p className="mt-0.5 text-[15px] font-extrabold">{x.title}</p>
+              <p className="mt-1 text-sm leading-relaxed">{x.approach}</p>
+              <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                <span className={cn("rounded-full px-2 py-0.5 font-bold", x.outcome === "GOING" ? "bg-[var(--brand-soft)] text-primary" : x.outcome === "STOPPED" ? "bg-foreground text-background" : "bg-background text-muted-foreground")}>{OUTCOME_LABEL[x.outcome]}</span>
+                {x.reason && <span className="text-muted-foreground">{x.reason}</span>}
+                <a href={x.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 font-semibold text-muted-foreground hover:text-foreground">{x.sourceTitle}<ArrowUpRight className="size-3" /></a>
+              </div>
+            </li>)}</ul>
+            : <p className="py-2 text-sm text-muted-foreground">아직 다른 지역 사례가 없어요</p>}
+        </section>
+      </aside>
+    </div>
+  </div>;
+}

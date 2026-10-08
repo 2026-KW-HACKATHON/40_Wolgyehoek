@@ -101,7 +101,7 @@ export function OpinionForm({ cardId }: { cardId: string }) {
   return (
     <form ref={formRef} onSubmit={onSubmit} className="space-y-3">
       <div className="flex gap-1 rounded-full bg-muted p-1">
-        {[["pro", "찬성"], ["con", "반대"], ["conditional", "조건부 찬성"]].map(([k, l]) => (
+        {[["pro", "공감"], ["con", "반론"], ["conditional", "보완"]].map(([k, l]) => (
           <label key={k} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 flex-1 cursor-pointer rounded-full px-3 py-2 text-center text-sm font-bold ${stance === k ? "bg-background shadow-sm" : "text-muted-foreground"}`}>
             <input type="radio" name="stance" value={k} checked={stance === k} onChange={() => setStance(k)} className="sr-only" />
             {l}
@@ -109,7 +109,7 @@ export function OpinionForm({ cardId }: { cardId: string }) {
         ))}
       </div>
       <Textarea name="body" rows={2} placeholder="의견을 남겨 주세요" className={inputCls} />
-      {stance === "conditional" && <Input name="condition" placeholder="어떤 조건이면 찬성하나요? (필수)" className={inputCls} />}
+      {stance === "conditional" && <Input name="condition" placeholder="무엇을 보완하면 될까요? (필수)" className={inputCls} />}
       <FormMessage state={state} />
       <Button type="submit" disabled={pending} className={btnSecondary}>{pending ? "저장 중…" : "의견 남기기"}</Button>
     </form>

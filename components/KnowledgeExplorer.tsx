@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 const GraphCanvas = dynamic(() => import("./GraphCanvas"), { ssr: false, loading: () => <div className="size-full animate-pulse bg-[#141416]" /> });
 
 const TYPE_ORDER: GraphNodeType[] = ["NEED", "PLACE", "ACTOR", "BENEFICIARY", "BARRIER", "IDEA", "SOURCE"];
-const HEIGHT = 440;
+const HEIGHT = 600;
 
 export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
   const box = useRef<HTMLDivElement>(null);
@@ -59,8 +59,8 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
   const ranked = graph.signals.filter((s) => s.kind !== "WHITESPACE").slice(0, 8);
   const blanks = graph.signals.filter((s) => s.kind === "WHITESPACE");
 
-  return <div className="space-y-6">
-    <div ref={box} className="relative -mx-1 scroll-mt-16 overflow-hidden rounded-[22px] bg-[#141416]" style={{ height: HEIGHT }}>
+  return <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
+    <div ref={box} className="relative scroll-mt-20 overflow-hidden rounded-[22px] bg-[#141416]" style={{ height: HEIGHT }}>
       {width > 0 && <GraphCanvas nodes={graph.nodes} links={graph.links} width={width} height={HEIGHT}
         focus={focus[0] ?? null} highlight={highlight} visible={visible} onSelect={(id) => select(id ? [id] : [])} />}
       <div className="pointer-events-none absolute inset-x-0 top-0 flex gap-1.5 overflow-x-auto p-3 [scrollbar-width:none]">
@@ -74,6 +74,7 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
       {focus.length > 0 && <button type="button" onClick={() => select([])} aria-label="선택 해제" className="absolute bottom-3 right-3 flex size-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur"><X className="size-4" /></button>}
     </div>
 
+    <aside className="space-y-6 lg:max-h-[600px] lg:overflow-y-auto lg:pr-1">
     {main && <Insight node={main} title={title} pair={focus.length > 1 ? focus.map((f) => byId.get(f)!).filter(Boolean) : null}
       ideas={ideas} hubs={[...highlight].map((id) => byId.get(id)!).filter((n) => n && n.type !== "IDEA" && !focus.includes(n.id))}
       signals={graph.signals.filter((s) => focus.every((f) => s.focus.includes(f)) && s.focus.length > 0)} onPick={select} />}
@@ -93,6 +94,7 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
       </div>}
       <p className="mt-3 text-[11px] text-[var(--text-4)]">공개 기록과 동네서랍 반응으로 계산한 신호예요 · 시장 규모가 아니에요</p>
     </section>
+    </aside>
   </div>;
 }
 
@@ -101,6 +103,10 @@ function Insight({ node, title, pair, ideas, hubs, signals, onPick }: {
   onPick: (ids: string[], label?: string | null) => void;
 }) {
   const s = pair ? null : node.stats;
+  const picked = [node, ...(pair ?? [])];
+  const needKey = picked.find((p) => p.type === "NEED")?.id.slice(5);
+  const placeKey = picked.find((p) => p.type === "PLACE")?.id.slice(6);
+  const problemHref = needKey && placeKey ? `/problems/${needKey}.${placeKey}` : needKey ? `/problems?need=${needKey}` : placeKey ? `/report?place=${placeKey}` : null;
   const grouped = (["NEED", "PLACE", "ACTOR", "BENEFICIARY", "BARRIER", "SOURCE"] as GraphNodeType[])
     .map((t) => ({ t, list: hubs.filter((h) => h.type === t) })).filter((g) => g.list.length);
   const counts = s ? [["시도", s.attempts], ["시행", s.going], ["멈춤", s.stopped], ["검증 중", s.live], ["미확인", s.unknown], ["반응", s.demand]].filter(([, v], i) => i === 0 || Number(v) > 0) as [string, number][] : [];
@@ -112,6 +118,7 @@ function Insight({ node, title, pair, ideas, hubs, signals, onPick }: {
     </p>
     <h3 className="mt-1 text-[20px] font-extrabold leading-snug tracking-tight">{title ?? node.label}</h3>
     {node.type === "IDEA" && !pair && <p className="mt-1 text-sm text-muted-foreground tnum">{node.year} · {node.sub}</p>}
+    {problemHref && <Link href={problemHref} className="mt-3 inline-flex items-center gap-0.5 rounded-full bg-foreground px-4 py-2 text-sm font-bold text-background">{needKey && placeKey ? "문제 보기" : needKey ? "이 니즈의 문제 보기" : "지역 리포트 보기"}<ChevronRight className="size-4" /></Link>}
 
     {counts.length > 0 && <div className="mt-4 flex gap-5">{counts.map(([k, v]) => <div key={k}><p className="text-[22px] font-black leading-none tnum">{v}</p><p className="mt-1 text-[11px] font-semibold text-muted-foreground">{k}</p></div>)}</div>}
     {s && s.attempts > 0 && <div aria-hidden="true" className="mt-3 flex h-1.5 overflow-hidden rounded-full bg-background">

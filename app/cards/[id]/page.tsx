@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCard, relatedIdeas } from "@/lib/queries";
+import { getCard, knowledgeGraph, relatedIdeas } from "@/lib/queries";
+import { buildProblems } from "@/lib/domain/problems";
+import { OPINION_KINDS } from "@/lib/domain/opinions";
 import { ORIGIN_LABELS } from "@/lib/domain/ideas";
 import { IdeaLineage } from "@/components/IdeaLineage";
 import { currentDevice } from "@/lib/device";
@@ -14,14 +16,15 @@ import { canTakeOver } from "@/lib/domain/status";
 import { DECISION_LABELS, RESPONDENT_LABELS, STANCE_LABELS, STATUS_LABELS, STEP_LABELS, topicLabel, type Decision, type RespondentType, type Stance } from "@/lib/domain/types";
 import { closeNow } from "@/app/actions";
 import { CardBackdrop } from "@/components/CardMedia";
-import { ButtonLink, Disclaimer, Pill, SectionTitle, StatusBadge, fmtDate, fmtWon } from "@/components/ui";
+import { ButtonLink, Disclaimer, SectionTitle, StatusBadge, fmtDate, fmtWon } from "@/components/ui";
 import { ConclusionForm, FlagForm, OpinionForm, OwnerControls, ReactionPanel, ReportPublishForm } from "./panels";
 
 export default async function CardPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const [d, me] = await Promise.all([getCard(id), currentDevice()]);
   if (!d || (d.card.hidden && !me?.isOperator)) notFound();
-  const [insight, lineage] = await Promise.all([getCreditInsight(id), relatedIdeas(id)]);
+  const [insight, lineage, graph] = await Promise.all([getCreditInsight(id), relatedIdeas(id), knowledgeGraph()]);
+  const problems = buildProblems(graph).filter((p) => p.attempts.some((a) => a.id === id));
   const { card, status } = d;
   const archived = card.origin !== "";
   const statusText = card.succeededAt ? "성사" : archived && !d.latest ? "결과 미확인" : archived && status === "go" ? "시행" : STATUS_LABELS[status];
@@ -38,8 +41,9 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
   const likeRatio = insight.total ? Math.round(((insight.likes ?? 0) / insight.total) * 100) : 0;
 
   return (
-    <article className="space-y-8 px-4 pb-8 pt-1">
-      <header className="relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-[22px] p-6 text-white shadow-float">
+    <article className="mx-auto grid w-full max-w-[1200px] items-start gap-10 px-8 pt-8 lg:grid-cols-[minmax(0,1fr)_400px]">
+     <div className="min-w-0 space-y-8">
+      <header className="relative flex min-h-[320px] flex-col justify-end overflow-hidden rounded-[22px] p-6 text-white shadow-float">
         <CardBackdrop cardId={card.id} media={card.media[0]} />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[rgb(74_24_4/.78)] via-transparent to-[rgb(74_24_4/.22)]" />
         <Link href="/" aria-label="뒤로" className="absolute left-4 top-4 flex size-10 items-center justify-center rounded-full bg-black/20 backdrop-blur hover:bg-black/30"><ChevronLeft className="size-5" /></Link>
@@ -92,6 +96,50 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         )}
       </section>
 
+      <IdeaLineage check={lineage} mode="detail" />
+
+      <section>
+        <SectionTitle sub={d.opinions.filter((o) => !o.hidden).length}>의견</SectionTitle>
+        <p className="-mt-1 mb-3 text-sm text-muted-foreground">공감·반론·보완과 그 근거를 남겨 주세요. 멈춘 이유를 알고 있다면 반론으로 알려 주세요.</p>
+        <OpinionForm cardId={card.id} />
+        <ul className="mt-2 divide-y divide-border">
+          {d.opinions.map((o) => (
+            <li key={o.id} className="py-4">
+              {o.hidden ? (
+                <p className="text-sm text-[var(--text-4)]">가려진 글이에요</p>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className={`font-extrabold ${OPINION_KINDS[o.stance as Stance].tone}`}>{STANCE_LABELS[o.stance as Stance]}</span>
+                    <span className="font-bold">{o.authorName}</span>
+                    <span className="text-[var(--text-4)]">{fmtDate(o.createdAt)}</span>
+                  </div>
+                  <p className="mt-2 text-[15px] leading-6">{o.body}</p>
+                  {o.condition && <p className="mt-1 text-sm text-muted-foreground">보완 · {o.condition}</p>}
+                  <FlagForm targetType="opinion" targetId={o.id} cardId={card.id} />
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <footer className="border-t border-border pt-2">
+        <FlagForm targetType="card" targetId={card.id} cardId={card.id} label="이 카드 신고" />
+      </footer>
+     </div>
+
+     <aside className="space-y-8 lg:sticky lg:top-24">
+      {problems.length > 0 && <section>
+        <SectionTitle>이 시도가 다룬 문제</SectionTitle>
+        <ul className="space-y-2">{problems.map((p) => <li key={p.id}>
+          <Link href={`/problems/${p.id}`} className="flex items-center justify-between gap-3 rounded-2xl bg-muted p-3.5 hover:bg-[var(--muted-hover)]">
+            <span className="min-w-0"><span className="block truncate text-[15px] font-extrabold">{p.need.label}</span><span className="block truncate text-xs font-semibold text-muted-foreground">{p.place.label}</span></span>
+            <span className="tnum shrink-0 text-sm font-black text-primary">{p.counts.total}번</span>
+          </Link>
+        </li>)}</ul>
+      </section>}
+
       {!insight.campaign && !archived && <RecordProgress status={status} reactions={d.reactionCount} published={!!card.reportPublishedAt} concluded={d.conclusions.length > 0} />}
 
       {insight.campaign ? <section>
@@ -105,9 +153,8 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-background"><div className="bg-brand h-full rounded-full" style={{ width: `${Math.min(100, Math.round((insight.pledges / Math.max(1, insight.goal)) * 100))}%` }} /></div>
           </>}
         </div>
-        {insight.mine ? <div className="rounded-2xl bg-muted p-4"><p className="flex items-center gap-2 text-[15px] font-bold">{insight.mine.direction === "RIGHT" ? <Heart className="size-4 fill-[var(--like)] text-[var(--like)]" /> : <X className="size-4 text-[var(--nope)]" strokeWidth={3} />}{insight.mine.direction === "RIGHT" ? "함께해요" : "패스"}{insight.mine.reward > 0 && <span className="ml-auto text-sm text-primary">+{insight.mine.reward}P</span>}</p>{insight.mine.reason && <p className="mt-2 text-sm leading-6">{insight.mine.reason}</p>}</div>
+        {insight.mine ? <div className="rounded-2xl bg-muted p-4"><p className="flex items-center gap-2 text-[15px] font-bold">{insight.mine.direction === "RIGHT" ? <Heart className="size-4 fill-[var(--like)] text-[var(--like)]" /> : <X className="size-4 text-[var(--nope)]" strokeWidth={3} />}{insight.mine.direction === "RIGHT" ? "함께해요" : "패스"}</p>{insight.mine.reason && <p className="mt-2 text-sm leading-6">{insight.mine.reason}</p>}</div>
           : canManage ? (insight.owner ? <OwnerControls cardId={card.id} open={status === "open"} succeeded={!!insight.succeededAt} pledges={insight.pledges} /> : <ButtonLink href="/admin" variant="secondary">운영자 공간</ButtonLink>)
-          : insight.accepting ? <Button asChild size="lg" className="w-full"><Link href={`/discover?idea=${card.id}`}>스와이프하러 가기</Link></Button>
           : <p className="text-sm text-[var(--text-4)]">{status === "open" ? "예산 준비 중" : "참여 종료"}</p>}
         {insight.visible ? <div className="mt-6">
           <div className="flex items-end justify-between text-sm font-bold tnum"><span className="flex items-center gap-1.5 text-[var(--like)]"><Heart className="size-4 fill-current" />{insight.likes}</span><span className="text-xs font-medium text-[var(--text-4)]">{insight.total}명{insight.showRatio && !!insight.total && ` · 관심 ${likeRatio}%`}</span><span className="flex items-center gap-1.5 text-[var(--nope)]">{insight.passes}<X className="size-4" strokeWidth={3} /></span></div>
@@ -147,7 +194,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
                 <Stat key={k} label={RESPONDENT_LABELS[k]} value={`${report.respondents[k]}명`} />
               ))}
             </div>
-            <p className="tnum text-sm text-muted-foreground">월계1동 위치 확인 {report.geoInside}명 · 찬성 {report.opinions.pro} / 반대 {report.opinions.con} / 조건부 {report.opinions.conditional}</p>
+            <p className="tnum text-sm text-muted-foreground">월계1동 위치 확인 {report.geoInside}명 · 공감 {report.opinions.pro} / 반론 {report.opinions.con} / 보완 {report.opinions.conditional}</p>
             {card.reportSummary && <p className="rounded-2xl bg-muted p-4 text-sm leading-6">{card.reportSummary}</p>}
             <Disclaimer total={report.total} />
             {!card.reportPublishedAt && canManage && <ReportPublishForm cardId={card.id} />}
@@ -185,36 +232,7 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
         </section>
       )}
 
-      <IdeaLineage check={lineage} mode="detail" />
-
-      {(!archived || d.opinions.length > 0) && <section>
-        <SectionTitle sub={d.opinions.filter((o) => !o.hidden).length}>의견</SectionTitle>
-        {status === "open" && <OpinionForm cardId={card.id} />}
-        <ul className="mt-2 divide-y divide-border">
-          {d.opinions.map((o) => (
-            <li key={o.id} className="py-4">
-              {o.hidden ? (
-                <p className="text-sm text-[var(--text-4)]">가려진 글이에요</p>
-              ) : (
-                <>
-                  <div className="flex items-center gap-2 text-xs">
-                    <Pill>{STANCE_LABELS[o.stance as Stance]}</Pill>
-                    <span className="font-bold">{o.authorName}</span>
-                    <span className="text-[var(--text-4)]">{fmtDate(o.createdAt)}</span>
-                  </div>
-                  <p className="mt-2 text-[15px] leading-6">{o.body}</p>
-                  {o.condition && <p className="mt-1 text-sm text-muted-foreground">조건 · {o.condition}</p>}
-                  <FlagForm targetType="opinion" targetId={o.id} cardId={card.id} />
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>}
-
-      <footer className="border-t border-border pt-2">
-        <FlagForm targetType="card" targetId={card.id} cardId={card.id} label="이 카드 신고" />
-      </footer>
+     </aside>
     </article>
   );
 }

@@ -79,4 +79,4 @@ body { font-family: var(--font-sans); word-break: keep-all; overflow-wrap: anywh
 /* WebKit은 backface-visibility를 무시할 때가 있어, 회전 절반(90°) 시점에 면을 바꾼다. */
 .flip-face { transition: visibility 0s linear 250ms; }
 @media (prefers-reduced-motion: reduce) { .flip-face { transition: none; } }
-@media(min-width:481px) { html { background:#f2f3f6; } .mobile-app { box-shadow: 0 0 0 1px var(--border); } }
+

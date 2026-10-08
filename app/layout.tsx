@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { getWallet } from "@/lib/credits";
 import { currentDevice } from "@/lib/device";
 import { unreadCount } from "@/lib/queries";
 import "./globals.css";
@@ -15,7 +14,7 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "동네서랍",
-  description: "매년 다시 나오는 동네 아이디어를 지난 시도·멈춘 이유·빈칸과 함께 보여주는 지역 아이디어의 기억",
+  description: "지역 문제를 풀려는 청년 팀이 바로 쓸 수 있는 아이디어 온톨로지. 같은 문제를 누가, 어디서, 어떻게 시도했고 왜 멈췄는지 보고 시작합니다.",
   metadataBase: new URL("https://dongne-seorap.vercel.app"),
 };
 
@@ -24,6 +23,5 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const me = await currentDevice();
   const unread = me ? await unreadCount() : 0;
-  const wallet = me ? await getWallet() : null;
-  return <html lang="ko" className={pretendard.variable}><body className="antialiased"><AppShell balance={wallet?.balance ?? 0} points={!!wallet?.enabled} unread={unread} nickname={me?.nickname} operator={!!me?.isOperator}>{children}</AppShell></body></html>;
+  return <html lang="ko" className={pretendard.variable}><body className="antialiased"><AppShell unread={unread} nickname={me?.nickname} operator={!!me?.isOperator}>{children}</AppShell></body></html>;
 }
