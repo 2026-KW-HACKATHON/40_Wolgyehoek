@@ -21,12 +21,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ z
   const cellOf = (zone: string, topic: string) => map.cells.find((c) => c.zone === zone && c.topic === topic);
   const picked = sp.zone && sp.topic ? { zone: sp.zone, topic: sp.topic, ids: cellOf(sp.zone, sp.topic)?.ids ?? [] } : null;
   const max = Math.max(1, ...map.cells.map((c) => c.count));
-  const stats: [string, number][] = [
-    [t.explore.attempts, map.total],
-    [t.explore.problems, problems.length],
-    [t.explore.repeated, repeated.length],
-    [t.explore.stoppedAttempts, map.cells.reduce((n, c) => n + c.stopped, 0)],
-    [t.explore.precedents, PRECEDENTS.length],
+  const stats: [string, number, string][] = [
+    [t.explore.attempts, map.total, "/problems"],
+    [t.explore.problems, problems.length, "/problems"],
+    [t.explore.repeated, repeated.length, "/problems?filter=repeat"],
+    [t.explore.stoppedAttempts, map.cells.reduce((n, c) => n + c.stopped, 0), "/problems?filter=stopped"],
+    [t.explore.precedents, PRECEDENTS.length, "/problems?filter=precedent"],
   ];
 
   return <div className="mx-auto w-full max-w-[1200px] space-y-10 px-8 pt-8">
@@ -35,9 +35,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ z
         <h1 className="text-[34px] font-black tracking-[-0.04em]">{t.explore.heading}</h1>
         <p className="mt-2 text-[17px] font-medium text-muted-foreground">{t.explore.intro}</p>
       </div>
-      <dl className="flex gap-2">
-        {stats.map(([k, v]) => <div key={k} className="min-w-[104px] rounded-2xl bg-muted px-4 py-3"><dd className="text-[26px] font-black leading-none tracking-tight tnum">{v.toLocaleString(locale, { useGrouping: locale !== "ko" })}</dd><dt className="mt-1.5 text-xs font-semibold text-muted-foreground">{k}</dt></div>)}
-      </dl>
+      <ul className="flex gap-2">
+        {stats.map(([k, v, href]) => <li key={k}><Link href={href} className="block min-w-[104px] rounded-2xl bg-muted px-4 py-3 transition-colors hover:bg-[var(--muted-hover)]"><span className="block text-[26px] font-black leading-none tracking-tight tnum">{v.toLocaleString(locale, { useGrouping: locale !== "ko" })}</span><span className="mt-1.5 block text-xs font-semibold text-muted-foreground">{k}</span></Link></li>)}
+      </ul>
     </header>
 
     <KnowledgeExplorer graph={graph} />

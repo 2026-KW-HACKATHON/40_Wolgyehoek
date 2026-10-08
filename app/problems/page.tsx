@@ -3,7 +3,7 @@ import { pick } from "@/lib/i18n/messages/common";
 import Link from "next/link";
 import { knowledgeGraph } from "@/lib/queries";
 import { ProblemRow } from "@/components/ProblemRow";
-import { buildProblems, needsOf, placesOf, searchProblems } from "@/lib/domain/problems";
+import { buildProblems, needsOf, placesOf, precedentsFor, searchProblems, type Problem } from "@/lib/domain/problems";
 import { cn } from "@/lib/utils";
 
 export async function generateMetadata() {
@@ -11,11 +11,18 @@ export async function generateMetadata() {
   return { title: t.problems.metadataTitle };
 }
 
-export default async function ProblemsPage({ searchParams }: { searchParams: Promise<{ q?: string; need?: string; place?: string }> }) {
+const FILTERS: Record<string, (p: Problem) => boolean> = {
+  repeat: (p) => p.counts.total >= 2,
+  stopped: (p) => p.counts.stopped > 0,
+  precedent: (p) => precedentsFor([p.need.key]).length > 0,
+};
+
+export default async function ProblemsPage({ searchParams }: { searchParams: Promise<{ q?: string; need?: string; place?: string; filter?: string }> }) {
   const { t, locale } = await getT();
   const [graph, sp] = await Promise.all([knowledgeGraph(), searchParams]);
   const all = buildProblems(graph);
-  const list = searchProblems(all, { text: sp.q, need: sp.need, place: sp.place });
+  const filter = sp.filter && FILTERS[sp.filter] ? sp.filter : undefined;
+  const list = searchProblems(all, { text: sp.q, need: sp.need, place: sp.place }).filter((p) => !filter || FILTERS[filter](p));
   const needs = needsOf(graph).filter((n) => all.some((p) => p.need.key === n.key));
   const places = placesOf(graph).filter((n) => all.some((p) => p.place.key === n.key));
   const href = (patch: Record<string, string | undefined>) => {
@@ -34,8 +41,16 @@ export default async function ProblemsPage({ searchParams }: { searchParams: Pro
         <form action="/problems" className="flex gap-2">
           {sp.need && <input type="hidden" name="need" value={sp.need} />}
           {sp.place && <input type="hidden" name="place" value={sp.place} />}
+          {filter && <input type="hidden" name="filter" value={filter} />}
           <input name="q" defaultValue={sp.q ?? ""} placeholder={t.problems.searchPlaceholder} className="h-10 min-w-0 flex-1 rounded-full bg-muted px-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-primary" />
         </form>
+        <div>
+          <p className="mb-2 text-xs font-bold text-muted-foreground">{t.problems.view}</p>
+          <div className="flex flex-wrap gap-1.5">
+            <Link href={href({ filter: undefined })} className={chip(!filter)}>{t.problems.all}</Link>
+            {Object.keys(FILTERS).map((k) => <Link key={k} href={href({ filter: k })} className={chip(filter === k)}>{t.problems.filters[k]}</Link>)}
+          </div>
+        </div>
         <div>
           <p className="mb-2 text-xs font-bold text-muted-foreground">{t.problems.need}</p>
           <div className="flex flex-wrap gap-1.5">
