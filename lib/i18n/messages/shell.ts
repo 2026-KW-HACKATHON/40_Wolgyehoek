@@ -9,7 +9,7 @@ const ko = {
   switchTo: "English",
   switchLabel: "Switch to English",
   operator: "운영자",
-  description: "지역 문제를 풀려는 청년 팀이 바로 쓸 수 있는 아이디어 온톨로지. 같은 문제를 누가, 어디서, 어떻게 시도했고 왜 멈췄는지 보고 시작합니다.",
+  description: "지역 문제를 푸는 시도의 결과와 멈춘 이유를 남기고, 다음 팀이 시작할 때 먼저 보여줍니다.",
 };
 
 const en: typeof ko = {
@@ -23,7 +23,7 @@ const en: typeof ko = {
   switchTo: "한국어",
   switchLabel: "한국어로 보기",
   operator: "Operator",
-  description: "An idea ontology for youth teams tackling local problems. See who tried what, where, how, and why it stopped before you start.",
+  description: "Keeps what happened to local problem-solving attempts and why they stopped, and shows it to the next team before they start.",
 };
 
 export const shell = { ko, en };

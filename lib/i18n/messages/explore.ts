@@ -3,7 +3,7 @@ import { common, pick } from "./common";
 
 const ko = {
   heading: "같은 문제, 먼저 시도한 사람들",
-  intro: "지역 문제를 누가, 어디서, 어떻게 시도했고 왜 멈췄는지 보고 시작하세요.",
+  intro: "시도가 끝나면 결과와 멈춘 이유를 남기고, 다음 팀은 그걸 먼저 보고 시작해요.",
   attempts: "시도",
   problems: "문제",
   repeated: "반복되는 문제",
@@ -87,7 +87,7 @@ const ko = {
 
 const en: typeof ko = {
   heading: "The same problems, those who tried first",
-  intro: "See who tried what, where, and why it stopped before you start.",
+  intro: "When an attempt ends, leave what happened and why it stopped. The next team sees it first.",
   attempts: "Attempts",
   problems: "Problems",
   repeated: "Recurring problems",
