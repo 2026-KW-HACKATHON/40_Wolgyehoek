@@ -153,7 +153,8 @@ public class IdeaGraphService {
         boolean zoneFits = sameZone || IdeaTaxonomy.isWide(p.zone()) || IdeaTaxonomy.isWide(n.profile().zone());
         boolean linked = text >= 0.25
                 || (specific >= 1 && (zoneFits || text >= 0.1))
-                || (shared.size() >= 2 && zoneFits);
+                || (shared.size() >= 2 && zoneFits)
+                || (!shared.isEmpty() && zoneFits && p.topic().equals(n.profile().topic()));
         if (!linked) return 0;
         double concept = union.isEmpty() ? 0 : (double) shared.size() / union.size();
         return Math.min(1, 0.55 * concept + (sameZone ? 0.2 : 0) + 0.6 * text);
