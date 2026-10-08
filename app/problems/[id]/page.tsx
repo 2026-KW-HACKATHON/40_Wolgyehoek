@@ -7,6 +7,8 @@ import { getCard, knowledgeGraph, listCards } from "@/lib/queries";
 import { CountsBar } from "@/components/ProblemRow";
 import { STATE_LABELS } from "@/lib/domain/graph";
 import { buildProblems, elsewhere } from "@/lib/domain/problems";
+import { contacts, nextSteps } from "@/lib/domain/next-steps";
+import type { IdeaRelated } from "@/lib/domain/ideas";
 import { OPINION_KINDS } from "@/lib/domain/opinions";
 import { OpinionForm } from "@/app/cards/[id]/panels";
 import { cn } from "@/lib/utils";
@@ -36,6 +38,14 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
   const detailById = new Map(linkedAttempts.map((a, i) => [a.id, details[i]]));
   const opinions = withOpinions.flatMap(a => (detailById.get(a.id)?.opinions ?? []).filter(o => !o.hidden).map(o => ({ ...o, attempt: a })));
   const institutionAttempts = linkedAttempts.filter(a => (detailById.get(a.id)?.institutionResponses.length ?? 0) > 0);
+  const asRelated = p.attempts.map((a): IdeaRelated => ({
+    id: a.id, title: a.title, status: a.state === "GOING" ? "GO" : a.state === "STOPPED" ? "STOP" : "UNKNOWN",
+    statusLabel: "", year: a.year, origin: "", originLabel: "", sourceTitle: "", sourceUrl: a.sourceUrl ?? "",
+    zone: a.place.key, shared: [], decision: a.state === "STOPPED" ? "STOP" : null, reasonTags: a.barriers, reason: "",
+    succeeded: a.state === "GOING", canTakeOver: false, score: 1, by: a.actor ?? "",
+  }));
+  const steps = nextSteps(asRelated);
+  const asks = contacts(asRelated);
   const num = (n: number) => n.toLocaleString(locale, { useGrouping: locale !== "ko" });
   const years = p.since && p.until ? (p.since === p.until ? `${p.since}` : `${p.since}–${p.until}`) : "";
 
@@ -86,6 +96,16 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
             </li>)}
           </ol>
         </section>
+
+        {(steps.length > 0 || asks.length > 0) && <section data-testid="problem-next-steps">
+          <h2 className="mb-1 text-xl font-extrabold tracking-tight">{t.teams.nextSteps}</h2>
+          <p className="mb-3 text-sm text-muted-foreground">{t.teams.nextStepsHint}</p>
+          {steps.length > 0 && <ol className="space-y-2">{steps.map((s, i) => <li key={s.key} className="flex gap-3 rounded-[18px] bg-[var(--brand-soft)] p-4">
+            <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-black text-white">{i + 1}</span>
+            <span className="min-w-0"><span className="block text-[15px] font-extrabold">{t.teams.checkItems[s.key]}</span><span className="mt-0.5 block text-sm text-muted-foreground">{t.intake.nextStepBecause(s.ref)}</span></span>
+          </li>)}</ol>}
+          {asks.length > 0 && <p className="mt-3 text-sm"><span className="font-bold">{t.teams.ask}</span> <span className="text-muted-foreground">{asks.map((a) => a.name).join(" · ")}</span></p>}
+        </section>}
 
         <section>
           <h2 className="mb-3 text-xl font-extrabold tracking-tight">{t.org.title}</h2>
