@@ -9,8 +9,9 @@ import { card } from "./card";
 import { me } from "./me";
 import { system } from "./system";
 import { org } from "./org";
+import { teams } from "./teams";
 
-const all = { common, shell, connect, explore, problems, report, intake, card, me, system, org };
+const all = { common, shell, connect, explore, problems, report, intake, card, me, system, org, teams };
 type All = typeof all;
 
 const build = <L extends "ko" | "en">(l: L) =>

@@ -36,4 +36,8 @@ describe("contacts", () => {
     const list = contacts([rec({ by: "노원구 청년정책과" }), rec({ by: "노원구 청년정책과" }), rec({ by: "노원구" }), rec({ by: "월계1동주민센터" })]);
     expect(list).toEqual([{ name: "노원구 청년정책과", count: 2 }, { name: "월계1동주민센터", count: 1 }]);
   });
+
+  it("한 기록에 주체가 여러 개면 부서만 갈라서 센다", () => {
+    expect(contacts([rec({ by: "노원구 청년정책과·청년 창업가" })])).toEqual([{ name: "노원구 청년정책과", count: 1 }]);
+  });
 });

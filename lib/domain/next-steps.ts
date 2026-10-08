@@ -37,8 +37,9 @@ const DEPARTMENT = /(과|팀|주민센터|주민자치회|캠퍼스타운|센터
 export function contacts(related: IdeaRelated[]): Contact[] {
   const counts = new Map<string, number>();
   for (const r of related) {
-    const name = (r.by ?? "").trim();
-    if (DEPARTMENT.test(name)) counts.set(name, (counts.get(name) ?? 0) + 1);
+    for (const name of (r.by ?? "").split(/[·,]/).map((s) => s.trim())) {
+      if (DEPARTMENT.test(name)) counts.set(name, (counts.get(name) ?? 0) + 1);
+    }
   }
   return [...counts].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count).slice(0, 3);
 }

@@ -1,0 +1,4528 @@
+[
+ {
+  "no": 1,
+  "teamName": "토큰좀주세요",
+  "service": "데이트코스메이커",
+  "category": "상권 활성화",
+  "summary": "광운 전자 23학번 21학번입니다 데이트나 가족 나들이 코스를 짤때 일일히 검색 후 짜야했던 불편함을 지역의 명소와 맛집들을 위주로 코스를 짜주는 어플입니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/c745bb7b-bbac-4b5d-aad0-e56ef2b2eccf",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 2,
+    "open": 4,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_sign21",
+     "title": "광운로 상점 간판·시설 개선",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2021,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=37197",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "간판개선과 지역상가 시설개선·멘토링 진행이 확인됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "광운대 캠퍼스타운"
+    },
+    {
+     "id": "arc_induk_live",
+     "title": "동북권 소상공인 라이브커머스",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "한국대학신문 · 2022 테마캠퍼스/인덕대, 산학일체형 직업교육으로 혁신 선도한다",
+     "sourceUrl": "https://news.unn.net/news/articleView.html?idxno=529336",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": "인덕대 I·CULTURE·DU 캠퍼스타운"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 2,
+  "teamName": "솜사탕과 너구리",
+  "service": "월계알리미",
+  "category": "배리어프리·생활 편의",
+  "summary": "동네 소식은 놓치지 않고, 긴 공지는 헤매지 않도록. 월계알리미가 흩어진 공지를 모아 중요한 내용부터 쉽게 전합니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/007473f7-7a5b-4bb5-89f1-075305f9408d",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 4,
+  "teamName": "얼마Geo",
+  "service": "얼마 GEO",
+  "category": "기타",
+  "summary": "재개발 재건축 분담금 예측 서비스",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/d5a92a6f-7230-4dc2-9d65-54ec9356d350",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 5,
+  "teamName": "라스트팡",
+  "service": "동네냠냠",
+  "category": "상권 활성화",
+  "summary": "가게의 빈 시간과 주민의 여유 시간을 잇는 월계1동 타임딜 서비스, 동네냠냠을 만듭니다 오프라인 상권의 데드존을 허무는 실시간 가치 전환 플랫폼! 동네냠냠입니다. 손님이 없는 게 아니라 가게와 주민의 시간이 어긋나 있다는 문제에서 출발해, 사장님의 빈 시간과 주민의 빈 시간을 실시간으로 이어주고, 정해진 할인 시간표 없이 그때그때 반경 800m 안에서 매칭하며, 수수료 0원으로 소상공인의 고",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/5ed19166-dce5-481a-85fe-09c18da0333e",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 2,
+    "open": 4,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_seokgye_night",
+     "title": "석계역 달빛야시장",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제300회 행정재경위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=e53e163dc9d24e80068f757335b23a9e5d0eef17e6b56687bf03eaaadc6e5f4fc8d015e196d32dfa",
+     "zone": "석계역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구 지역경제과"
+    },
+    {
+     "id": "arc_induk_live",
+     "title": "동북권 소상공인 라이브커머스",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "한국대학신문 · 2022 테마캠퍼스/인덕대, 산학일체형 직업교육으로 혁신 선도한다",
+     "sourceUrl": "https://news.unn.net/news/articleView.html?idxno=529336",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": "인덕대 I·CULTURE·DU 캠퍼스타운"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 6,
+  "teamName": "CALAR",
+  "service": "디지털 취약 계층을 위한 월계 1동 지역 상권 앱",
+  "category": "상권 활성화",
+  "summary": "아이디어를 실행 가능한 코드와 제품으로 구현해내는 6조 CALAR 입니다. 고령층과 디지털 취약 계층도 간판 촬영 한 번으로 동네 가게를 찾고, 미리 주문·예약까지 할 수 있게 돕는 골목 상권 활성화 서비스입니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/16e58b8b-4bd4-434a-b18a-3c1ccd4660bf",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    },
+    {
+     "key": "DIGITAL",
+     "label": "디지털 배움"
+    }
+   ],
+   "zone": {
+    "key": "HOMES",
+    "label": "주거 골목"
+   },
+   "topic": "CARE",
+   "outcome": {
+    "attempts": 3,
+    "stopped": 0,
+    "going": 2,
+    "open": 1,
+    "reasons": [],
+    "since": 2024
+   },
+   "related": [
+    {
+     "id": "arc_disability_digital",
+     "title": "장애인 디지털기기 무료 교육",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 서울시, 장애인 정보화교육 7곳서 무료로…디지털이용 도움",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240311058600004",
+     "zone": "노원구 전역",
+     "shared": [
+      "디지털 배움"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월부터 무료 교육을 시행한다고 밝혔다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "서울시"
+    },
+    {
+     "id": "arc_clink_waste",
+     "title": "무단투기 통합관리시스템 구축",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2026,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 쓰레기 무단투기 통합관리시스템 '클링크' 가동",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20260615095700004",
+     "zone": "노원구 전역",
+     "shared": [
+      "디지털 배움"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.19,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_child_meals",
+     "title": "천원 아동식당 운영",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 서울서 합계출산율 1위…아이 키우기 좋은 환경 구축",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240229130200004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "천원 아동식당 운영과 이용자 호응이 보도됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.14,
+     "by": "노원구"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 7,
+  "teamName": "로컬호스트",
+  "service": "밥줄",
+  "category": "상권 활성화",
+  "summary": "한산한 식당에 새로운 수요를 만드는 팀, 로컬호스트입니다. 밥줄은 실시간 식당 혼잡도 제보를 포인트와 시간 한정 쿠폰으로 연결해, 한산한 시간대의 방문을 늘리는 지역 상권 활성화 서비스입니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/31f86f61-5782-4b69-9140-5f61b9e0c522",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 2,
+    "open": 4,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.57,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_seokgye_night",
+     "title": "석계역 달빛야시장",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제300회 행정재경위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=e53e163dc9d24e80068f757335b23a9e5d0eef17e6b56687bf03eaaadc6e5f4fc8d015e196d32dfa",
+     "zone": "석계역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.3,
+     "by": "노원구 지역경제과"
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": ""
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 8,
+  "teamName": "ESGenius",
+  "service": "월계온",
+  "category": "배리어프리·생활 편의",
+  "summary": "월계 1동 맞춤 보행, 생활정보 플랫폼 8조 ESGenius_월계온",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/4ecd6afa-2abb-42ce-9d8e-ccbffb10eaf7",
+  "check": {
+   "concepts": [
+    {
+     "key": "TRAFFIC",
+     "label": "보행·교통"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "SAFETY",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 1,
+    "going": 5,
+    "open": 0,
+    "reasons": [
+     {
+      "tag": "예산·공간 부족",
+      "count": 1
+     }
+    ],
+    "since": 2023
+   },
+   "related": [
+    {
+     "id": "arc_2024_s10_shelter",
+     "title": "스마트쉼터 조성",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2024년 노원구 주민제안사업 선정 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=233774&q_fileId=2312acef-5ece-417a-80d4-d9eb1d7cf203",
+     "zone": "상계동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구 주민제안사업(상계10동)"
+    },
+    {
+     "id": "arc_culture_street_hold",
+     "title": "노원문화의거리 개선 재원 보류",
+     "status": "HOLD",
+     "statusLabel": "보류",
+     "year": 2025,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "노원구의회 · 제295회 도시환경위원회 제1차 회의록(2025.12.01.)",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=b930cde9b8becc891190a1ab87baab686216cf908f87448012b6731840c42688ec72558281ce537d",
+     "zone": "상계동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "HOLD",
+     "reasonTags": [
+      "예산·공간 부족"
+     ],
+     "reason": "구 재정상 매칭 구비 10억원을 확보하지 못해 시비를 받지 못했으며 다음 해 추경 등을 통한 확보를 검토한다고 설명했다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_happy_bus",
+     "title": "무료 공공순환 노원행복버스",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 무료공공셔틀 '노원행복버스' 상계권역 노선 신설",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20260601097900004",
+     "zone": "공릉동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "기존 노선 운행과 하루 평균 약 600명 이용이 확인되며 제2노선 개통은 예정으로 보도됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_dokkaebi_paving",
+     "title": "도깨비시장 노면 포장",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제300회 행정재경위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=e53e163dc9d24e80068f757335b23a9e5d0eef17e6b56687bf03eaaadc6e5f4fc8d015e196d32dfa",
+     "zone": "공릉동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구 지역경제과"
+    },
+    {
+     "id": "arc_2023_bus_cooling",
+     "title": "버스정류장 냉방편의시설 설치",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구 주민참여예산"
+    },
+    {
+     "id": "arc_2023_unmanned_parking",
+     "title": "스마트 무인 노상공영주차장 도입",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구 주민참여예산"
+    }
+   ]
+  },
+  "precedents": []
+ },
+ {
+  "no": 9,
+  "teamName": "월계동행",
+  "service": "집결",
+  "category": "배리어프리·생활 편의",
+  "summary": "노후주택의 주거문제를 집수리 복지정책과 연결하고, 필요한 상담정 보를 한곳에 모아주는 주거복지 지원 서비스",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/52e25369-2918-4fe0-930c-727d7534c826",
+  "check": {
+   "concepts": [
+    {
+     "key": "REPAIR",
+     "label": "수리·나눔"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "ENVIRONMENT",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 1,
+    "going": 1,
+    "open": 4,
+    "reasons": [
+     {
+      "tag": "예산·공간 부족",
+      "count": 1
+     }
+    ],
+    "since": 2016
+   },
+   "related": [
+    {
+     "id": "arc_syu_coal",
+     "title": "꽃샘추위 연탄나눔",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2016,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "삼육대학교 · 교수가 후원하고 학생이 봉사하는 사랑의 연탄봉사",
+     "sourceUrl": "https://www.syu.ac.kr/blog/교수가-후원하고-학생이-봉사하는-사랑의-연탄봉사/",
+     "zone": "중계동",
+     "shared": [
+      "수리·나눔"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "삼육대 총학생회·학생 봉사자"
+    },
+    {
+     "id": "demo_repair40",
+     "title": "고장 난 물건, 버리기 전에 한 번 더",
+     "status": "CLOSED",
+     "statusLabel": "검증 종료",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "월계1동 전역",
+     "shared": [
+      "수리·나눔"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": ""
+    },
+    {
+     "id": "arc_green_kimchi",
+     "title": "제1회 김장 페스티벌",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "삼육대학교 · 사랑의 김장나눔…노원구 취약계층에 400상자 전달",
+     "sourceUrl": "https://www.syu.ac.kr/ece/삼육동사진관-사랑의-김장나눔노원구-취약계층/",
+     "zone": "공릉동",
+     "shared": [
+      "수리·나눔"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "삼육대·노원그린캠퍼스타운사업단"
+    },
+    {
+     "id": "cc1f6f4644fa",
+     "title": "주민과 학생의 주말 수리 모임",
+     "status": "HOLD",
+     "statusLabel": "보류",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "수리·나눔"
+     ],
+     "decision": "HOLD",
+     "reasonTags": [
+      "예산·공간 부족"
+     ],
+     "reason": "안전한 공구와 수리 공간을 확보한 뒤 다시 추진합니다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": ""
+    },
+    {
+     "id": "arc_peoples_grocery",
+     "title": "피플스 그로서리 농작물 나눔",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "삼육대학교 · 삼육대 학생들, 노원구 취약계층 50가구에 김장김치 전달",
+     "sourceUrl": "https://www.syu.ac.kr/blog/보도자료-삼육대-학생들-노원구-취약계층-50가구에-김/",
+     "zone": "공릉동",
+     "shared": [
+      "수리·나눔"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "대학혁신지원사업의 지원을 받아 글로컬사회혁신원이 운영한다고 밝혔다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "삼육대 글로컬사회혁신원·재학생"
+    },
+    {
+     "id": "a4935c278a4d",
+     "title": "학생팀과 다시 여는 주말 수리 모임",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "수리·나눔"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": ""
+    }
+   ]
+  },
+  "precedents": []
+ },
+ {
+  "no": 10,
+  "teamName": "컴미컴",
+  "service": "잇다 (IT-Da) - AI와 지도로 연결되는 동네 상권",
+  "category": "상권 활성화",
+  "summary": "AI로 소상공인의 숏폼 마케팅 작성을 자동화하고, 지도 기반 퀘스트와 배리어프리 UI로 동네 상권을 연결하는 웹 서비스입니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/a9be9774-a0fe-48f0-9d87-2d8bfe6519df",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 1,
+    "open": 5,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.58,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_induk_live",
+     "title": "동북권 소상공인 라이브커머스",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "한국대학신문 · 2022 테마캠퍼스/인덕대, 산학일체형 직업교육으로 혁신 선도한다",
+     "sourceUrl": "https://news.unn.net/news/articleView.html?idxno=529336",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.31,
+     "by": "인덕대 I·CULTURE·DU 캠퍼스타운"
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": ""
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 11,
+  "teamName": "월월계계",
+  "service": "월월계계",
+  "category": "상권 활성화",
+  "summary": "11팀 월월계계의 중간 발표 보고서 및 자료입니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/7ece4bae-915e-4341-93de-a334e244dac1",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 12,
+  "teamName": "우럭아왜우럭",
+  "service": "집속사정",
+  "category": "청년·지역 상생",
+  "summary": "본 서비스는 청년들이 집을 계약하기 전에 알기 어려운 수도세, 전기세, 난방비 등의 실제 생활비와 수압, 방음, 결로 등 주거 환경 정보를 서로 공유할 수 있도록 만든 지역 기반 주거 정보 플랫폼이다. 기존 부동산 플랫폼에서 확인하기 어려운 실거주자의 경험을 축적하여 정보 비대칭을 줄이고, 청년들이 보다 합리적으로 주거지를 선택할 수 있도록 돕는 것을 목표로 한다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/27cfa068-85fc-4c81-bf35-84310881d408",
+  "check": {
+   "concepts": [
+    {
+     "key": "GATHER",
+     "label": "청년·주민 교류"
+    },
+    {
+     "key": "HOUSING",
+     "label": "자취·주거"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "YOUTH",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 2,
+    "going": 2,
+    "open": 2,
+    "reasons": [
+     {
+      "tag": "예산·공간 부족",
+      "count": 2
+     },
+     {
+      "tag": "기타",
+      "count": 1
+     }
+    ],
+    "since": 2022
+   },
+   "related": [
+    {
+     "id": "arc_student_fieldwork",
+     "title": "대학생 구정현장체험",
+     "status": "HOLD",
+     "statusLabel": "보류",
+     "year": 2022,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제276회 행정재경위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=c8545f1bbf59549a6b31bab3f9ba54156e0afb1f0e8e1a31bebcea7c53a099169cf8ea8efc73b304",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "HOLD",
+     "reasonTags": [
+      "예산·공간 부족",
+      "기타"
+     ],
+     "reason": "예산 사정이 좋지 않고 다른 부서는 공공근로와 직원으로 대응할 수 있어 필요한 현장 위주로 축소했다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.3,
+     "by": "노원구 자치안전과"
+    },
+    {
+     "id": "arc_housing_guard",
+     "title": "우리동네 주거방위대",
+     "status": "STOP",
+     "statusLabel": "중단",
+     "year": 2023,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제282회 보건복지위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=1a700c2d21eee3f363711702f62e533a41d895df0331b2ad5d0a47dc51ffd2520797f96acee1feec",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "STOP",
+     "reasonTags": [
+      "예산·공간 부족"
+     ],
+     "reason": "과장은 청년 사업 폐지·감액의 배경이 어려운 재정 형편이라고 답변했다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": "노원구 청년정책과"
+    },
+    {
+     "id": "arc_youth_plan",
+     "title": "청년정책 시행계획",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 올 청년정책에 80억 투입…청년이 오래 머무는 도시",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240319148400004",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 청년정책 시행계획 수립이 확인됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_youth_learning",
+     "title": "청년 평생교육 다 담다",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 청년 평생교육프로그램 '다 담다' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240715112500004",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_ilsam_center",
+     "title": "청년 일삶센터 지속 운영",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 올 청년정책에 80억 투입…청년이 오래 머무는 도시",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240319148400004",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "일삶센터를 지속 운영한다고 밝혔다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_youth_housing",
+     "title": "공릉동 청년주택 준공 계획",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 올 청년정책에 80억 투입…청년이 오래 머무는 도시",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240319148400004",
+     "zone": "공릉동",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.28,
+     "by": "노원구"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_mokpo_gwaenchana",
+    "title": "목포 괜찮아마을",
+    "year": 2018,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "전남 목포시",
+    "need": "GATHER",
+    "beneficiary": "휴식과 지역 정착을 모색하는 청년",
+    "by": "괜찮아마을",
+    "approach": "청년이 목포 원도심에서 6주간 살아보며 대화·식사·창작·창업을 통해 관계와 새로운 삶을 모색하도록 했다.",
+    "outcome": "GOING",
+    "reason": "2021년 보도에서 전년까지 76명이 참여했으며 청년 30명이 마을에 정착해 살고 있다고 밝혔다.",
+    "sourceTitle": "대한민국 정책브리핑",
+    "sourceUrl": "https://www.korea.kr/briefing/policyBriefingView.do?newsId=148883906"
+   }
+  ]
+ },
+ {
+  "no": 13,
+  "teamName": "NowonLikeUs",
+  "service": "월계는 처음이라",
+  "category": "배리어프리·생활 편의",
+  "summary": "월계1동에 처음 이사 온 사람이 거주형태·계약형태·이사일만 고르면, 자기에게 해당하는 생활 할 일(전입신고, 확정일자 등)만 기한 순서로 보여주는 웹 서비스입니다. 광운대 캠퍼스 때문에 사는 사람이 계속 바뀌어 생활 지식이 매년 사라지는 문제를 풀고, 질문과 주민 답변이 쌓여 다음 전입자의 할 일로 이어지게 합니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/aa7affc1-414b-49a3-95f6-2e5e27a4905b",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "KW_UNIV",
+    "label": "광운대 앞"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 14,
+  "teamName": "강컴퍼니",
+  "service": "월계더링",
+  "category": "상권 활성화",
+  "summary": "단체 예약 어플",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/515de14c-61d5-4107-a57e-f06f0141525e",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 15,
+  "teamName": "복지나침반",
+  "service": "복지나침반 - 개인별 필요한 복지를 찾는 맞춤형 개인 복지 비서",
+  "category": "기타",
+  "summary": "개인별 필요한 복지를 찾는 맞춤형 복지 비서",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/f7394379-8e34-40a7-bd5b-e2fe9c8a7fc5",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 16,
+  "teamName": "유구무언",
+  "service": "월계 식당 패스: 월계1동 식당과 학생·주민을 하나로 잇는 모바일 웹앱",
+  "category": "상권 활성화",
+  "summary": "월계1동 식당과 학생·주민을 하나로 잇는 모바일 웹앱",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/26473dad-a7e7-4f08-89c9-69765a50cdea",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 1,
+    "open": 5,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": ""
+    },
+    {
+     "id": "arc_induk_live",
+     "title": "동북권 소상공인 라이브커머스",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "한국대학신문 · 2022 테마캠퍼스/인덕대, 산학일체형 직업교육으로 혁신 선도한다",
+     "sourceUrl": "https://news.unn.net/news/articleView.html?idxno=529336",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": "인덕대 I·CULTURE·DU 캠퍼스타운"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 17,
+  "teamName": "탄탄대로",
+  "service": "그루업",
+  "category": "탄소중립·ESG",
+  "summary": "탄탄대로팀 - 그루비 그루업은 사용자가 일상 속 친환경 행동을 미션으로 실천할 수 있도록 돕고, 인증을 통해 탄소 감축량을 기록하는 서비스입니다. 사용자는 텀블러 사용, 장바구니 사용, 다회용기 사용 등 작은 실천을 꾸준히 이어가며 포인트와 캐릭터 성장을 통해 자신의 변화를 확인할 수 있습니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/b1a08067-5b12-464c-b686-93ec8adf5942",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 18,
+  "teamName": "방과 후 지도타임",
+  "service": "턱없네 — 월계1동 맞춤형 접근성 지도",
+  "category": "배리어프리·생활 편의",
+  "summary": "휠체어·유아차·목발, 내 조건으로 \"이 가게 들어갈 수 있나\"를 알려주는 월계1동 접근성 지도 \"이 가게, 내가 들어갈 수 있을까?\"에 답하는 월계1동 접근성 지도입니다. 휠체어, 유아차, 보행 보조기, 목발 중 내 이동 조건을 고르면, 입구 턱 높이, 경사로, 출입문 폭 등을 법령 수치 기준으로 판정해 가능/조건부/어려움/미확인으로 보여줍니다. 입구 사진 한 장이면 AI가 항목을 먼저 채워",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/830c0820-6626-4ff7-b188-c8759f377e95",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    },
+    {
+     "key": "TRAFFIC",
+     "label": "보행·교통"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "SAFETY",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 5,
+    "open": 1,
+    "reasons": [],
+    "since": 2023
+   },
+   "related": [
+    {
+     "id": "arc_night25",
+     "title": "제2회 석계역 달빛야시장",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2025,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "언론·연합뉴스",
+     "sourceUrl": "https://www.yna.co.kr/amp/view/AKR20250915089100004",
+     "zone": "석계역",
+     "shared": [
+      "골목 가게 살리기",
+      "보행·교통"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.37,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_2024_s10_shelter",
+     "title": "스마트쉼터 조성",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2024년 노원구 주민제안사업 선정 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=233774&q_fileId=2312acef-5ece-417a-80d4-d9eb1d7cf203",
+     "zone": "상계동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구 주민제안사업(상계10동)"
+    },
+    {
+     "id": "arc_2024_s67_backstreet",
+     "title": "상가 이면도로 환경개선",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2024년 노원구 주민제안사업 선정 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=233774&q_fileId=2312acef-5ece-417a-80d4-d9eb1d7cf203",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구 주민제안사업(상계6·7동)"
+    },
+    {
+     "id": "arc_happy_bus",
+     "title": "무료 공공순환 노원행복버스",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 무료공공셔틀 '노원행복버스' 상계권역 노선 신설",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20260601097900004",
+     "zone": "공릉동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "기존 노선 운행과 하루 평균 약 600명 이용이 확인되며 제2노선 개통은 예정으로 보도됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_2023_unmanned_parking",
+     "title": "스마트 무인 노상공영주차장 도입",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "노원구 주민참여예산"
+    },
+    {
+     "id": "arc_2024_s8_underpass",
+     "title": "11단지 상가 지하차도 환경개선",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2024년 노원구 주민제안사업 선정 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=233774&q_fileId=2312acef-5ece-417a-80d4-d9eb1d7cf203",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "노원구 주민제안사업(상계8동)"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 19,
+  "teamName": "월계상단",
+  "service": "월계장터",
+  "category": "탄소중립·ESG",
+  "summary": "월계1동 이사철 순환장터 — 자취·기숙사생의 남는 가전·가구를 신입생·지역 주민에게 잇는 탄소 절감 매칭 서비스",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/a859d92d-ff2b-4974-bbca-03a51611bec7",
+  "check": {
+   "concepts": [
+    {
+     "key": "MARKET",
+     "label": "장터·플리마켓"
+    },
+    {
+     "key": "HOUSING",
+     "label": "자취·주거"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 1,
+    "going": 3,
+    "open": 2,
+    "reasons": [
+     {
+      "tag": "운영 주체 없음",
+      "count": 1
+     }
+    ],
+    "since": 2019
+   },
+   "related": [
+    {
+     "id": "demo-market",
+     "title": "광운로 주말 플리마켓",
+     "status": "HOLD",
+     "statusLabel": "보류",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "장터·플리마켓"
+     ],
+     "decision": "HOLD",
+     "reasonTags": [
+      "운영 주체 없음"
+     ],
+     "reason": "지속적으로 운영할 팀을 찾고 있어요.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.28,
+     "by": ""
+    },
+    {
+     "id": "arc_flea22",
+     "title": "광운대 주민 협업 플리마켓",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2022,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=40932",
+     "zone": "광운대 앞",
+     "shared": [
+      "장터·플리마켓"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2022년 페스티벌을 성황리에 마무리했다고 보도됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.21,
+     "by": "광운대 캠퍼스타운"
+    },
+    {
+     "id": "arc_fest24",
+     "title": "한마음축제 주민 참여 마켓",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "노원구의회 행정사무감사",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=a719da7597d5130db9eff8b8b1308db476b2e335d83be479c5d718fd0e10b6007c47b58616851a8e",
+     "zone": "석계역",
+     "shared": [
+      "장터·플리마켓"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "10월 26일 지역주민 3,000여 명 참여 축제 개최가 보고됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.2,
+     "by": "월계1동주민센터"
+    },
+    {
+     "id": "arc_flea19",
+     "title": "광운대 주민 플리마켓·ICT 축제",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2019,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=2330",
+     "zone": "광운대 앞",
+     "shared": [
+      "장터·플리마켓"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2019년 9월 19일·26일 행사 종료가 확인됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.2,
+     "by": "광운대 캠퍼스타운"
+    },
+    {
+     "id": "arc_chuchu_market",
+     "title": "창작프리마켓 추추마켓",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2023,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "삼육대학교 · 삼육대, ‘2023년 서울시 캠퍼스타운 사업’ 우수대학 선정",
+     "sourceUrl": "https://www.syu.ac.kr/blog/보도자료-삼육대-2023년-서울시-캠퍼스타운-사업-우수/",
+     "zone": "공릉동",
+     "shared": [
+      "장터·플리마켓"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.19,
+     "by": "삼육대·서울여대 노원그린캠퍼스타운"
+    },
+    {
+     "id": "wg_env",
+     "title": "원룸 골목 분리배출 클린데이",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "자취·주거"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.19,
+     "by": ""
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_marche_farmers",
+    "title": "마르쉐 농부시장",
+    "year": 2012,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "서울 종로구·양천구 등",
+    "need": "MARKET",
+    "beneficiary": "지역 농부·요리사·수공예가와 주민",
+    "by": "마르쉐",
+    "approach": "농부·요리사·수공예가가 함께 출점하는 시장을 열어 먹거리와 생산 이야기를 주민과 나누도록 했다.",
+    "outcome": "GOING",
+    "reason": "2012년 첫 시장 이후 12년간 출점팀·자원활동가·손님이 함께 시장을 만들어 왔다고 밝혔다.",
+    "sourceTitle": "마르쉐",
+    "sourceUrl": "https://www.marcheat.net/market-info/?bmode=view&idx=164701500"
+   }
+  ]
+ },
+ {
+  "no": 20,
+  "teamName": "ABC",
+  "service": "월계온",
+  "category": "청년·지역 상생",
+  "summary": "월계1동에서 정보 단절과 이동 단절을 해결하고자 이들을 연결하자는 취지로 모인 사람들입니다! 월계온은 월계1동의 행사, 불편 신고, 보행길을 지도 하나로 연결하는 주민 생활 플랫폼입니다",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/cd4d3f41-588a-4ff2-a53b-7966b900d8e2",
+  "check": {
+   "concepts": [
+    {
+     "key": "TRAFFIC",
+     "label": "보행·교통"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "SAFETY",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 5,
+    "open": 1,
+    "reasons": [],
+    "since": 2022
+   },
+   "related": [
+    {
+     "id": "arc_2024_s10_shelter",
+     "title": "스마트쉼터 조성",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2024년 노원구 주민제안사업 선정 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=233774&q_fileId=2312acef-5ece-417a-80d4-d9eb1d7cf203",
+     "zone": "상계동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구 주민제안사업(상계10동)"
+    },
+    {
+     "id": "arc_2023_unmanned_parking",
+     "title": "스마트 무인 노상공영주차장 도입",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구 주민참여예산"
+    },
+    {
+     "id": "arc_happy_bus",
+     "title": "무료 공공순환 노원행복버스",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 무료공공셔틀 '노원행복버스' 상계권역 노선 신설",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20260601097900004",
+     "zone": "공릉동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "기존 노선 운행과 하루 평균 약 600명 이용이 확인되며 제2노선 개통은 예정으로 보도됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_2023_bus_cooling",
+     "title": "버스정류장 냉방편의시설 설치",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구 주민참여예산"
+    },
+    {
+     "id": "arc_kw_bicycle",
+     "title": "자전거 친화도시 노원 사례연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 캠퍼스타운 지역연계수업·한솔"
+    },
+    {
+     "id": "arc_dokkaebi_paving",
+     "title": "도깨비시장 노면 포장",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제300회 행정재경위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=e53e163dc9d24e80068f757335b23a9e5d0eef17e6b56687bf03eaaadc6e5f4fc8d015e196d32dfa",
+     "zone": "공릉동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구 지역경제과"
+    }
+   ]
+  },
+  "precedents": []
+ },
+ {
+  "no": 21,
+  "teamName": "배고프당",
+  "service": "NO:WON (나우:온)",
+  "category": "기타",
+  "summary": "now on은 월계1동의 재난 상황에서 여러 경로로 접수되는 신고와 현장 대응 정보를 한 곳에서 관리하기 위한 재난 현장대응 통합 관리 서비스이다. 통화 내용을 AI가 분석하여 재난 유형·발생 위치·상황 요약을 구조화하고, 담당 공무원의 확인을 거쳐 실제 재난 사건으로 등록한다. 등록된 사건은 지도 기반 대시보드에서 확인할 수 있으며, 사건별로 대응 인력을 배정하고 출동부터 완료까지의 대응 ",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/58877c56-efc2-4053-ab90-a8efb79da5d5",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 22,
+  "teamName": "4 guys",
+  "service": "Bumpy",
+  "category": "배리어프리·생활 편의",
+  "summary": "생활 속 이동 장벽을 이웃과 함께 확인하고 해결로 연결하는 앱 ‘Bumpy’를 만드는 4guys입니다. Bumpy는 고장난 시설이나 막힌 경사로 등 생활 속 이동 장벽을 사진과 위치로 신고하고, 이웃의 ‘확인 +1’ 참여를 모아 처리 우선순위와 해결 결과를 함께 확인하는 주민 참여형 배리어프리 서비스입니다",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/e0b1aa07-dbbd-4610-b067-7077d4ae3fda",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 23,
+  "teamName": "경영과컴퓨터",
+  "service": "가꿈(광운대생과 월계1동 가게를 잇는 제안/의뢰 상생 플랫폼)",
+  "category": "청년·지역 상생",
+  "summary": "광운대생 과 월계1동 가게를 잇는 제안/의뢰 상생 플랫폼 [가꿈]을 기획하였습니다. 「가꿈」은 광운대생이 전공역량을 살려 월계1동 가게에 개선안을 먼저 제안하고, 사장님은 필요한 일을 템플릿으로 간단히 의뢰하는 양방향 상생 플랫폼입니다. 월계1동은 대학 바로 앞 상권인데도 외식업 매출의 절반이 50대 이상이고 20대 매출은 18.3%에 그쳐, 트렌드 파악과 디지털 전환이 어려운 가게들이 대학",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/993aaabc-1453-4932-a264-df3845e873bc",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    },
+    {
+     "key": "DIGITAL",
+     "label": "디지털 배움"
+    }
+   ],
+   "zone": {
+    "key": "KW_UNIV",
+    "label": "광운대 앞"
+   },
+   "topic": "CARE",
+   "outcome": {
+    "attempts": 3,
+    "stopped": 0,
+    "going": 2,
+    "open": 1,
+    "reasons": [],
+    "since": 2024
+   },
+   "related": [
+    {
+     "id": "arc_disability_digital",
+     "title": "장애인 디지털기기 무료 교육",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 서울시, 장애인 정보화교육 7곳서 무료로…디지털이용 도움",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240311058600004",
+     "zone": "노원구 전역",
+     "shared": [
+      "디지털 배움"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월부터 무료 교육을 시행한다고 밝혔다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "서울시"
+    },
+    {
+     "id": "arc_clink_waste",
+     "title": "무단투기 통합관리시스템 구축",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2026,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 쓰레기 무단투기 통합관리시스템 '클링크' 가동",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20260615095700004",
+     "zone": "노원구 전역",
+     "shared": [
+      "디지털 배움"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.19,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_child_meals",
+     "title": "천원 아동식당 운영",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 서울서 합계출산율 1위…아이 키우기 좋은 환경 구축",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240229130200004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "천원 아동식당 운영과 이용자 호응이 보도됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.15,
+     "by": "노원구"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 24,
+  "teamName": "삼삼오오",
+  "service": "월계함",
+  "category": "배리어프리·생활 편의",
+  "summary": "현관 안내가 담당하던 ‘건물에 남는 정보’와 카카오톡이 담당하던 ‘현재 사람에게 전달하는 공지’를 하나의 건물 정보 원본에서 이어주는 서비스입니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/06df5300-8c96-4574-a7a2-af45c04338df",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 25,
+  "teamName": "월계방범대",
+  "service": "월계밥상",
+  "category": "상권 활성화",
+  "summary": "주민이 직접 채운 가게 정보로 모임의 식당 선택을 돕고, 월계동의 가게 방문을 늘리는 식당 추천 서비스 플랫폼",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/bcc5f1e2-a1b3-4de9-b513-32ecfec5e407",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    },
+    {
+     "key": "MEAL",
+     "label": "함께 먹기"
+    },
+    {
+     "key": "GATHER",
+     "label": "청년·주민 교류"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "NEIGHBOR",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 1,
+    "going": 3,
+    "open": 2,
+    "reasons": [
+     {
+      "tag": "예산·공간 부족",
+      "count": 1
+     }
+    ],
+    "since": 2021
+   },
+   "related": [
+    {
+     "id": "demo_lunch40",
+     "title": "학생과 주민이 함께하는 점심 식탁",
+     "status": "CLOSED",
+     "statusLabel": "검증 종료",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기",
+      "함께 먹기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.39,
+     "by": ""
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기",
+      "함께 먹기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.38,
+     "by": ""
+    },
+    {
+     "id": "arc_gongneung_shops",
+     "title": "공릉동 청년상가 지원",
+     "status": "STOP",
+     "statusLabel": "중단",
+     "year": 2023,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제282회 보건복지위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=1a700c2d21eee3f363711702f62e533a41d895df0331b2ad5d0a47dc51ffd2520797f96acee1feec",
+     "zone": "공릉동",
+     "shared": [
+      "골목 가게 살리기",
+      "청년·주민 교류"
+     ],
+     "decision": "STOP",
+     "reasonTags": [
+      "예산·공간 부족"
+     ],
+     "reason": "과장은 형편이 어려워 청년상가 지원을 폐지했다고 답변했다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.37,
+     "by": "노원구 청년정책과"
+    },
+    {
+     "id": "arc_child_meals",
+     "title": "천원 아동식당 운영",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 서울서 합계출산율 1위…아이 키우기 좋은 환경 구축",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240229130200004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기",
+      "함께 먹기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "천원 아동식당 운영과 이용자 호응이 보도됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_youth_shops",
+     "title": "청년가게 조성·운영",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 올 청년정책에 80억 투입…청년이 오래 머무는 도시",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240319148400004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기",
+      "청년·주민 교류"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "청년가게의 지속 조성·운영 방침을 밝혔다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_math_youth_shop",
+     "title": "수학문화관 청년가게 운영",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2021,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "노원수학문화관 · 문화관안내 연혁",
+     "sourceUrl": "https://www.nowon.kr/math/autocontents/contents/main/304",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기",
+      "청년·주민 교류"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "운영자 변경과 이후 운영은 확인되지만 변경 또는 지속 이유는 명시되지 않았다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "노원구·노원수학문화관 청년가게 운영자"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_mokpo_gwaenchana",
+    "title": "목포 괜찮아마을",
+    "year": 2018,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "전남 목포시",
+    "need": "GATHER",
+    "beneficiary": "휴식과 지역 정착을 모색하는 청년",
+    "by": "괜찮아마을",
+    "approach": "청년이 목포 원도심에서 6주간 살아보며 대화·식사·창작·창업을 통해 관계와 새로운 삶을 모색하도록 했다.",
+    "outcome": "GOING",
+    "reason": "2021년 보도에서 전년까지 76명이 참여했으며 청년 30명이 마을에 정착해 살고 있다고 밝혔다.",
+    "sourceTitle": "대한민국 정책브리핑",
+    "sourceUrl": "https://www.korea.kr/briefing/policyBriefingView.do?newsId=148883906"
+   },
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 26,
+  "teamName": "COMs",
+  "service": "동네 히스토리 타임캡슐",
+  "category": "상권 활성화",
+  "summary": "우리 동네의 과거와 현재가 얼마나 바뀌었는지 궁금하시지않나요? 우리 동네의 과거의 추억을 기록하고 다시 다녀와보시는건 어떠세요?",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/f3989992-a8c9-4511-85d8-5a67c665b1b7",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 27,
+  "teamName": "MassCOM",
+  "service": "월계 마스코트 코인",
+  "category": "상권 활성화",
+  "summary": "맛있는 한 끼에, 가게별 기념 코인을 모으는 재미를 더한 동네 탐방 서비스.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/8c7630aa-cdd4-4e73-a28b-82b944638d37",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 2,
+    "open": 4,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": ""
+    },
+    {
+     "id": "arc_night24",
+     "title": "석계역 달빛 야행 음식문화행사",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "언론·아주경제",
+     "sourceUrl": "https://www.ajunews.com/view/20240922121959134",
+     "zone": "석계역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 9월 21일 행사와 점등식 개최가 확인됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 28,
+  "teamName": "월계원정대",
+  "service": "월계원정대",
+  "category": "상권 활성화",
+  "summary": "월계1동을 돌아다니며 캐릭터를 발견하고 수집하는 위치기반 캐릭터 수집 서비스",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/9ba4516c-0ab9-43a1-b121-954fc800b80a",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 29,
+  "teamName": "지단",
+  "service": "지단",
+  "category": "청년·지역 상생",
+  "summary": "청년의 가능성을 잇고, 청년과 지역을 잇다. 청년의 가능성을 잇고, 청년과 지역을 잇다. 지역 매장과 근무자를 잇는 일자리 플랫폼이자, 업무 노하우를 새 근무자에게 이어 주는 AI 인수인계 플랫폼",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/7fb38fa1-711f-4093-8ff4-31659ff8d30c",
+  "check": {
+   "concepts": [
+    {
+     "key": "GATHER",
+     "label": "청년·주민 교류"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "YOUTH",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 2,
+    "going": 2,
+    "open": 2,
+    "reasons": [
+     {
+      "tag": "예산·공간 부족",
+      "count": 2
+     },
+     {
+      "tag": "기타",
+      "count": 1
+     }
+    ],
+    "since": 2022
+   },
+   "related": [
+    {
+     "id": "arc_youth_plan",
+     "title": "청년정책 시행계획",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 올 청년정책에 80억 투입…청년이 오래 머무는 도시",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240319148400004",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 청년정책 시행계획 수립이 확인됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.57,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_ilsam_center",
+     "title": "청년 일삶센터 지속 운영",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 올 청년정책에 80억 투입…청년이 오래 머무는 도시",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240319148400004",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "일삶센터를 지속 운영한다고 밝혔다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.57,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_student_fieldwork",
+     "title": "대학생 구정현장체험",
+     "status": "HOLD",
+     "statusLabel": "보류",
+     "year": 2022,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제276회 행정재경위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=c8545f1bbf59549a6b31bab3f9ba54156e0afb1f0e8e1a31bebcea7c53a099169cf8ea8efc73b304",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "HOLD",
+     "reasonTags": [
+      "예산·공간 부족",
+      "기타"
+     ],
+     "reason": "예산 사정이 좋지 않고 다른 부서는 공공근로와 직원으로 대응할 수 있어 필요한 현장 위주로 축소했다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.57,
+     "by": "노원구 자치안전과"
+    },
+    {
+     "id": "arc_youth_learning",
+     "title": "청년 평생교육 다 담다",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 청년 평생교육프로그램 '다 담다' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240715112500004",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.57,
+     "by": "노원구"
+    },
+    {
+     "id": "wg_youth",
+     "title": "청년·주민이 함께 여는 동네 저녁 모임",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": ""
+    },
+    {
+     "id": "arc_housing_guard",
+     "title": "우리동네 주거방위대",
+     "status": "STOP",
+     "statusLabel": "중단",
+     "year": 2023,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제282회 보건복지위원회 제3차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=1a700c2d21eee3f363711702f62e533a41d895df0331b2ad5d0a47dc51ffd2520797f96acee1feec",
+     "zone": "노원구 전역",
+     "shared": [
+      "청년·주민 교류"
+     ],
+     "decision": "STOP",
+     "reasonTags": [
+      "예산·공간 부족"
+     ],
+     "reason": "과장은 청년 사업 폐지·감액의 배경이 어려운 재정 형편이라고 답변했다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "노원구 청년정책과"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_mokpo_gwaenchana",
+    "title": "목포 괜찮아마을",
+    "year": 2018,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "전남 목포시",
+    "need": "GATHER",
+    "beneficiary": "휴식과 지역 정착을 모색하는 청년",
+    "by": "괜찮아마을",
+    "approach": "청년이 목포 원도심에서 6주간 살아보며 대화·식사·창작·창업을 통해 관계와 새로운 삶을 모색하도록 했다.",
+    "outcome": "GOING",
+    "reason": "2021년 보도에서 전년까지 76명이 참여했으며 청년 30명이 마을에 정착해 살고 있다고 밝혔다.",
+    "sourceTitle": "대한민국 정책브리핑",
+    "sourceUrl": "https://www.korea.kr/briefing/policyBriefingView.do?newsId=148883906"
+   }
+  ]
+ },
+ {
+  "no": 31,
+  "teamName": "바오밥나무",
+  "service": "BAOBAB-설문조사 플랫폼",
+  "category": "청년·지역 상생",
+  "summary": "설문조사 플랫폼",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/625019ba-52e8-4422-a854-9aca14b9cd86",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 32,
+  "teamName": "월계디버깅",
+  "service": "차곡차곡",
+  "category": "배리어프리·생활 편의",
+  "summary": "골목 빌라끼리 빈 차고지와 출차 시간을 나누는 주차 서비스",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/3d403639-983c-4799-971d-ac36f1e41d7c",
+  "check": {
+   "concepts": [
+    {
+     "key": "TRAFFIC",
+     "label": "보행·교통"
+    }
+   ],
+   "zone": {
+    "key": "HOMES",
+    "label": "주거 골목"
+   },
+   "topic": "SAFETY",
+   "outcome": {
+    "attempts": 4,
+    "stopped": 0,
+    "going": 3,
+    "open": 1,
+    "reasons": [],
+    "since": 2022
+   },
+   "related": [
+    {
+     "id": "arc_2023_unmanned_parking",
+     "title": "스마트 무인 노상공영주차장 도입",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구 주민참여예산"
+    },
+    {
+     "id": "arc_2023_bus_cooling",
+     "title": "버스정류장 냉방편의시설 설치",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구 주민참여예산"
+    },
+    {
+     "id": "arc_kw_bicycle",
+     "title": "자전거 친화도시 노원 사례연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 캠퍼스타운 지역연계수업·한솔"
+    },
+    {
+     "id": "arc_drain24",
+     "title": "침수 지점 하수관로 정비",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "노원구의회 행정사무감사",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=a719da7597d5130db9eff8b8b1308db476b2e335d83be479c5d718fd0e10b6007c47b58616851a8e",
+     "zone": "월계1동 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "배수 후 하수관로 공사 시행 중이라고 답변함.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "월계1동주민센터"
+    }
+   ]
+  },
+  "precedents": []
+ },
+ {
+  "no": 33,
+  "teamName": "입대 전 발악",
+  "service": "Discushion",
+  "category": "기타",
+  "summary": "지역 주민들이 쉽고, 부담없이 지역 정책이나 안건에 대해 이야기하고 공유할 수 있는 지역 참여 플랫폼",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/4b9201ef-2a23-478a-9890-9ac0d6827452",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ },
+ {
+  "no": 34,
+  "teamName": "허강정",
+  "service": "WOLINK 월링크",
+  "category": "청년·지역 상생",
+  "summary": "WOLINK는 도움이 필요한 지역 소상공인과 재능 있는 대학생을 연결합니다. 대학생은 개발·사진·디자인·릴스 제작 등 자신의 진로에 맞는 활동으로 실무 경험을 쌓고, 포트폴리오 자동 작성 기능으로 그 경험을 경력 자산으로 남길 수 있습니다. 활동을 통해 쌓은 신뢰가 등급 상승과 보상 기회로 이어져 지속적인 참여를 이끌어냅니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/089c6f0b-c047-46a2-a2b7-0198096bb40b",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 1,
+    "open": 5,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.55,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "arc_induk_live",
+     "title": "동북권 소상공인 라이브커머스",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "한국대학신문 · 2022 테마캠퍼스/인덕대, 산학일체형 직업교육으로 혁신 선도한다",
+     "sourceUrl": "https://news.unn.net/news/articleView.html?idxno=529336",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": "인덕대 I·CULTURE·DU 캠퍼스타운"
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": ""
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 35,
+  "teamName": "월계 계섯거라",
+  "service": "월계 한걸음",
+  "category": "배리어프리·생활 편의",
+  "summary": "본 서비스는 주민이 보행 불편 구간을 사진과 위치 정보로 직접 제보하고, 이를 지도에 표시하는 생활 보행환경 지도 서비스​이다. 다른 이용자는 불편 구간을 미리 확인하고 해당 구간을 피해 이동할 수 있다. 제보는 관리자 검토 후 지도에 반영되며, 승인된 제보에는 포인트를 지급한다. 향후 포인트를 지역 상점 혜택과 연계하고, 축적된 제보 데이터를 지자체의 보행환경 개선에도 활용할 수 있도록 확",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/73f46f83-d492-456d-b3e5-07decbcd062a",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    },
+    {
+     "key": "TRAFFIC",
+     "label": "보행·교통"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "SAFETY",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 1,
+    "going": 4,
+    "open": 1,
+    "reasons": [
+     {
+      "tag": "예산·공간 부족",
+      "count": 1
+     }
+    ],
+    "since": 2023
+   },
+   "related": [
+    {
+     "id": "arc_night25",
+     "title": "제2회 석계역 달빛야시장",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2025,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "언론·연합뉴스",
+     "sourceUrl": "https://www.yna.co.kr/amp/view/AKR20250915089100004",
+     "zone": "석계역",
+     "shared": [
+      "골목 가게 살리기",
+      "보행·교통"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.38,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_happy_bus",
+     "title": "무료 공공순환 노원행복버스",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 노원구, 무료공공셔틀 '노원행복버스' 상계권역 노선 신설",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20260601097900004",
+     "zone": "공릉동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "기존 노선 운행과 하루 평균 약 600명 이용이 확인되며 제2노선 개통은 예정으로 보도됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_2024_s67_backstreet",
+     "title": "상가 이면도로 환경개선",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2024년 노원구 주민제안사업 선정 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=233774&q_fileId=2312acef-5ece-417a-80d4-d9eb1d7cf203",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구 주민제안사업(상계6·7동)"
+    },
+    {
+     "id": "arc_2024_s8_underpass",
+     "title": "11단지 상가 지하차도 환경개선",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2024년 노원구 주민제안사업 선정 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=233774&q_fileId=2312acef-5ece-417a-80d4-d9eb1d7cf203",
+     "zone": "상계동",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구 주민제안사업(상계8동)"
+    },
+    {
+     "id": "arc_culture_street_hold",
+     "title": "노원문화의거리 개선 재원 보류",
+     "status": "HOLD",
+     "statusLabel": "보류",
+     "year": 2025,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "노원구의회 · 제295회 도시환경위원회 제1차 회의록(2025.12.01.)",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=b930cde9b8becc891190a1ab87baab686216cf908f87448012b6731840c42688ec72558281ce537d",
+     "zone": "상계동",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "HOLD",
+     "reasonTags": [
+      "예산·공간 부족"
+     ],
+     "reason": "구 재정상 매칭 구비 10억원을 확보하지 못해 시비를 받지 못했으며 다음 해 추경 등을 통한 확보를 검토한다고 설명했다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.29,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_2023_unmanned_parking",
+     "title": "스마트 무인 노상공영주차장 도입",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2023,
+     "origin": "RESIDENT",
+     "originLabel": "주민 제안",
+     "sourceTitle": "노원구 · 2023년도 노원구 주민참여예산 선정사업 결과",
+     "sourceUrl": "https://www.nowon.kr/component/file/ND_fileDownload.do?q_fileSn=177605&q_fileId=8d5c4e1e-e019-4531-995b-ca89f6f22fbe",
+     "zone": "노원구 전역",
+     "shared": [
+      "보행·교통"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": "노원구 주민참여예산"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 36,
+  "teamName": "노놀",
+  "service": "노놀",
+  "category": "상권 활성화",
+  "summary": "동네 가게 3곳에서 친구와 퀘스트를 깨고 여권에 스탬프를 모으는 실생활 퀘스트 게임",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/5e131699-281d-474a-b550-20abd113a366",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 2,
+    "open": 4,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.55,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_night24",
+     "title": "석계역 달빛 야행 음식문화행사",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "언론·아주경제",
+     "sourceUrl": "https://www.ajunews.com/view/20240922121959134",
+     "zone": "석계역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 9월 21일 행사와 점등식 개최가 확인됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구"
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.28,
+     "by": ""
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 37,
+  "teamName": "이음(IEUM)",
+  "service": "월계이음",
+  "category": "청년·지역 상생",
+  "summary": "대학생의 봉사와 어르신의 일상 돌봄을 지역으로 연결하여 세대 간 상생을 만드는 '월계 이음'입니다. 대학생의 봉사와 어르신의 일상 돌봄을 지역 기반으로 연결하여 세대 간 상생을 만드는 '월계 이음'입니다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/1996ef89-f5f9-4500-a3b4-39e9dd717813",
+  "check": {
+   "concepts": [
+    {
+     "key": "ELDER",
+     "label": "어르신 돌봄"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "CARE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 1,
+    "going": 4,
+    "open": 1,
+    "reasons": [
+     {
+      "tag": "기타",
+      "count": 1
+     }
+    ],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_integrated_care_ordinance",
+     "title": "지역사회 돌봄 통합지원 조례",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2026,
+     "origin": "ORDINANCE",
+     "originLabel": "조례",
+     "sourceTitle": "국가법령정보센터 · 서울특별시 노원구 지역사회 돌봄 통합지원에 관한 조례",
+     "sourceUrl": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2100137&chrClsCd=010202&gubun=ELIS",
+     "zone": "노원구 전역",
+     "shared": [
+      "어르신 돌봄"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "제2069호 조례가 2026년 3월 27일부터 시행됐다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.57,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_senior20",
+     "title": "어르신 활력프로젝트 이팔청춘",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "어르신 돌봄"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.57,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_knock24",
+     "title": "똑똑똑돌봄단 정기 안부 확인",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "노원구의회 행정사무감사",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=a719da7597d5130db9eff8b8b1308db476b2e335d83be479c5d718fd0e10b6007c47b58616851a8e",
+     "zone": "월계1동 전역",
+     "shared": [
+      "어르신 돌봄"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "정기 안부 확인과 서비스 연계 882건 추진이 보고됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.57,
+     "by": "월계1동주민센터"
+    },
+    {
+     "id": "arc_plug24",
+     "title": "스마트플러그로 고독사 위험 확인",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "노원구의회 행정사무감사",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=a719da7597d5130db9eff8b8b1308db476b2e335d83be479c5d718fd0e10b6007c47b58616851a8e",
+     "zone": "월계1동 전역",
+     "shared": [
+      "어르신 돌봄"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "스마트플러그 지원사업 추진이 보고됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.57,
+     "by": "월계1동주민센터"
+    },
+    {
+     "id": "arc_knock_care",
+     "title": "똑똑똑 돌봄단 확대",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "뉴시스 · 노원구, 새해 '똑똑똑 돌봄단' 확대…위험가구 빈틈없이 관리",
+     "sourceUrl": "https://www.newsis.com/view/NISX20240104_0002581578",
+     "zone": "노원구 전역",
+     "shared": [
+      "어르신 돌봄"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 돌봄단 확대 운영과 모니터링 강화 방침을 밝혔다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_silver_delivery",
+     "title": "14단지 실버택배 작업장 지원",
+     "status": "STOP",
+     "statusLabel": "중단",
+     "year": 2020,
+     "origin": "COUNCIL",
+     "originLabel": "의회 기록",
+     "sourceTitle": "노원구의회 · 제261회 행정재경위원회 제2차",
+     "sourceUrl": "https://council.nowon.kr/record/recordView.do?key=6a2bbfcb3bfbe5188d4ca0def4027c1d560af4a8d74b0876c0c427536cf0df1493b52aa107ef592d",
+     "zone": "노원구 전역",
+     "shared": [
+      "어르신 돌봄"
+     ],
+     "decision": "STOP",
+     "reasonTags": [
+      "기타"
+     ],
+     "reason": "경로당 주민 반대로 이전이 필요했고 참여 어르신들이 사업을 그만두기로 결정해 임차 필요가 없어졌다.",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "노원구 마을공동체과"
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_daegu_student_checkin",
+    "title": "대학생 어르신 안부 확인표",
+    "year": 2017,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "대구",
+    "need": "ELDER",
+    "beneficiary": "홀몸 어르신",
+    "by": "대구은행 대학생 홍보봉사단",
+    "approach": "대학생들이 기획한 요일별 안부 확인표를 홀몸 어르신의 집 입구에 붙여 이웃의 관심과 확인을 유도했다.",
+    "outcome": "GOING",
+    "reason": "대학생 봉사단이 아이디어를 발굴해 캠페인을 기획하고 진행했다.",
+    "sourceTitle": "파이낸셜뉴스",
+    "sourceUrl": "https://www.fnnews.com/news/201702211653272777"
+   },
+   {
+    "id": "pre_gimhae_ai_companion",
+    "title": "김해 어르신 AI 말벗",
+    "year": 2019,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "경남 김해시",
+    "need": "ELDER",
+    "beneficiary": "고독사 예방 돌봄이 필요한 어르신",
+    "by": "김해시",
+    "approach": "어르신이 AI 스피커와 대화하며 무료함을 달래도록 고독사 예방 사업을 시작했다.",
+    "outcome": "GOING",
+    "reason": "",
+    "sourceTitle": "뉴스핌",
+    "sourceUrl": "https://www.newspim.com/news/view/20250507000219"
+   },
+   {
+    "id": "pre_gwangju_milk_checkin",
+    "title": "광주 북구 우유 안부 확인",
+    "year": 2023,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "광주 북구",
+    "need": "ELDER",
+    "beneficiary": "건강과 안전이 우려되는 홀몸 어르신",
+    "by": "광주 북구·한국나눔연맹",
+    "approach": "홀몸 어르신 200세대에 주 3회 우유를 배달하고 이틀 이상 방치되면 119와 구청에 알리기로 했다.",
+    "outcome": "UNKNOWN",
+    "reason": "",
+    "sourceTitle": "연합뉴스",
+    "sourceUrl": "https://www.yna.co.kr/view/AKR20230221134400054"
+   },
+   {
+    "id": "pre_gunpo_hanse_hello",
+    "title": "한세대 안녕 봉사단",
+    "year": 2023,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "경기 군포시",
+    "need": "ELDER",
+    "beneficiary": "홀몸 어르신",
+    "by": "한세대학교 안녕 봉사단·군포노인복지관",
+    "approach": "간호·경찰행정·사회복지 전공 학생들이 월 1회 가정을 방문해 안부와 건강을 확인하고 보이스피싱 예방과 복지 정보를 안내했다.",
+    "outcome": "GOING",
+    "reason": "재학생 120명이 3인 1조로 돌봄 봉사활동을 실시하고 있다.",
+    "sourceTitle": "대학저널",
+    "sourceUrl": "https://m.dhnews.co.kr/news/view/1065577623343232"
+   }
+  ]
+ },
+ {
+  "no": 38,
+  "teamName": "이오",
+  "service": "월계아쿠아(QRium)",
+  "category": "상권 활성화",
+  "summary": "월계 1동의 숨은 상권과 주민들을, 물고기 AR리뷰와 수집형 게임을 통해 연결한다.",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/65fcd5a8-ed9b-4e21-b404-3fa8c193cc2d",
+  "check": {
+   "concepts": [
+    {
+     "key": "SHOP",
+     "label": "골목 가게 살리기"
+    }
+   ],
+   "zone": {
+    "key": "WIDE",
+    "label": "월계1동 전역"
+   },
+   "topic": "COMMERCE",
+   "outcome": {
+    "attempts": 6,
+    "stopped": 0,
+    "going": 2,
+    "open": 4,
+    "reasons": [],
+    "since": 2020
+   },
+   "related": [
+    {
+     "id": "arc_small_business_manager",
+     "title": "찾아가는 소상공인 매니저",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "연합뉴스 · 애로 듣고 지원책 찾아드려요…노원구 '소상공인 매니저' 운영",
+     "sourceUrl": "https://www.yna.co.kr/view/AKR20240307107900004",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 3월 5일부터 운영을 시작했다.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.56,
+     "by": "노원구"
+    },
+    {
+     "id": "arc_random20",
+     "title": "랜덤박스로 지역상가 홍보",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_login20",
+     "title": "ICT 가로활성화 광운 login",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2020,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대 캠퍼스타운",
+     "sourceUrl": "https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=35391",
+     "zone": "월계1동 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 지역연계수업"
+    },
+    {
+     "id": "arc_kw_postpandemic",
+     "title": "팬데믹 이후 노원 상권 연구",
+     "status": "UNKNOWN",
+     "statusLabel": "결과 미확인",
+     "year": 2022,
+     "origin": "STUDENT",
+     "originLabel": "학생 프로젝트",
+     "sourceTitle": "광운대학교 · 캠퍼스타운사업단, 2022년 1학기 지역연계수업 성과프렌즈데이 성료",
+     "sourceUrl": "https://www-3.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=39845",
+     "zone": "노원구 전역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": true,
+     "score": 0.56,
+     "by": "광운대 캠퍼스타운 지역연계수업·조경준"
+    },
+    {
+     "id": "arc_night24",
+     "title": "석계역 달빛 야행 음식문화행사",
+     "status": "GO",
+     "statusLabel": "시행",
+     "year": 2024,
+     "origin": "POLICY",
+     "originLabel": "구·시 사업",
+     "sourceTitle": "언론·아주경제",
+     "sourceUrl": "https://www.ajunews.com/view/20240922121959134",
+     "zone": "석계역",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": "GO",
+     "reasonTags": [],
+     "reason": "2024년 9월 21일 행사와 점등식 개최가 확인됨.",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": "노원구"
+    },
+    {
+     "id": "wg_shop",
+     "title": "골목 식당 점심 빈자리 함께 먹기",
+     "status": "OPEN",
+     "statusLabel": "검증 중",
+     "year": 2026,
+     "origin": "",
+     "originLabel": "동네서랍",
+     "sourceTitle": "",
+     "sourceUrl": "",
+     "zone": "광운대 앞",
+     "shared": [
+      "골목 가게 살리기"
+     ],
+     "decision": null,
+     "reasonTags": [],
+     "reason": "",
+     "succeeded": false,
+     "canTakeOver": false,
+     "score": 0.29,
+     "by": ""
+    }
+   ]
+  },
+  "precedents": [
+   {
+    "id": "pre_gongju_gaga_shop",
+    "title": "공주 원도심 가가상점",
+    "year": 2021,
+    "country": "대한민국",
+    "countryCode": "KR",
+    "region": "충남 공주시",
+    "need": "SHOP",
+    "beneficiary": "원도심 공방·주민 모임과 방문객",
+    "by": "가가상점·퍼즐랩",
+    "approach": "원도심을 안내하는 서점에서 주민 모임과 인근 공방이 만든 엽서·스티커·기념품을 함께 판매했다.",
+    "outcome": "GOING",
+    "reason": "마을 만년필클럽의 펜그림 엽서와 인근 공방의 기념품을 판매하는 모습이 보도됐다.",
+    "sourceTitle": "경향신문",
+    "sourceUrl": "https://v.daum.net/v/20210721201901036"
+   },
+   {
+    "id": "pre_brixton_local_currency",
+    "title": "브릭스턴 지역화폐",
+    "year": 2009,
+    "country": "영국",
+    "countryCode": "GB",
+    "region": "영국 런던 브릭스턴",
+    "need": "SHOP",
+    "beneficiary": "동네 독립 상점과 주민",
+    "by": "트랜지션 타운 브릭스턴",
+    "approach": "동네 상점에서 쓰는 지역화폐를 발행해 주민의 소비가 지역 사업체 안에서 순환하도록 유도했다.",
+    "outcome": "GOING",
+    "reason": "2010년 보도 당시 발행액 20만 브릭스턴파운드 중 3만이 유통됐으며 사업체가 다시 쓸 곳을 찾는 데 어려움이 있었다.",
+    "sourceTitle": "가디언",
+    "sourceUrl": "https://www.theguardian.com/society/2010/sep/21/brixton-pound-local-currency"
+   }
+  ]
+ },
+ {
+  "no": 39,
+  "teamName": "일동차렷",
+  "service": "우이런 — 우이천의 일상을 환경 참여로",
+  "category": "탄소중립·ESG",
+  "summary": "정보융합학부 2인 팀, 일동차렷입니다 우이천을 뛰고 걷고 지나가는 일상에 가벼운 환경 체크를 얹어, 작은 참여를 포인트와 월계1동 혜택으로 돌려주는 서비스",
+  "galleryUrl": "https://www.kw-hackathon.co.kr/gallery/7a010e49-90a5-484c-b586-45670e3787eb",
+  "check": {
+   "concepts": [],
+   "zone": {
+    "key": "STREAM",
+    "label": "중랑천·우이천"
+   },
+   "topic": "",
+   "outcome": {
+    "attempts": 0,
+    "stopped": 0,
+    "going": 0,
+    "open": 0,
+    "reasons": [],
+    "since": null
+   },
+   "related": []
+  },
+  "precedents": []
+ }
+]
