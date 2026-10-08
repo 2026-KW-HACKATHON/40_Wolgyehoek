@@ -1,10 +1,10 @@
 "use client";
 import { useI18n } from "@/lib/i18n/client";
 import { pick } from "@/lib/i18n/messages/common";
-import { graphNodeLabel, placeLabel, needLabel, signalText } from "@/lib/i18n/messages/explore";
+import { graphNodeLabel, placeLabel, signalText } from "@/lib/i18n/messages/explore";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ArrowUpRight, ChevronRight, X } from "lucide-react";
 import type { GraphNode, GraphNodeType, KnowledgeGraph, Signal } from "@/lib/domain/graph";
 import { NODE_COLORS, SIGNAL_COLORS, STATE_LABELS, nodeColor } from "@/lib/domain/graph";
@@ -15,8 +15,8 @@ const GraphCanvas = dynamic(() => import("./GraphCanvas"), { ssr: false, loading
 const TYPE_ORDER: GraphNodeType[] = ["NEED", "PLACE", "ACTOR", "BENEFICIARY", "BARRIER", "IDEA", "SOURCE"];
 const HEIGHT = 600;
 
-export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
-  const { t, locale } = useI18n();
+export function KnowledgeExplorer({ graph, side }: { graph: KnowledgeGraph; side: ReactNode }) {
+  const { t } = useI18n();
   const box = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [focus, setFocus] = useState<string[]>([]);
@@ -56,12 +56,9 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
   }, [focus, ideas, neighbors]);
 
   const select = (ids: string[], label: string | null = null) => { setFocus(ids); setTitle(label); };
-  const pickSignal = (s: Signal) => { select(s.focus, signalText(s, locale, t.common).title); box.current?.scrollIntoView({ behavior: "smooth", block: "start" }); };
   const toggle = (t: GraphNodeType) => setVisible((v) => { const n = new Set(v); if (n.has(t)) n.delete(t); else n.add(t); return n; });
 
   const main = focus.length ? byId.get(focus[0]) : undefined;
-  const ranked = graph.signals.filter((s) => s.kind !== "WHITESPACE").slice(0, 8);
-  const blanks = graph.signals.filter((s) => s.kind === "WHITESPACE");
 
   return <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
     <div ref={box} className="relative scroll-mt-20 overflow-hidden rounded-[22px] bg-[#141416]" style={{ height: HEIGHT }}>
@@ -74,7 +71,6 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
           <span className="size-2 rounded-full" style={{ background: NODE_COLORS[type] }} />{pick(t.common.nodeTypes, type, graph.types[type])}
         </button>)}
       </div>
-      <p className="pointer-events-none absolute bottom-3 left-4 text-[11px] font-semibold text-white/45 tnum">{t.explore.graphCounts(graph.ideas.toLocaleString(locale, { useGrouping: locale !== "ko" }), graph.links.length.toLocaleString(locale, { useGrouping: locale !== "ko" }))}</p>
       {focus.length > 0 && <button type="button" onClick={() => select([])} aria-label={t.explore.clearSelection} className="absolute bottom-3 right-3 flex size-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur"><X className="size-4" /></button>}
     </div>
 
@@ -83,21 +79,7 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
       ideas={ideas} hubs={[...highlight].map((id) => byId.get(id)!).filter((n) => n && n.type !== "IDEA" && !focus.includes(n.id))}
       signals={graph.signals.filter((s) => focus.every((f) => s.focus.includes(f)) && s.focus.length > 0)} onPick={select} />}
 
-    <section>
-      <h2 className="mb-1 text-lg font-extrabold tracking-tight">{t.explore.opportunities}</h2>
-      <ul className="divide-y divide-border">{ranked.map((s, i) => <li key={i}>
-        <button type="button" onClick={() => pickSignal(s)} className="flex w-full items-center gap-3 py-3 text-left">
-          <span title={pick(t.common.signals, s.kind, s.label)} className={cn("w-[68px] shrink-0 rounded-full px-2 py-1 text-center text-[11px] font-extrabold text-white", locale === "en" && "truncate")} style={{ background: SIGNAL_COLORS[s.kind] }}>{pick(t.common.signals, s.kind, s.label)}</span>
-          <span className="min-w-0 flex-1"><span className="block truncate text-[15px] font-bold">{signalText(s, locale, t.common).title}</span><span className="block truncate text-xs text-muted-foreground">{signalText(s, locale, t.common).detail}</span></span>
-          <ChevronRight className="size-4 shrink-0 text-[var(--text-4)]" />
-        </button>
-      </li>)}</ul>
-      {blanks.length > 0 && <div className="mt-3 rounded-2xl border border-dashed border-border p-4">
-        <p className="text-xs font-bold text-muted-foreground">{t.explore.untouchedProblems}</p>
-        <div className="mt-2 flex flex-wrap gap-1.5">{blanks.map((b) => <Link key={b.title} href="/new" className="rounded-full bg-muted px-3 py-1.5 text-[13px] font-bold hover:bg-[var(--muted-hover)]">{needLabel(b.title, t.common)}</Link>)}</div>
-      </div>}
-      <p className="mt-3 text-[11px] text-[var(--text-4)]">{t.explore.signalHint}</p>
-    </section>
+    {side}
     </aside>
   </div>;
 }
