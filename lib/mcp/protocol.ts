@@ -48,7 +48,7 @@ async function handleOne(value: unknown, service: McpService): Promise<RpcRespon
           protocolVersion: versions.includes(params.protocolVersion) ? params.protocolVersion : "2025-06-18",
           capabilities: { tools: {} },
           serverInfo: { name: "dongne-seorap", version: "1.0.0" },
-          instructions: "동네서랍은 필요(니즈)와 장소별로 지난 시도를 모읍니다. 시도에는 시행·멈춤·검증 중·결과 미확인 상태, 장벽, 대상, 주체와 출처가 연결됩니다. list_vocabulary로 키를 확인하고 문제·타 지역 시도·국내외 선례를 탐색하세요. 공개 기록만 조회하며 빈 결과와 미확인 결과는 해결이나 부재의 증거가 아닙니다.",
+          instructions: "동네서랍은 니즈와 장소별로 지난 시도를 모읍니다. 시도에는 시행·멈춤·검증 중·결과 미확인 상태, 장벽, 대상, 주체와 출처가 연결됩니다. list_vocabulary로 키를 확인하고 문제·타 지역 시도·국내외 선례를 탐색하세요. 공개 기록만 조회하며 빈 결과와 미확인 결과는 해결이나 부재의 증거가 아닙니다.",
         };
         break;
       }

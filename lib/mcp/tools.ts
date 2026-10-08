@@ -72,7 +72,7 @@ async function execute(name: string, args: unknown) {
       const other = elsewhere(problems, p);
       const timeline = [...p.attempts].sort((a, b) => a.year - b.year).map(attempt);
       return result(
-        `## ${p.need.label} · ${p.place.label}\n${problemUrl(p.id)}\n### 지난 시도\n${lines(timeline, a => `${a.year ? `${a.year}년` : "연도 미확인"} · ${a.title} · ${a.stateLabel}\n  주체: ${a.actor || "기록 없음"} · 장벽: ${a.barriers.join(", ") || "기록 없음"}\n  ${a.url || ""} 출처: ${a.sourceUrl || "기록 없음"}`)}\n### 장벽\n${lines(p.barriers, b => `${b.label}: ${b.count}번`)}\n### 대상\n${lines(p.beneficiaries, b => `${b.label}: ${b.count}번`)}\n### 같은 필요의 다른 장소\n${lines(other.local, problemLine, "같은 필요를 다룬 다른 장소의 기록이 없습니다.")}\n${precedentSections(other.precedents)}`,
+        `## ${p.need.label} · ${p.place.label}\n${problemUrl(p.id)}\n### 지난 시도\n${lines(timeline, a => `${a.year ? `${a.year}년` : "연도 미확인"} · ${a.title} · ${a.stateLabel}\n  주체: ${a.actor || "기록 없음"} · 장벽: ${a.barriers.join(", ") || "기록 없음"}\n  ${a.url || ""} 출처: ${a.sourceUrl || "기록 없음"}`)}\n### 장벽\n${lines(p.barriers, b => `${b.label}: ${b.count}번`)}\n### 대상\n${lines(p.beneficiaries, b => `${b.label}: ${b.count}번`)}\n### 같은 니즈의 다른 장소\n${lines(other.local, problemLine, "같은 니즈를 다룬 다른 장소의 기록이 없습니다.")}\n${precedentSections(other.precedents)}`,
         { ...p, attempts: timeline, elsewhere: other.local.map(problemSummary), precedents: groupedPrecedents(other.precedents), url: problemUrl(p.id) },
       );
     }
@@ -107,7 +107,7 @@ async function execute(name: string, args: unknown) {
       const report = regionReport(graph, input.place);
       const url = `${siteUrl}/report${input.place ? `?place=${encodeURIComponent(input.place)}` : ""}`;
       return result(
-        `## ${report.place?.label ?? "전체 지역"} 보고서\n${url}\n총 ${report.totals.total}번 시도 · 시행 ${report.totals.going} · 멈춤 ${report.totals.stopped} · 검증 중 ${report.totals.live} · 결과 미확인 ${report.totals.unknown}\n### 주요 문제\n${lines(report.problems, problemLine)}\n### 장벽 분포\n${lines(report.barriers, b => `${b.label}: ${b.count}번`)}\n### 시도 기록이 없는 필요\n${lines(report.whitespace, n => `${n.label} (${n.key})`)}\n기록이 없다는 뜻이며 실제 필요나 활동이 없다는 뜻은 아닙니다.\n### 검증 중인 시도\n${lines(report.live, a => `${a.title} (${yearLabel(a.year)}) ${absoluteHref(a.href) || ""}`)}\n### 신호\n${lines(report.signals, s => `${s.label} · ${s.title}: ${s.detail}`)}`,
+        `## ${report.place?.label ?? "전체 지역"} 보고서\n${url}\n총 ${report.totals.total}번 시도 · 시행 ${report.totals.going} · 멈춤 ${report.totals.stopped} · 검증 중 ${report.totals.live} · 결과 미확인 ${report.totals.unknown}\n### 주요 문제\n${lines(report.problems, problemLine)}\n### 장벽 분포\n${lines(report.barriers, b => `${b.label}: ${b.count}번`)}\n### 시도 기록이 없는 니즈\n${lines(report.whitespace, n => `${n.label} (${n.key})`)}\n기록이 없다는 뜻이며 실제 필요나 활동이 없다는 뜻은 아닙니다.\n### 검증 중인 시도\n${lines(report.live, a => `${a.title} (${yearLabel(a.year)}) ${absoluteHref(a.href) || ""}`)}\n### 신호\n${lines(report.signals, s => `${s.label} · ${s.title}: ${s.detail}`)}`,
         { ...report, problems: report.problems.map(problemSummary), live: report.live.map(attempt), url },
       );
     }
@@ -124,7 +124,7 @@ async function execute(name: string, args: unknown) {
       const needs = needsOf(graph);
       const places = placesOf(graph);
       return result(
-        `## 검색용 용어\n### 필요\n${lines(needs, n => `${n.key}: ${n.label}`, "등록된 필요가 없습니다.")}\n### 장소\n${lines(places, p => `${p.key}: ${p.label}`, "등록된 장소가 없습니다.")}`,
+        `## 검색용 용어\n### 니즈\n${lines(needs, n => `${n.key}: ${n.label}`, "등록된 니즈가 없습니다.")}\n### 장소\n${lines(places, p => `${p.key}: ${p.label}`, "등록된 장소가 없습니다.")}`,
         { needs, places },
       );
     }
