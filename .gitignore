@@ -43,3 +43,16 @@ next-env.d.ts
 
 # local pglite
 /.data/
+
+# 발표자료·영상 (소스와 최종 산출물만 올린다)
+/presentation/node_modules/
+/presentation/.agents/
+/presentation/.claude/
+/presentation/dist/
+/presentation/.open-slide/
+/presentation/exports/*
+!/presentation/exports/dongne-seorap-pitch.pdf
+/videos/*/node_modules/
+/videos/*/renders/*
+!/videos/*/renders/dongne-seorap-promo.mp4
+/videos/*/capture/

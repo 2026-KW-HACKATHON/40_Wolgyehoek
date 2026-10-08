@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+      @font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+      @font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #ffffff; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Pretendard", sans-serif; color: #212124; letter-spacing: -0.025em; }
+      .scene { position: absolute; inset: 0; background: #ffffff; }
+      .gray { background: #f2f3f6; }
+      .dark { background: #141416; color: #ffffff; }
+      .label { position: absolute; left: 0; right: 0; text-align: center; font-weight: 900; letter-spacing: -0.04em; }
+      .top { top: 96px; font-size: 64px; }
+      .low { bottom: 90px; font-size: 44px; font-weight: 800; }
+      .accent { color: #ff6f0f; }
+      .muted { color: #868b94; }
+      .gray .accent, .gray .zero { color: #cf5608; }
+
+      /* 1. 전국 규모 */
+      .money { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-size: 230px; font-weight: 900; line-height: 1; color: #ff6f0f; letter-spacing: -0.05em; }
+      .regions { position: absolute; left: 50%; top: 640px; width: 1360px; margin-left: -680px; display: flex; justify-content: space-between; }
+      .region { width: 56px; height: 56px; border-radius: 50%; background: #ff6f0f; }
+
+      /* 2. 지자체 243곳 */
+      .dots { position: absolute; left: 295px; top: 300px; width: 1330px; display: grid; grid-template-columns: repeat(27, 30px); gap: 20px; }
+      .dot { width: 30px; height: 30px; border-radius: 50%; background: #ff6f0f; }
+
+      /* 3. 기록 36건 */
+      .records { position: absolute; left: 160px; top: 250px; width: 1600px; display: grid; grid-template-columns: repeat(20, 64px); gap: 14px 16px; }
+      .rec { height: 64px; border-radius: 12px; background: #ffffff; border: 2px solid #eaebee; }
+      .rec.why { background: #ff6f0f; border-color: #ff6f0f; }
+      .rec.why2 { background: #ffb37f; border-color: #ffb37f; }
+      .zsub { top: 900px !important; bottom: auto !important; }
+      .rec i { display: block; height: 10px; border-radius: 5px; background: #d1d3d8; margin-bottom: 9px; }
+      .rec i:nth-child(2) { width: 70%; }
+      .rec i:nth-child(3) { width: 85%; background: #eaebee; }
+      .rec b { display: block; margin-top: 18px; height: 46px; border-radius: 10px; border: 3px dashed #ff6f0f; }
+      .zero { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-size: 300px; font-weight: 900; line-height: 1; color: #ff6f0f; }
+
+      /* 4. 37팀 */
+      .fline { position: absolute; left: 330px; right: 330px; top: 560px; height: 6px; background: #4d5159; border-radius: 3px; transform-origin: 0 50%; }
+      .fpt { position: absolute; top: 420px; width: 360px; margin-left: -180px; text-align: center; color: #ffffff; }
+      .fpt b { display: block; font-size: 64px; font-weight: 900; }
+      .fpt i { display: block; width: 44px; height: 44px; margin: 42px auto 0; border-radius: 50%; background: #ffffff; }
+      .fpt span { display: block; margin-top: 30px; font-size: 38px; font-weight: 800; }
+      .fpt.me b, .fpt.me span { color: #ff6f0f; }
+      .fpt.me i { background: #ff6f0f; box-shadow: 0 0 0 14px rgba(255,111,15,0.25); }
+      .fwhy { top: 840px !important; bottom: auto !important; font-size: 52px !important; }
+      .thumbs { position: absolute; left: 84px; top: 290px; width: 1752px; display: grid; grid-template-columns: repeat(13, 120px); gap: 18px 16px; }
+      .thumb { width: 120px; height: 170px; border-radius: 10px; overflow: hidden; background: #2a2a2e; }
+      .thumb img { display: block; width: 120px; height: 170px; }
+      .thumb.hit { outline: 6px solid #ff6f0f; outline-offset: 4px; }
+      .tag { position: absolute; padding: 14px 26px; border-radius: 20px; background: #ff6f0f; color: #ffffff; font-size: 34px; font-weight: 900; white-space: nowrap; }
+
+      /* 5. 한 학기 */
+      .track { position: absolute; left: 200px; right: 200px; top: 560px; height: 12px; border-radius: 6px; background: #34343a; }
+      .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 6px; background: #ff6f0f; transform-origin: 0 50%; }
+      .runner { position: absolute; top: -24px; left: -30px; width: 60px; height: 60px; border-radius: 50%; background: #ffffff; border: 8px solid #ff6f0f; }
+      .stop { position: absolute; top: 620px; width: 360px; margin-left: -180px; text-align: center; }
+      .stop .wk { font-size: 30px; font-weight: 700; color: #868b94; }
+      .stop .what { margin-top: 10px; font-size: 44px; font-weight: 900; }
+      .bubble { position: absolute; right: 120px; top: 300px; padding: 30px 44px; border-radius: 36px; background: #ffffff; color: #141416; font-size: 56px; font-weight: 900; }
+      .bubble::after { content: ""; position: absolute; left: 90px; bottom: -28px; border: 16px solid transparent; border-top: 18px solid #ffffff; }
+
+      /* 6. 개념 → 문제 → 다른 지역 */
+      .links { position: absolute; inset: 0; }
+      .core { position: absolute; left: 860px; top: 470px; width: 200px; height: 200px; border-radius: 50%; background: #e8650e; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 56px; font-weight: 900; }
+      .chip { position: absolute; top: 260px; width: 240px; height: 90px; border-radius: 45px; background: #ffffff; border: 3px solid #eaebee; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 800; }
+      .place { position: absolute; width: 360px; padding: 26px 30px; border-radius: 28px; background: #ffffff; box-shadow: 0 20px 50px rgba(20,20,22,0.08); }
+      .place .where { font-size: 30px; font-weight: 700; color: #868b94; }
+      .place .state { margin-top: 8px; font-size: 40px; font-weight: 900; }
+
+      /* 실제 화면 */
+      .browser { position: absolute; border-radius: 24px; overflow: hidden; background: #ffffff; border: 2px solid #eaebee; box-shadow: 0 28px 75px rgba(20,20,22,0.13); }
+      .bar { height: 44px; background: #f2f3f6; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-bottom: 1px solid #eaebee; }
+      .bar i { width: 10px; height: 10px; border-radius: 50%; background: #868b94; }
+      .viewport { position: relative; overflow: hidden; background: #ffffff; }
+      .capture { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+      .capture img { display: block; width: 100%; height: 100%; }
+      .typed-line { position: absolute; left: 320px; top: 190px; width: 1280px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: #ffffff; color: #212124; font-size: 34px; font-weight: 700; box-shadow: 0 12px 30px rgba(20,20,22,0.06); }
+      .ch { display: inline-block; }
+      .focus { position: absolute; left: 785px; top: 468px; width: 345px; height: 52px; border: 4px solid #e8650e; border-radius: 12px; }
+      .step { position: absolute; top: 150px; padding: 12px 28px; border-radius: 999px; background: #ffffff; font-size: 34px; font-weight: 900; box-shadow: 0 10px 24px rgba(20,20,22,0.06); }
+      .step b { color: #e8650e; margin-right: 10px; }
+      .arrow { position: absolute; left: 920px; top: 560px; width: 80px; height: 80px; border-radius: 50%; background: #e8650e; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 46px; font-weight: 900; }
+
+      /* 9. 커넥터 */
+      .hub { position: absolute; left: 860px; top: 440px; width: 200px; height: 200px; border-radius: 48px; background: #ffffff; display: flex; align-items: center; justify-content: center; }
+      .hub img { width: 140px; height: 140px; }
+      .app { position: absolute; width: 130px; height: 130px; margin: -65px 0 0 -65px; border-radius: 34px; background: #ffffff; display: flex; align-items: center; justify-content: center; }
+      .app img { width: 76px; height: 76px; }
+
+      /* 10. 확장 */
+      .stage { position: absolute; left: 960px; top: 560px; width: 0; height: 0; }
+      .seed { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: #ff6f0f; }
+      .seed.big { width: 46px; height: 46px; margin: -23px 0 0 -23px; background: #ffffff; border: 8px solid #ff6f0f; }
+      .home { position: absolute; width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; background: #ff6f0f; box-shadow: 0 0 0 16px rgba(255,111,15,0.25); }
+      .globe { position: absolute; width: 900px; height: 900px; margin: -450px 0 0 -450px; border-radius: 50%; border: 4px solid rgba(255,255,255,0.35); }
+      .globe::before, .globe::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 3px solid rgba(255,255,255,0.18); }
+      .globe::before { transform: scaleX(0.45); }
+      .globe::after { transform: scaleY(0.45); }
+      .swaplabel { position: absolute; left: 0; right: 0; top: 96px; text-align: center; font-size: 60px; font-weight: 900; }
+      .swaplabel span { position: absolute; left: 0; right: 0; }
+
+      /* 11. 마무리 */
+      .brand { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+      .brand img { width: 170px; height: 170px; }
+      .brand .name { font-size: 138px; font-weight: 900; line-height: 1; letter-spacing: -0.05em; }
+      .tagline { color: #4d5159; font-size: 54px; font-weight: 900; }
+      .ask { color: #e8650e; font-size: 40px; font-weight: 800; }
+      .url { padding: 18px 42px; border-radius: 999px; background: #f2f3f6; font-size: 34px; font-weight: 700; }
+      .askline { position: absolute; left: 160px; right: 160px; bottom: 96px; text-align: center; }
+      .askline b { display: block; font-size: 44px; font-weight: 900; }
+      .askline span { display: block; margin-top: 14px; color: #ff8a3d; font-size: 32px; font-weight: 800; }
+      .qr { display: flex; align-items: center; gap: 28px; background: #f2f3f6; border-radius: 32px; padding: 24px 40px; }
+      .qr img { width: 150px; height: 150px; }
+      .qr .qrurl { font-size: 36px; font-weight: 900; }
+      .qr .qrsub { margin-top: 10px; color: #e8650e; font-size: 30px; font-weight: 800; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="47" data-width="1920" data-height="1080">
+                  <section id="s4" class="scene dark clip" data-start="0" data-duration="6.5" data-track-index="3">
+        <div class="label top">저희도 처음엔, <span class="accent">광운대 앞 플리마켓</span>이었습니다</div>
+        <div class="fline"></div>
+        <div class="fpt" style="left: 330px"><b>2019</b><i></i><span>주민 플리마켓</span></div>
+        <div class="fpt" style="left: 750px"><b>2022</b><i></i><span>협업 플리마켓</span></div>
+        <div class="fpt" style="left: 1170px"><b>2024</b><i></i><span>주민 참여 마켓</span></div>
+        <div class="fpt me" style="left: 1590px"><b>2026</b><i></i><span>저희 팀</span></div>
+        <div class="label low fwhy">왜 이어지지 않았는지는, <span class="accent">어디에도 없었습니다</span></div>
+      </section>
+      <section id="s3" class="scene gray clip" data-start="6" data-duration="6" data-track-index="2">
+        <div class="label top">월계1동·노원구 공개 기록 <span class="accent">160건</span>, 멈춘 이유는</div>
+        <div class="records" id="records"></div>
+        <div class="zero">20건</div>
+        <div class="label low zsub">그중 <span class="accent">17건</span>은 구의회 회의록 속 답변에</div>
+      </section>
+
+            <section id="s5" class="scene dark clip" data-start="11.5" data-duration="6" data-track-index="4">
+        <div class="label top">한 팀의 한 학기</div>
+        <div class="track"><div class="fill"></div><div class="runner"></div></div>
+        <div class="stop" style="left: 200px"><div class="wk">1주차</div><div class="what">과제</div></div>
+        <div class="stop" style="left: 707px"><div class="wk">2~6주차</div><div class="what">아이디어</div></div>
+        <div class="stop" style="left: 1213px"><div class="wk">7주차</div><div class="what">조사 20시간</div></div>
+        <div class="stop" style="left: 1720px"><div class="wk">발표날</div><div class="what accent">처음 듣는다</div></div>
+        <div class="bubble">“이미 했어요.”</div>
+      </section>
+
+      <section id="s6" class="scene gray clip" data-start="17" data-duration="6" data-track-index="5">
+        <div class="label top">아이디어 전에, <span class="accent">문제부터</span></div>
+        <svg class="links" width="1920" height="1080" viewBox="0 0 1920 1080">
+          <line class="ln" x1="960" y1="570" x2="420" y2="400" stroke="#ff6f0f" stroke-width="5" />
+          <line class="ln" x1="960" y1="570" x2="1500" y2="400" stroke="#ff6f0f" stroke-width="5" />
+          <line class="ln" x1="960" y1="570" x2="420" y2="840" stroke="#ff6f0f" stroke-width="5" />
+          <line class="ln" x1="960" y1="570" x2="1500" y2="840" stroke="#ff6f0f" stroke-width="5" />
+        </svg>
+        <div class="chip" style="left: 330px">대상</div>
+        <div class="chip" style="left: 670px">니즈</div>
+        <div class="chip" style="left: 1010px">장소</div>
+        <div class="chip" style="left: 1350px">멈춘 이유</div>
+        <div class="core">문제</div>
+        <div class="place" style="left: 240px; top: 330px"><div class="where">서울 월계1동</div><div class="state">시행 · 미확인</div></div>
+        <div class="place" style="left: 1320px; top: 330px"><div class="where">대구</div><div class="state">시행</div></div>
+        <div class="place" style="left: 240px; top: 770px"><div class="where">전북 전주</div><div class="state accent">멈춤</div></div>
+        <div class="place" style="left: 1320px; top: 770px"><div class="where">일본 도쿄도</div><div class="state">시행</div></div>
+      </section>
+
+      <section id="s7" class="scene gray clip" data-start="22.5" data-duration="6.5" data-track-index="6">
+        <div class="typed-line"><span class="typed">월계1동 홀몸 어르신이 고립돼 안부를 확인할 사람이 없어요</span></div>
+        <div class="browser" style="left: 320px; top: 300px; width: 1280px">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="viewport" style="height: 660px"><div class="capture" style="width: 1280px; height: 800px"><img src="assets/desk/v3-desk-intake.png" alt="" /><div class="focus"></div></div></div>
+        </div>
+      </section>
+
+      <section id="s8" class="scene gray clip" data-start="28.5" data-duration="7.5" data-track-index="7">
+        <div class="step" style="left: 150px"><b>①</b>멈춘 이유를 남긴다</div>
+        <div class="step" style="left: 1010px"><b>②</b>다음 팀은 거기서 시작</div>
+        <div class="browser" style="left: 120px; top: 240px; width: 780px">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="viewport" style="height: 700px"><div class="capture" id="leave1" style="width: 780px; height: 488px"><img src="assets/desk/v3-desk-leave.png" alt="" /></div></div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="browser" style="left: 1020px; top: 240px; width: 780px">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="viewport" style="height: 700px"><div class="capture" id="leave2" style="width: 780px; height: 488px"><img src="assets/desk/v3-desk-leave-next.png" alt="" /></div></div>
+        </div>
+      </section>
+
+      <section id="s9" class="scene dark clip" data-start="35.5" data-duration="4.5" data-track-index="8">
+        <div class="label top">각자 쓰는 AI에서 바로</div>
+        <svg class="links" width="1920" height="1080" viewBox="0 0 1920 1080" id="appLinks"></svg>
+        <div class="hub"><img src="assets/mark.svg" alt="" /></div>
+        <div id="apps"></div>
+        <div class="askline"><b>“다른 동네는 이 문제를 어떻게 풀었어?”</b><span>전주는 1년 시범 뒤 중단 · 광주 북구는 우유 배달로 전환</span></div>
+      </section>
+
+      <section id="s10" class="scene dark clip" data-start="39.5" data-duration="4" data-track-index="9">
+        <div class="swaplabel"><span id="lb1">한 동네</span><span id="lb2">서울 · 대학 35곳 · 25개 구</span><span id="lb3">전국 17개 시도</span><span id="lb4">그리고 해외 도시</span></div>
+        <div class="stage" id="stage">
+          <div class="globe"></div>
+          <div class="home"></div>
+        </div>
+      </section>
+
+      <section id="s11" class="scene clip" data-start="43" data-duration="4" data-track-index="10">
+        <div class="brand">
+          <img src="assets/mark.svg" alt="" />
+          <div class="name">동네서랍</div>
+          <div class="tagline">아이디어 전에, 문제부터</div>
+          <div class="ask">정책·예산·이해관계인·선례를 찾아 주는 지역 문제 에이전트</div>
+          <div class="qr"><img src="assets/qr-teams.png" alt="" /><div><div class="qrurl">dongne-seorap.vercel.app/teams</div><div class="qrsub">우리 팀 아이디어, 누가 먼저 해봤을까</div></div></div>
+        </div>
+      </section>
+    </div>
+    <script>
+      // 모든 요소는 고정된 규칙으로 만든다 (무작위 없음)
+      const make = (parent, tag, cls, n, fill) => { const p = document.getElementById(parent); if (!p) return; for (let i = 0; i < n; i++) { const el = document.createElement(tag); el.className = cls; if (fill) fill(el, i); p.appendChild(el); } };
+      make("regions", "div", "region", 17);
+      make("dots", "div", "dot", 243, (el, i) => { if (i < 185) el.classList.add("bad"); });
+      make("records", "div", "rec", 160, (el, i) => { const j = (i * 37) % 160; if (j < 17) el.classList.add("why"); else if (j < 20) el.classList.add("why2"); });
+      const logos = ["claude", "chatgpt", "cursor", "claude-code", "codex"];
+      const appsEl = document.getElementById("apps"), linkSvg = document.getElementById("appLinks");
+      logos.forEach((name, i) => {
+        const a = -Math.PI / 2 + (i * 2 * Math.PI) / logos.length;
+        const x = 960 + Math.cos(a) * 340, y = 540 + Math.sin(a) * 300;
+        const app = document.createElement("div"); app.className = "app"; app.style.left = `${x}px`; app.style.top = `${y}px`;
+        app.innerHTML = `<img src="assets/logos/${name}.svg" alt="" />`; appsEl.appendChild(app);
+        const ln = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        Object.entries({ x1: 960, y1: 540, x2: x, y2: y, stroke: "#ff6f0f", "stroke-width": 5, class: "al" }).forEach(([k, v]) => ln.setAttribute(k, v));
+        linkSvg.appendChild(ln);
+      });
+      const stage = document.getElementById("stage");
+      for (let i = 0; i < 35; i++) { const a = (i * 2 * Math.PI) / 35; const d = document.createElement("div"); d.className = "seed s35"; d.style.left = `${Math.cos(a) * 200}px`; d.style.top = `${Math.sin(a) * 200}px`; stage.appendChild(d); }
+      for (let i = 0; i < 17; i++) { const a = (i * 2 * Math.PI) / 17 + 0.2; const d = document.createElement("div"); d.className = "seed big s17"; d.style.left = `${Math.cos(a) * 340}px`; d.style.top = `${Math.sin(a) * 300}px`; stage.appendChild(d); }
+      const typed = document.querySelector(".typed");
+      typed.innerHTML = [...typed.textContent].map((c) => `<span class="ch">${c === " " ? "&nbsp;" : c}</span>`).join("");
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const rise = (sel, at, extra = {}) => tl.fromTo(sel, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", ...extra }, at);
+      const pop = (sel, at, extra = {}) => tl.fromTo(sel, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", ...extra }, at);
+      [5.5, 11, 16.5, 22.5, 28, 33.5, 39.5, 46.5, 50.5, 54].forEach((at, i) => document.getElementById(`s${i + 2}`) && tl.fromTo(`#s${i + 2}`, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.inOut" }, at));
+
+
+      // 3. 기록 36건, 멈춘 이유 칸은 비어 있음 → 0
+      rise("#s3 .top", 11.3);
+      tl.fromTo("#s3 .rec", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, stagger: 0.008, ease: "power2.out" }, 11.6);
+      tl.fromTo("#s3 .rec:not(.why):not(.why2)", { backgroundColor: "#ffffff" }, { backgroundColor: "#eaebee", duration: 0.4 }, 13.2);
+      tl.fromTo("#s3 .rec.why, #s3 .rec.why2", { scale: 1 }, { scale: 1.25, duration: 0.3, yoyo: true, repeat: 1 }, 13.3);
+      tl.to("#s3 .records", { opacity: 0.25, duration: 0.5 }, 14.4);
+      pop("#s3 .zero", 14.6, { duration: 0.6 });
+      rise("#s3 .zsub", 15.2);
+
+      // 4. 37팀 썸네일 → 2팀 강조
+      rise("#s4 .top", 16.8);
+      tl.fromTo("#s4 .fline", { scaleX: 0 }, { scaleX: 1, duration: 1.6, ease: "power2.inOut" }, 17.2);
+      pop("#s4 .fpt", 17.3, { stagger: 0.5 });
+      tl.fromTo("#s4 .fpt.me i", { scale: 1 }, { scale: 1.25, duration: 0.4, repeat: 3, yoyo: true, ease: "sine.inOut" }, 19.2);
+      rise("#s4 .fwhy", 20.2);
+
+      // 5. 한 학기 진행 → 발표날
+      rise("#s5 .top", 22.8);
+      tl.fromTo("#s5 .fill", { scaleX: 0 }, { scaleX: 1, duration: 3.2, ease: "none" }, 23.3);
+      tl.fromTo("#s5 .runner", { x: 0 }, { x: 1520, duration: 3.2, ease: "none" }, 23.3);
+      rise("#s5 .stop", 23.3, { stagger: 1.05 });
+      pop("#s5 .bubble", 26.6, { duration: 0.5 });
+
+      // 6. 개념 칩이 문제로 모이고 → 다른 지역과 연결
+      rise("#s6 .top", 28.2);
+      pop("#s6 .chip", 28.5, { stagger: 0.12 });
+      document.querySelectorAll("#s6 .chip").forEach((chip, i) => {
+        tl.to(chip, { x: 960 - (330 + i * 340 + 120), y: 280, opacity: 0, scale: 0.5, duration: 0.7, ease: "power2.in" }, 29.6);
+      });
+      pop("#s6 .core", 30.2, { duration: 0.5 });
+      tl.fromTo("#s6 .ln", { attr: { "stroke-dasharray": 700, "stroke-dashoffset": 700 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.7, stagger: 0.12, ease: "power2.out" }, 30.7);
+      rise("#s6 .place", 31.1, { stagger: 0.15 });
+
+      // 7. 문제를 적으면 바로 보여줌
+      rise("#s7 .typed-line", 33.6);
+      tl.fromTo("#s7 .ch", { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.04 }, 33.9);
+      rise("#s7 .browser", 33.55);
+      tl.fromTo("#s7 .capture", { scale: 1, x: 0, y: 0 }, { scale: 1.6, x: -560, y: -300, duration: 1.4, ease: "power2.inOut" }, 36.6);
+      tl.fromTo("#s7 .focus", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 37.8);
+
+      // 8. 남긴다 → 다음 팀이 먼저 본다
+      rise("#s8 .step", 39.8, { stagger: 2.2 });
+      rise("#s8 .browser", 39.9, { stagger: 2.2 });
+      tl.fromTo("#leave1", { scale: 1, x: 0, y: 0 }, { scale: 1.75, x: -620, y: -110, duration: 1.4, ease: "power2.inOut" }, 40.6);
+      pop("#s8 .arrow", 41.9);
+      tl.fromTo("#leave2", { scale: 1, x: 0, y: 0 }, { scale: 1.75, x: -620, y: -380, duration: 1.6, ease: "power2.inOut" }, 42.9);
+      tl.fromTo("#s8 .arrow", { x: 0 }, { x: 18, duration: 0.35, repeat: 5, yoyo: true, ease: "sine.inOut" }, 42.2);
+
+      // 9. 커넥터: 동네서랍 ↔ AI 앱
+      rise("#s9 .top", 46.7);
+      pop("#s9 .hub", 46.9);
+      tl.fromTo("#s9 .al", { attr: { "stroke-dasharray": 420, "stroke-dashoffset": 420 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.5, stagger: 0.1 }, 47.4);
+      pop("#s9 .app", 47.6, { stagger: 0.12 });
+      rise("#s9 .askline b", 48.1);
+      rise("#s9 .askline span", 48.5);
+
+      // 10. 한 동네 → 35 → 17 → 세계
+      pop("#s10 .home", 50.7);
+      rise("#lb1", 50.7);
+      tl.to("#lb1", { opacity: 0, duration: 0.25 }, 51.6);
+      rise("#lb2", 51.7);
+      pop("#s10 .s35", 51.7, { stagger: 0.012, duration: 0.3 });
+      tl.to("#lb2", { opacity: 0, duration: 0.25 }, 52.6);
+      rise("#lb3", 52.7);
+      pop("#s10 .s17", 52.7, { stagger: 0.03, duration: 0.3 });
+      tl.to("#lb3", { opacity: 0, duration: 0.25 }, 53.4);
+      rise("#lb4", 53.5);
+      tl.fromTo("#s10 .globe", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 53.4);
+
+      // 11. 마무리
+      tl.fromTo("#s11 img", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 54.2);
+      rise("#s11 .name", 54.4);
+      rise("#s11 .tagline", 54.7);
+      rise("#s11 .ask", 55.2);
+      rise("#s11 .qr", 55.6);
+      tl.set({}, {}, 47);
+      // 예산 장면(s1·s2)을 빼고 37팀(s4) → 기록 0(s3) → 나머지 순서로 시각을 옮긴다
+      const SHIFT = { s3: -5, s4: -16.5 };
+      tl.getChildren(false, true, false).forEach((tw) => {
+        const t = tw.targets()[0];
+        const sec = t && t.closest ? t.closest("section") : null;
+        if (!sec) return;
+        tw.startTime(Math.max(0, tw.startTime() + (SHIFT[sec.id] ?? -11)));
+      });
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
