@@ -59,6 +59,20 @@ class ConclusionServiceTest {
     }
 
     @Test
+    void 검증_기간_중에도_결과와_멈춘_이유를_남길_수_있다() {
+        Card card = saveCard(Instant.now().plus(7, ChronoUnit.DAYS));
+
+        conclusionService.record(card.getId(), PROPOSER,
+                new RecordConclusionRequest(Decision.STOP, List.of("예산·공간 부족"), "쓸 공간을 구하지 못했어요."));
+
+        Card reloaded = cardRepository.findById(card.getId()).orElseThrow();
+        assertThat(reloaded.status(Instant.now())).isEqualTo(CardStatus.STOP);
+        assertThat(conclusionService.history(card.getId()))
+                .singleElement()
+                .satisfies(c -> assertThat(c.reasonTags()).containsExactly("예산·공간 부족"));
+    }
+
+    @Test
     void 보류는_사유가_없으면_거부한다() {
         Card card = saveCard(Instant.now().minus(1, ChronoUnit.DAYS));
 
@@ -93,15 +107,6 @@ class ConclusionServiceTest {
         assertThatThrownBy(() -> conclusionService.record(card.getId(), OTHER,
                 new RecordConclusionRequest(Decision.GO, null, null)))
                 .isInstanceOf(ForbiddenException.class);
-    }
-
-    @Test
-    void 검증_중에는_기록할_수_없다() {
-        Card card = saveCard(Instant.now().plus(7, ChronoUnit.DAYS));
-
-        assertThatThrownBy(() -> conclusionService.record(card.getId(), PROPOSER,
-                new RecordConclusionRequest(Decision.GO, null, null)))
-                .isInstanceOf(BadRequestException.class);
     }
 
     @Test

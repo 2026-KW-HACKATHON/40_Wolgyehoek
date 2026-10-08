@@ -142,8 +142,8 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
           </div>
         ))}
         {card.reportSummary && <p className="mb-3 rounded-2xl bg-muted p-4 text-sm leading-6">{card.reportSummary}</p>}
-        {d.conclusions.length === 0 && !card.reportSummary && !(canManage && status !== "open") && <p className="rounded-2xl border border-dashed border-border p-4 text-sm leading-6 text-muted-foreground">{t.card.noOutcome}</p>}
-        {canManage && status !== "open" && <ConclusionForm cardId={card.id} />}
+        {d.conclusions.length === 0 && !card.reportSummary && !canManage && <p className="rounded-2xl border border-dashed border-border p-4 text-sm leading-6 text-muted-foreground">{t.card.noOutcome}</p>}
+        {canManage && <ConclusionForm cardId={card.id} />}
         {canTakeOver(status) && (
           <div className="mt-4">
             <ButtonLink href={`/cards/${card.id}/takeover`}>{t.common.takeover}</ButtonLink>

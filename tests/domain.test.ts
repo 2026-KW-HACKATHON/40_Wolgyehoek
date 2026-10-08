@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { canConclude, canTakeOver, cardStatus, periodEnd, STALE_DAYS } from "@/lib/domain/status";
+import { canTakeOver, cardStatus, periodEnd, STALE_DAYS } from "@/lib/domain/status";
 import { aggregateReport, median } from "@/lib/domain/report";
 import { bigrams, jaccard, similarCards } from "@/lib/domain/similarity";
 import { isInsideWolgye1 } from "@/lib/domain/geo";
@@ -20,10 +20,6 @@ describe("cardStatus", () => {
     expect(canTakeOver("stale")).toBe(true);
     expect(canTakeOver("open")).toBe(false);
     expect(canTakeOver("go")).toBe(false);
-  });
-  it("결론은 검증 종료 뒤에만", () => {
-    expect(canConclude("open")).toBe(false);
-    expect(canConclude("closed")).toBe(true);
   });
   it("periodEnd는 주 단위로 더한다", () => expect(periodEnd(now, 2).getTime() - now.getTime()).toBe(14 * DAY));
 });

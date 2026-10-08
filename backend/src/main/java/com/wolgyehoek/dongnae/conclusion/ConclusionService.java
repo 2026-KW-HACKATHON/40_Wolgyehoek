@@ -59,9 +59,6 @@ public class ConclusionService {
         if (!card.canBeManagedBy(actor.id(), actor.operator())) {
             throw new ForbiddenException("제안자나 운영자만 결론을 기록할 수 있어요.");
         }
-        if (!card.status(Instant.now()).canConclude()) {
-            throw new BadRequestException("검증 기간이 끝난 뒤에 결론을 기록할 수 있어요.");
-        }
 
         List<String> tags = (request.reasonTags() == null)
                 ? List.of()

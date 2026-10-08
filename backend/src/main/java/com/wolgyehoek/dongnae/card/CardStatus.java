@@ -42,10 +42,6 @@ public enum CardStatus {
         return CLOSED;
     }
 
-    public boolean canConclude() {
-        return this != OPEN;
-    }
-
     public boolean canTakeOver() {
         return this == HOLD || this == STOP || this == STALE;
     }

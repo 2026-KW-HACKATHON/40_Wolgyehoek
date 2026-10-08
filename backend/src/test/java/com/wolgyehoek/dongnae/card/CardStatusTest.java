@@ -64,11 +64,4 @@ class CardStatusTest {
         assertThat(CardStatus.CLOSED.canTakeOver()).isFalse();
         assertThat(CardStatus.GO.canTakeOver()).isFalse();
     }
-
-    @Test
-    void 결론은_검증_중이_아닐_때만_남길_수_있다() {
-        assertThat(CardStatus.OPEN.canConclude()).isFalse();
-        assertThat(CardStatus.CLOSED.canConclude()).isTrue();
-        assertThat(CardStatus.STALE.canConclude()).isTrue();
-    }
 }

@@ -14,10 +14,6 @@ export function canTakeOver(status: CardStatus): boolean {
   return status === "hold" || status === "stop" || status === "stale";
 }
 
-export function canConclude(status: CardStatus): boolean {
-  return status !== "open";
-}
-
 export function periodEnd(start: Date, weeks: number): Date {
   const w = Math.min(8, Math.max(1, Math.round(weeks)));
   return new Date(start.getTime() + w * 7 * DAY);
