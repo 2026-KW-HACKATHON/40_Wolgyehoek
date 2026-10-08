@@ -86,20 +86,25 @@ export function ReactionPanel({ cardId, open, counts, mine }: { cardId: string; 
   );
 }
 
-export function OpinionForm({ cardId }: { cardId: string }) {
-  const [state, action, pending] = useActionState<ActionState, FormData>(addOpinion.bind(null, cardId), init);
+export function OpinionForm({ cardId, targets }: { cardId: string; targets?: { id: string; label: string }[] }) {
+  const [state, action, pending] = useActionState<ActionState, FormData>((prev, form) => addOpinion(String(form.get("target") || cardId), prev, form), init);
   const [stance, setStance] = useState("pro");
   const onSubmit = useFormSubmit(action);
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
   useEffect(() => {
     if (state.ok && state.message && formRef.current) {
       for (const field of Array.from(formRef.current.elements)) {
         if (field instanceof HTMLTextAreaElement || (field instanceof HTMLInputElement && field.type === "text")) field.value = "";
       }
+      if (targets) router.refresh();
     }
-  }, [state]);
+  }, [state, targets, router]);
   return (
     <form ref={formRef} onSubmit={onSubmit} className="space-y-3">
+      {targets && <select name="target" defaultValue={cardId} aria-label="의견을 남길 시도" className={`${inputCls} cursor-pointer font-semibold`}>
+        {targets.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
+      </select>}
       <div className="flex gap-1 rounded-full bg-muted p-1">
         {[["pro", "공감"], ["con", "반론"], ["conditional", "보완"]].map(([k, l]) => (
           <label key={k} className={`has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-2 flex-1 cursor-pointer rounded-full px-3 py-2 text-center text-sm font-bold ${stance === k ? "bg-background shadow-sm" : "text-muted-foreground"}`}>

@@ -6,6 +6,7 @@ import { CountsBar } from "@/components/ProblemRow";
 import { STATE_LABELS } from "@/lib/domain/graph";
 import { buildProblems, elsewhere, type Precedent } from "@/lib/domain/problems";
 import { OPINION_KINDS } from "@/lib/domain/opinions";
+import { OpinionForm } from "@/app/cards/[id]/panels";
 import { cn } from "@/lib/utils";
 
 const STATE_TONE: Record<string, string> = { GOING: "bg-[var(--brand-soft)] text-primary", STOPPED: "bg-foreground text-background", LIVE: "bg-muted text-foreground", UNKNOWN: "bg-muted text-muted-foreground" };
@@ -80,7 +81,8 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
 
         <section>
           <h2 className="mb-1 text-xl font-extrabold tracking-tight">의견 <span className="text-muted-foreground tnum">{opinions.length}</span></h2>
-          <p className="mb-3 text-sm text-muted-foreground">이 문제의 시도들에 남은 공감·반론·보완 의견이에요. 의견은 각 시도 화면에서 남길 수 있어요.</p>
+          <p className="mb-3 text-sm text-muted-foreground">공감·반론·보완과 그 근거를 남겨 주세요. 멈춘 이유를 알고 있다면 어느 시도인지 골라 반론으로 알려 주세요.</p>
+          {p.attempts.some((a) => a.href) && <div className="mb-5 rounded-[18px] bg-muted p-4"><OpinionForm cardId={p.attempts.find((a) => a.href)!.id} targets={p.attempts.filter((a) => a.href).map((a) => ({ id: a.id, label: `${a.year || ""} · ${a.title}` }))} /></div>}
           {opinions.length
             ? <ul className="space-y-2">{opinions.map((o) => <li key={o.id} className="rounded-[18px] border border-border p-4">
               <p className="text-xs font-bold"><span className={OPINION_KINDS[o.stance].tone}>{OPINION_KINDS[o.stance].label}</span><span className="ml-2 font-semibold text-muted-foreground">{o.authorName} · {o.attempt.title}</span></p>
