@@ -3,7 +3,7 @@ export interface IdeaRelated {
   id: string; title: string; status: string; statusLabel: string; year: number;
   origin: string; originLabel: string; sourceTitle: string; sourceUrl: string; zone: string;
   shared: string[]; decision: string | null; reasonTags: string[]; reason: string;
-  succeeded: boolean; canTakeOver: boolean; score: number;
+  succeeded: boolean; canTakeOver: boolean; score: number; by?: string;
 }
 export interface IdeaOutcome { attempts: number; stopped: number; going: number; open: number; reasons: { tag: string; count: number }[]; since: number | null }
 export interface IdeaCheck { concepts: IdeaLabel[]; zone: IdeaLabel; topic: string; related: IdeaRelated[]; outcome: IdeaOutcome }

@@ -34,7 +34,7 @@ public class IdeaGraphService {
     public record Related(String id, String title, String status, String statusLabel, int year, String origin,
                           String originLabel, String sourceTitle, String sourceUrl, String zone, List<String> shared,
                           String decision, List<String> reasonTags, String reason, boolean succeeded,
-                          boolean canTakeOver, double score) {
+                          boolean canTakeOver, double score, String by) {
     }
 
     public record Reason(String tag, long count) {
@@ -182,7 +182,8 @@ public class IdeaGraphService {
                 ORIGIN_LABELS.getOrDefault(c.getOrigin(), "동네서랍"), c.getSourceTitle(), c.getSourceUrl(),
                 n.profile().zone().label(), sharedLabels, latest == null ? null : latest.getDecision().name(),
                 latest == null ? List.of() : latest.getReasonTags(), latest == null ? "" : latest.getReason(),
-                c.getSucceededAt() != null, n.status().canTakeOver(), Math.round(score * 100) / 100.0);
+                c.getSucceededAt() != null, n.status().canTakeOver(), Math.round(score * 100) / 100.0,
+                c.getOrigin().isEmpty() ? "" : c.getProposerName());
     }
 
     List<Node> nodes() {

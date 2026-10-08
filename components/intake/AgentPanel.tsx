@@ -10,6 +10,7 @@ import { type IdeaCheck } from "@/lib/domain/ideas";
 import type { Precedent, Problem } from "@/lib/domain/problems";
 import type { Draft } from "@/lib/domain/draft";
 import { takeoverCandidates, type ResearchQuestion } from "./rules";
+import { contacts, nextSteps } from "@/lib/domain/next-steps";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
@@ -40,6 +41,8 @@ export function AgentPanel({ pending, draft, check, precedents, local, questions
 }) {
   const { locale, t } = useI18n();
   const candidates = takeoverCandidates(check?.related ?? []);
+  const steps = nextSteps(check?.related ?? []);
+  const asks = contacts(check?.related ?? []);
   const attempts = [...new Map(local.flatMap((p) => p.attempts).map((a) => [a.id, a])).values()];
   return <aside className="min-w-0 self-start overflow-clip rounded-2xl border border-border bg-background lg:sticky lg:top-24" aria-label={t.intake.assistant}>
     <div className="flex items-center justify-between border-b border-border px-5 py-4">
@@ -72,6 +75,14 @@ export function AgentPanel({ pending, draft, check, precedents, local, questions
             </li>)}</ul>
           </>}
         </AgentBubble>
+        {(steps.length > 0 || asks.length > 0) && <section data-testid="next-steps" className="rounded-2xl border-2 border-primary/30 bg-[var(--brand-soft)] p-4">
+          <h3 className="text-sm font-extrabold text-[var(--brand-deep)]">{t.intake.nextStepsTitle}</h3>
+          <ol className="mt-2 space-y-2">{steps.map((s, i) => <li key={s.key} className="flex gap-2 text-sm leading-6">
+            <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white">{i + 1}</span>
+            <span><b>{t.intake.nextSteps[s.key]}</b><span className="block text-xs text-muted-foreground">{t.intake.nextStepBecause(s.ref)}</span></span>
+          </li>)}</ol>
+          {asks.length > 0 && <p className="mt-3 text-sm"><span className="font-bold">{t.intake.askWho}</span> {asks.map((a) => a.name).join(" · ")}</p>}
+        </section>}
         <AgentBubble step={3} title={t.intake.otherSolutions}>
           {!precedents.length && !attempts.length ? <p className="text-sm text-muted-foreground">{t.intake.noOtherSolutions}</p> :
             <div className="space-y-4">
