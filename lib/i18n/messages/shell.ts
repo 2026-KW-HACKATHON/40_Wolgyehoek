@@ -1,6 +1,6 @@
 const ko = {
   brand: "동네서랍",
-  nav: { explore: "탐색", problems: "문제", report: "지역 리포트", me: "워크스페이스" },
+  nav: { explore: "탐색", problems: "문제", report: "지역 리포트", me: "내 서랍" },
   mainMenu: "주 메뉴",
   skip: "본문으로 건너뛰기",
   unread: (n: number) => `읽지 않은 소식 ${n}개`,
@@ -14,7 +14,7 @@ const ko = {
 
 const en: typeof ko = {
   brand: "Dongne Seorap",
-  nav: { explore: "Explore", problems: "Problems", report: "Region report", me: "Workspace" },
+  nav: { explore: "Explore", problems: "Problems", report: "Region report", me: "My drawer" },
   mainMenu: "Main menu",
   skip: "Skip to content",
   unread: (n: number) => `${n} unread updates`,

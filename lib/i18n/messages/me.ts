@@ -1,11 +1,12 @@
 const ko = {
-  metadata: "워크스페이스 · 동네서랍",
+  metadata: "내 서랍 · 동네서랍",
   retry: "새로고침 후 다시 시도해 주세요.",
   registered: "등록한 시도",
   takenOver: "이어받은 시도",
   joined: "반응·의견 남긴 시도",
-  workspace: "워크스페이스",
-  intro: "우리 팀이 등록하고 이어받은 시도, 남긴 의견을 모아 봅니다.",
+  workspace: "내 서랍",
+  intro: "내가 제기한 문제와 등록·이어받은 시도, 남긴 의견을 모아 봅니다.",
+  raised: "제기한 문제",
   empty: "아직 없어요",
   newIdea: "아이디어 등록",
   browse: "문제 둘러보기",
@@ -23,13 +24,14 @@ const ko = {
 };
 
 const en: typeof ko = {
-  metadata: "Workspace · Dongne Seorap",
+  metadata: "My drawer · Dongne Seorap",
   retry: "Refresh and try again.",
   registered: "Registered attempts",
   takenOver: "Taken-over attempts",
   joined: "Attempts you responded to",
-  workspace: "Workspace",
-  intro: "See the attempts your team registered or took over, and the opinions you shared.",
+  workspace: "My drawer",
+  intro: "The problems you raised, the attempts you registered or took over, and the opinions you shared.",
+  raised: "Problems raised",
   empty: "Nothing yet",
   newIdea: "Add an idea",
   browse: "Browse problems",

@@ -2,7 +2,9 @@ import { getT } from "@/lib/i18n/server";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { currentDevice } from "@/lib/device";
-import { myActivity } from "@/lib/queries";
+import { knowledgeGraph, myActivity } from "@/lib/queries";
+import { buildProblems } from "@/lib/domain/problems";
+import { ProblemRow } from "@/components/ProblemRow";
 import { markNoticesRead } from "@/app/actions";
 import { CardItem } from "@/components/card-item";
 import { ButtonLink, SectionTitle, fmtDate } from "@/components/ui";
@@ -15,10 +17,13 @@ export default async function MePage() {
   const { t } = await getT();
   const me = await currentDevice();
   if (!me) return <p className="mx-auto max-w-[1200px] px-8 py-10 text-muted-foreground">{t.me.retry}</p>;
-  const a = await myActivity();
+  const [a, graph] = await Promise.all([myActivity(), knowledgeGraph()]);
+  const mineIds = new Set(a.mine.map((s) => s.card.id));
+  const raised = buildProblems(graph).filter((p) => p.attempts.some((x) => mineIds.has(x.id)));
   const cardById = new Map([...a.mine, ...a.joined].map((s) => [s.card.id, s]));
   const unread = a.notices.filter((n) => !n.readAt);
   const contributions: [string, number][] = [
+    [t.me.raised, raised.length],
     [t.me.registered, a.mine.filter((s) => !s.card.parentId).length],
     [t.me.takenOver, a.mine.filter((s) => s.card.parentId).length],
     [t.me.joined, a.joined.length],
@@ -30,6 +35,7 @@ export default async function MePage() {
         <h1 className="text-[34px] font-black tracking-[-0.04em]">{t.me.workspace}</h1>
         <p className="mt-2 text-[17px] font-medium text-muted-foreground">{t.me.intro}</p>
       </header>
+      <section><SectionTitle sub={raised.length || null}>{t.me.raised}</SectionTitle>{raised.length ? <div className="divide-y divide-border">{raised.map((p) => <ProblemRow key={p.id} p={p} />)}</div> : <div className="flex flex-col items-center gap-4 rounded-[18px] border border-dashed border-border py-10"><p className="text-sm text-[var(--text-4)]">{t.me.empty}</p><ButtonLink href="/new" variant="secondary">{t.me.newIdea}</ButtonLink></div>}</section>
       <section><SectionTitle sub={a.mine.length || null}>{t.me.registered}</SectionTitle>{a.mine.length ? <div className="divide-y divide-border">{a.mine.map((s) => <CardItem key={s.card.id} s={s} />)}</div> : <div className="flex flex-col items-center gap-4 rounded-[18px] border border-dashed border-border py-10"><p className="text-sm text-[var(--text-4)]">{t.me.empty}</p><ButtonLink href="/new" variant="secondary">{t.me.newIdea}</ButtonLink></div>}</section>
       <section><SectionTitle sub={a.joined.length || null}>{t.me.joined}</SectionTitle>{a.joined.length ? <div className="divide-y divide-border">{a.joined.map((s) => <CardItem key={s.card.id} s={s} />)}</div> : <div className="flex flex-col items-center gap-4 rounded-[18px] border border-dashed border-border py-10"><p className="text-sm text-[var(--text-4)]">{t.me.empty}</p><ButtonLink href="/problems" variant="secondary">{t.me.browse}</ButtonLink></div>}</section>
     </div>
@@ -40,7 +46,7 @@ export default async function MePage() {
           <span className="bg-brand flex size-14 items-center justify-center rounded-full text-[22px] font-black text-white">{me.nickname.slice(0, 1)}</span>
           <div className="min-w-0"><p className="truncate text-lg font-extrabold">{me.nickname}</p><p className="text-xs font-semibold text-muted-foreground">{t.me.history}</p></div>
         </div>
-        <dl className="mt-4 grid grid-cols-3 gap-2">{contributions.map(([k, v]) => <div key={k} className="rounded-2xl bg-background p-3"><dd className="tnum text-[22px] font-black leading-none">{v}</dd><dt className="mt-1.5 text-[11px] font-semibold leading-tight text-muted-foreground">{k}</dt></div>)}</dl>
+        <dl className="mt-4 grid grid-cols-2 gap-2">{contributions.map(([k, v]) => <div key={k} className="rounded-2xl bg-background p-3"><dd className="tnum text-[22px] font-black leading-none">{v}</dd><dt className="mt-1.5 text-[11px] font-semibold leading-tight text-muted-foreground">{k}</dt></div>)}</dl>
       </section>
 
       <section>
