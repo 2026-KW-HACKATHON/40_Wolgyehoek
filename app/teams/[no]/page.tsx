@@ -43,10 +43,10 @@ export default async function TeamReportPage({ params }: { params: Promise<{ no:
       {r.check.concepts.map((c) => <span key={c.key} className="rounded-full bg-[var(--brand-soft)] px-3 py-1.5 text-sm font-bold text-[var(--brand-deep)]">{pick(t.common.needs, c.key, c.label)}</span>)}
     </div>}
 
-    {steps.length > 0 && <Section title={t.teams.nextSteps}>
+    {steps.length > 0 && <Section title={t.teams.nextSteps} hint={t.teams.nextStepsHint}>
       <ol className="space-y-2">{steps.map((s, i) => <li key={s.key} className="flex gap-3 rounded-2xl bg-[var(--brand-soft)] p-4">
         <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-black text-white">{i + 1}</span>
-        <span className="min-w-0"><span className="block text-[16px] font-extrabold">{t.intake.nextSteps[s.key]}</span><span className="mt-0.5 block text-sm text-muted-foreground">{t.intake.nextStepBecause(s.ref)}</span></span>
+        <span className="min-w-0"><span className="block text-[16px] font-extrabold">{t.teams.checkItems[s.key]}</span><span className="mt-0.5 block text-sm text-muted-foreground">{t.intake.nextStepBecause(s.ref)}</span></span>
       </li>)}</ol>
     </Section>}
 
