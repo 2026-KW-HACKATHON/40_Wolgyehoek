@@ -57,11 +57,10 @@ export function NewCardForm({ parent }: { parent?: { id: string; title: string; 
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-extrabold tracking-tight">{parent ? t.intake.newCard : t.intake.draft}</h2>
-            <span className="rounded-full bg-muted px-2.5 py-1 text-[11px] font-bold text-muted-foreground">{draft.source === "llm" ? "AI" : draft.source === "rule" ? t.intake.automatic : t.intake.originalLink}</span>
+            {!parent && <span className="rounded-full bg-muted px-2.5 py-1 text-[11px] font-bold text-muted-foreground">{draft.source === "llm" ? "AI" : t.intake.automatic}</span>}
           </div>
           {parent && <input type="hidden" name="parentId" value={parent.id} />}
           {media.flatMap((m) => m.id && !m.error ? [<input key={m.key} type="hidden" name="mediaIds" value={m.id} />] : [])}
-          {parent && picker}
           <div className="space-y-1.5">
             <label htmlFor="problem" className="block text-sm font-semibold text-muted-foreground">{t.intake.whichProblem}</label>
             <Input id="problem" name="problem" defaultValue={parent?.problem ?? ""} maxLength={80} placeholder={t.intake.problemPlaceholder} className={inputCls} required />

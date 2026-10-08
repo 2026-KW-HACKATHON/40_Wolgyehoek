@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getCard } from "@/lib/queries";
 import { canTakeOver } from "@/lib/domain/status";
@@ -24,15 +26,15 @@ export default async function TakeoverPage({ params }: { params: Promise<{ id: s
      <aside className="space-y-4 lg:sticky lg:top-24">
       <h1 className="text-[34px] font-black tracking-[-0.04em]">{t.intake.takeover}</h1>
       <p className="text-[15px] text-muted-foreground">{t.intake.takeoverIntro}</p>
-      <div className="rounded-[22px] bg-muted p-5">
-        <div className="flex items-center gap-2"><StatusBadge status={d.status} /><span className="truncate text-[15px] font-bold">{d.card.title}</span></div>
+      <Link href={`/cards/${d.card.id}`} className="block rounded-[22px] bg-muted p-5 transition-colors hover:bg-[var(--muted-hover)]">
+        <div className="flex items-center gap-2"><StatusBadge status={d.status} /><span className="min-w-0 flex-1 truncate text-[15px] font-bold">{d.card.title}</span><ChevronRight className="size-4 shrink-0 text-muted-foreground" /></div>
         {d.latest && (
           <p className="mt-2 text-sm text-muted-foreground">
             {t.common.decisions[d.latest.decision]}{d.latest.reasonTags.length > 0 && ` · ${d.latest.reasonTags.map((tag) => pick(t.common.barriers, tag, tag)).join(", ")}`}{d.latest.reason && ` · ${d.latest.reason}`}
           </p>
         )}
         <p className="tnum mt-2 text-xs text-[var(--text-4)]">{t.intake.connections(d.reactionCount, d.opinions.length)}</p>
-      </div>
+      </Link>
      </aside>
      <div className="min-w-0">
       <NewCardForm parent={{ id: d.card.id, title: d.card.title, body: d.card.body, target: d.card.target, place: d.card.place, effect: d.card.effect, problem: d.card.problem, topic: d.card.topic }} />
