@@ -9,7 +9,7 @@ const ko = {
   switchTo: "English",
   switchLabel: "Switch to English",
   operator: "운영자",
-  description: "지역 문제를 푸는 시도의 결과와 멈춘 이유를 남기고, 다음 팀이 시작할 때 먼저 보여줍니다.",
+  description: "지역 문제를 처음 맡은 청년 팀에게 같은 문제를 먼저 시도한 기록과 멈춘 이유를 보여줘, 아이디어를 내기 전에 문제부터 제대로 정의하게 돕습니다.",
 };
 
 const en: typeof ko = {
@@ -23,7 +23,7 @@ const en: typeof ko = {
   switchTo: "한국어",
   switchLabel: "한국어로 보기",
   operator: "Operator",
-  description: "Keeps what happened to local problem-solving attempts and why they stopped, and shows it to the next team before they start.",
+  description: "Shows youth teams new to a local problem who tried the same problem before and why it stopped, so they define the problem before pitching an idea.",
 };
 
 export const shell = { ko, en };

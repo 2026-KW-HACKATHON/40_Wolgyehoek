@@ -11,6 +11,7 @@ import { TOPICS, type Topic } from "@/lib/domain/types";
 import { TOPIC_SHORT, ZONE_SHORT } from "@/lib/domain/ideas";
 import { PRECEDENTS, buildProblems } from "@/lib/domain/problems";
 import { cn } from "@/lib/utils";
+import { inputCls } from "@/components/ui";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ zone?: string; topic?: string }> }) {
   const { t, locale } = await getT();
@@ -34,6 +35,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ z
       <div>
         <h1 className="text-[34px] font-black tracking-[-0.04em]">{t.explore.heading}</h1>
         <p className="mt-2 text-[17px] font-medium text-muted-foreground">{t.explore.intro}</p>
+        <form action="/new" className="mt-5 flex w-full max-w-[640px] gap-2">
+          <input name="q" required maxLength={500} aria-label={t.explore.ask} placeholder={t.explore.askPlaceholder} className={`${inputCls} flex-1`} />
+          <button type="submit" className="bg-brand min-h-12 shrink-0 rounded-2xl px-5 text-[15px] font-bold text-white transition-transform hover:scale-[1.02] active:scale-95">{t.explore.askSubmit}</button>
+        </form>
       </div>
       <ul className="flex gap-2">
         {stats.map(([k, v, href]) => <li key={k}><Link href={href} className="block min-w-[104px] rounded-2xl bg-muted px-4 py-3 transition-colors hover:bg-[var(--muted-hover)]"><span className="block text-[26px] font-black leading-none tracking-tight tnum">{v.toLocaleString(locale, { useGrouping: locale !== "ko" })}</span><span className="mt-1.5 block text-xs font-semibold text-muted-foreground">{k}</span></Link></li>)}

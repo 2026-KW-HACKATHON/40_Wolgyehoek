@@ -87,7 +87,7 @@ async function execute(name: string, args: unknown) {
           ? `${siteUrl}/cards/${encodeURIComponent(a.id)}/takeover` : null,
       }));
       const summary = check.outcome.attempts
-        ? `이미 ${check.outcome.attempts}번 나온 아이디어`
+        ? `같은 문제에 먼저 ${check.outcome.attempts}번 시도됨`
         : "등록된 유사 시도가 없습니다. 새로운 아이디어라는 뜻은 아닙니다.";
       const nextSteps = related.filter(a => a.takeoverUrl).map(a => ({
         action: `${a.title}: ${a.statusLabel} 기록과 ${a.reason || "미확인 결과"}를 확인하고 이어받기를 검토하세요.`,

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/client";
-import { useActionState, useState, useSyncExternalStore, useTransition } from "react";
+import { useActionState, useEffect, useEffectEvent, useRef, useState, useSyncExternalStore, useTransition } from "react";
 import { FileText, Link2, MessageSquareText, ArrowRight, RotateCcw } from "lucide-react";
 import { analyzeIntake, publishIntake } from "@/app/intake-actions";
 import { Button } from "@/components/ui/Button";
@@ -36,7 +36,7 @@ function parseMemory(raw: string): TeamMemory {
   } catch { return emptyMemory; }
 }
 
-export function IntakeForm() {
+export function IntakeForm({ initialText = "" }: { initialText?: string }) {
   const { locale, t } = useI18n();
   const modes = [
     { key: "text", label: t.intake.freeText, icon: MessageSquareText },
@@ -47,7 +47,7 @@ export function IntakeForm() {
   const memory = parseMemory(memoryRaw);
   const [memoryError, setMemoryError] = useState("");
   const [mode, setMode] = useState<"text" | "url" | "file">("text");
-  const [text, setText] = useState("");
+  const [text, setText] = useState(initialText);
   const [url, setUrl] = useState("");
   const [file, setFile] = useState<{ name: string; text: string } | null>(null);
   const [reading, setReading] = useState(false);
@@ -97,6 +97,14 @@ export function IntakeForm() {
       setTakeoverId("");
     } catch { setError(t.intake.analysisError); }
   });
+  // 첫 화면에서 문제를 적고 들어오면 바로 분석을 시작한다 (개발 모드의 이중 실행은 ref로 막는다)
+  const autoRan = useRef(false);
+  const runInitial = useEffectEvent(() => run());
+  useEffect(() => {
+    if (!initialText || autoRan.current) return;
+    autoRan.current = true;
+    runInitial();
+  }, [initialText]);
   const answer = (q: ResearchQuestion, value: string) => {
     const previous = answers[q.key];
     setAnswers((old) => ({ ...old, [q.key]: value }));

@@ -2,8 +2,11 @@ import type { GraphNode } from "@/lib/domain/graph";
 import { common, pick } from "./common";
 
 const ko = {
-  heading: "같은 문제, 먼저 시도한 사람들",
-  intro: "시도가 끝나면 결과와 멈춘 이유를 남기고, 다음 팀은 그걸 먼저 보고 시작해요.",
+  heading: "아이디어 전에, 문제부터",
+  intro: "같은 문제를 먼저 시도한 기록과 멈춘 이유를 보고, 문제부터 제대로 정의하세요.",
+  ask: "풀려는 문제",
+  askPlaceholder: "예) 월계1동 홀몸 어르신이 고립돼요",
+  askSubmit: "먼저 시도한 기록 보기",
   attempts: "시도",
   problems: "문제",
   repeated: "반복되는 문제",
@@ -32,8 +35,8 @@ const ko = {
   viewOriginal: "원문 보기",
   succeeded: "성사",
   newCombination: "처음 보는 조합이에요",
-  already: "이미 ",
-  repeatedIdea: " 나온 아이디어",
+  already: "같은 문제에 먼저 ",
+  repeatedIdea: " 시도됐어요",
   sameGroup: "같은 묶음",
   lineageCounts: (stopped: string, going: string) => `멈춤 ${stopped} · 진행 ${going}`,
   since: (year: number) => `${year}년부터 · `,
@@ -86,8 +89,11 @@ const ko = {
 };
 
 const en: typeof ko = {
-  heading: "The same problems, those who tried first",
-  intro: "When an attempt ends, leave what happened and why it stopped. The next team sees it first.",
+  heading: "Problem first, then the idea",
+  intro: "See who tried the same problem and why it stopped, then define your problem properly.",
+  ask: "Problem to solve",
+  askPlaceholder: "e.g. Older people living alone are isolated",
+  askSubmit: "See who tried first",
   attempts: "Attempts",
   problems: "Problems",
   repeated: "Recurring problems",
@@ -116,8 +122,8 @@ const en: typeof ko = {
   viewOriginal: "View original",
   succeeded: "Succeeded",
   newCombination: "A new combination",
-  already: "An idea tried ",
-  repeatedIdea: " before",
+  already: "Tried ",
+  repeatedIdea: " on this problem",
   sameGroup: "Related attempts",
   lineageCounts: (stopped, going) => `Stopped ${stopped} · Running ${going}`,
   since: (year) => `Since ${year} · `,
