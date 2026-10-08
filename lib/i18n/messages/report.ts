@@ -1,7 +1,7 @@
 const ko = {
   metadataTitle: "지역 리포트 · 동네서랍",
   audience: "지자체·의원실용",
-  wholeArea: "월계1동 전체",
+  wholeArea: "월계1동·노원구 전체",
   title: (scope: string) => `${scope} 지역 문제 리포트`,
   intro: "이 지역에서 반복되는 문제, 멈춘 이유, 아무도 손대지 않은 빈칸을 한 번에 봅니다.",
   all: "전체",
@@ -28,7 +28,7 @@ const ko = {
 const en: typeof ko = {
   metadataTitle: "Area report · Dongne Seorap",
   audience: "For local government and council offices",
-  wholeArea: "All of Wolgye 1-dong",
+  wholeArea: "Wolgye 1-dong & all of Nowon-gu",
   title: (scope) => `${scope}: local problems report`,
   intro: "See recurring problems, why attempts stopped, and what no one has tried in this area.",
   all: "All",

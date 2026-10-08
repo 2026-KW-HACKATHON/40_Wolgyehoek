@@ -45,8 +45,16 @@ public final class IdeaTaxonomy {
     );
 
     public static final Zone WIDE = new Zone("WIDE", "월계1동 전역", List.of());
+    /** 노원구 전체에 걸친 기록. 월계1동 전역처럼 어느 동의 문제와도 이어진다. */
+    public static final Zone NOWON = new Zone("NOWON", "노원구 전역", List.of("노원구전역", "노원구일대", "노원구전체", "구전역"));
 
+    // 노원구의 다른 동은 월계1동 세부 장소보다 먼저 판정한다(예: 서울과기대 캠퍼스타운은 공릉동).
     public static final List<Zone> ZONES = List.of(
+            new Zone("WOLGYE_23", "월계2·3동", List.of("월계2동", "월계3동", "월계주공", "초안산")),
+            new Zone("GONGNEUNG", "공릉동", List.of("공릉", "태릉", "화랑대", "서울과기대", "서울과학기술대", "과기대", "서울여대", "서울여자대", "삼육대", "도깨비시장")),
+            new Zone("SANGGYE", "상계동", List.of("상계동", "상계1동", "상계2동", "상계3·4동", "상계5동", "상계6·7동", "상계8동", "상계9동", "상계10동", "노원문화의거리", "수락산", "불암산", "당고개", "노원역", "마들역", "인덕대")),
+            new Zone("JUNGGYE", "중계동", List.of("중계동", "중계본동", "중계1동", "중계2·3동", "중계4동", "백사마을", "은행사거리")),
+            new Zone("HAGYE", "하계동", List.of("하계동", "하계1동", "하계2동", "하계역", "중평")),
             new Zone("KW_STATION", "광운대역", List.of("광운대역", "역세권", "물류부지")),
             new Zone("KW_UNIV", "광운대 앞", List.of("광운대", "광운로", "원룸촌", "대학가", "동해문화예술관", "캠퍼스타운", "비타민센터", "연촌재")),
             new Zone("SEOKGYE", "석계역", List.of("석계")),
@@ -55,8 +63,14 @@ public final class IdeaTaxonomy {
             new Zone("STREAM", "중랑천·우이천", List.of("중랑천", "우이천", "하천변")),
             new Zone("FACILITY", "주민센터·복지시설", List.of("주민센터", "행정복지센터", "휴센터", "경로당", "복지관", "도서관", "문화센터")),
             new Zone("HOMES", "주거 골목", List.of("아파트", "단지", "골목", "주택가", "빌라")),
+            NOWON,
             WIDE
     );
+
+    /** 동 전체·구 전체 기록은 특정 장소를 가리지 않고 어느 장소의 문제와도 이어진다. */
+    public static boolean isWide(Zone zone) {
+        return zone == WIDE || zone == NOWON;
+    }
 
     private IdeaTaxonomy() {
     }

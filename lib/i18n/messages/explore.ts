@@ -8,6 +8,7 @@ const ko = {
   askPlaceholder: "예) 월계1동 홀몸 어르신이 고립돼요",
   askSubmit: "먼저 시도한 기록 보기",
   linksLabel: "기록 사이의 연결",
+  kinds: (policy: number, admin: number, attempt: number, precedent: number) => `정책 ${policy} · 행정 ${admin} · 시도 ${attempt} · 선례 ${precedent}`,
   attempts: "시도",
   problems: "문제",
   repeated: "반복되는 문제",
@@ -96,6 +97,7 @@ const en: typeof ko = {
   askPlaceholder: "e.g. Older people living alone are isolated",
   askSubmit: "See who tried first",
   linksLabel: "connections between records",
+  kinds: (policy: number, admin: number, attempt: number, precedent: number) => `Policy ${policy} · Admin ${admin} · Attempts ${attempt} · Cases ${precedent}`,
   attempts: "Attempts",
   problems: "Problems",
   repeated: "Recurring problems",
@@ -182,6 +184,7 @@ export const explore = { ko, en };
 const placeKeys: Record<string, string> = {
   "광운대역": "KW_STATION", "광운대 앞": "KW_UNIV", "석계역": "SEOKGYE", "영축산": "YEONGCHUK",
   "경춘선숲길": "GYEONGCHUN", "중랑천·우이천": "STREAM", "주민센터·복지시설": "FACILITY", "주거 골목": "HOMES", "월계1동 전역": "WIDE",
+  "월계2·3동": "WOLGYE_23", "공릉동": "GONGNEUNG", "상계동": "SANGGYE", "중계동": "JUNGGYE", "하계동": "HAGYE", "노원구 전역": "NOWON",
 };
 
 export const placeLabel = (label: string, vocab: typeof common.ko) => pick(vocab.places, placeKeys[label], label);

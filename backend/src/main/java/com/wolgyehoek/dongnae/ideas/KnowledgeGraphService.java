@@ -34,8 +34,17 @@ public class KnowledgeGraphService {
     public record Signal(String kind, String label, String title, String detail, int score, List<String> focus) {
     }
 
+    /** kinds: 자료 종류별 기록 수. POLICY=정책(조례·구 사업·공약), ADMIN=행정(의회 기록), ATTEMPT=시도(주민·학생·동네서랍 등록). */
     public record Graph(List<GraphNode> nodes, List<GraphLink> links, List<Signal> signals,
-                        Map<String, String> types, int ideas) {
+                        Map<String, String> types, int ideas, Map<String, Integer> kinds) {
+    }
+
+    static String kind(String origin) {
+        return switch (origin == null ? "" : origin) {
+            case "POLICY", "ORDINANCE", "PLEDGE" -> "POLICY";
+            case "COUNCIL" -> "ADMIN";
+            default -> "ATTEMPT";
+        };
     }
 
     private record Idea(Node node, State state, String actor, List<Ontology.Beneficiary> beneficiaries,
@@ -80,7 +89,10 @@ public class KnowledgeGraphService {
         hubs.forEach((id, h) -> nodes.add(new GraphNode(id, h.type(), h.label(), h.sub(), null, 0, null, h.sourceUrl(), stats(members.get(id)))));
         Map<String, String> types = new LinkedHashMap<>();
         for (NodeType t : NodeType.values()) types.put(t.name(), t.label());
-        return new Graph(nodes, links, signals(all), types, all.size());
+        Map<String, Integer> kinds = new LinkedHashMap<>();
+        for (String k : List.of("POLICY", "ADMIN", "ATTEMPT")) kinds.put(k, 0);
+        for (Idea i : all) kinds.merge(kind(i.card().getOrigin()), 1, Integer::sum);
+        return new Graph(nodes, links, signals(all), types, all.size(), kinds);
     }
 
     private static void link(Idea i, String hubId, NodeType type, String label, String sub, Relation rel,
@@ -143,9 +155,9 @@ public class KnowledgeGraphService {
                 out.add(new Signal("DEMAND", "수요 미충족", k.label() + "에 " + demand + "명이 반응했어요",
                         "아직 시행된 시도가 없어요 · " + list.size() + "번 시도", 70 + demand, List.of("need:" + key)));
             }
-            Set<String> proven = list.stream().filter(i -> i.state() == State.GOING).map(i -> i.node().profile().zone()).filter(z -> z != IdeaTaxonomy.WIDE).map(Zone::label).collect(Collectors.toCollection(LinkedHashSet::new));
+            Set<String> proven = list.stream().filter(i -> i.state() == State.GOING).map(i -> i.node().profile().zone()).filter(z -> !IdeaTaxonomy.isWide(z)).map(Zone::label).collect(Collectors.toCollection(LinkedHashSet::new));
             Set<String> tried = list.stream().map(i -> i.node().profile().zone().key()).collect(Collectors.toSet());
-            List<String> empty = IdeaTaxonomy.ZONES.stream().filter(z -> z != IdeaTaxonomy.WIDE && !tried.contains(z.key())).map(Zone::label).toList();
+            List<String> empty = IdeaTaxonomy.ZONES.stream().filter(z -> !IdeaTaxonomy.isWide(z) && !tried.contains(z.key())).map(Zone::label).toList();
             if (!proven.isEmpty() && !empty.isEmpty()) {
                 out.add(new Signal("SPREAD", "확산", k.label() + " · " + String.join(", ", proven) + "에서 시행",
                         String.join(", ", empty.subList(0, Math.min(3, empty.size()))) + (empty.size() > 3 ? " 외 " + (empty.size() - 3) + "곳" : "") + "은 아직 시도 없음",

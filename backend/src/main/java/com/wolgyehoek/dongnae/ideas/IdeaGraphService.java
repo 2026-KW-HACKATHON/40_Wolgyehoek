@@ -25,7 +25,8 @@ public class IdeaGraphService {
     private static final int RELATED_LIMIT = 6;
     private static final ZoneId SEOUL = ZoneId.of("Asia/Seoul");
     private static final Map<String, String> ORIGIN_LABELS = Map.of(
-            "STUDENT", "학생 프로젝트", "POLICY", "구·시 사업", "RESIDENT", "주민 제안", "PLEDGE", "선거 공약");
+            "STUDENT", "학생 프로젝트", "POLICY", "구·시 사업", "RESIDENT", "주민 제안", "PLEDGE", "선거 공약",
+            "ORDINANCE", "조례", "COUNCIL", "의회 기록");
 
     public record Label(String key, String label) {
     }
@@ -148,8 +149,8 @@ public class IdeaGraphService {
         Set<String> union = new HashSet<>(p.conceptKeys());
         union.addAll(n.profile().conceptKeys());
         long specific = p.concepts().stream().filter(c -> !c.broad() && shared.contains(c.key())).count();
-        boolean sameZone = p.zone().equals(n.profile().zone()) && p.zone() != IdeaTaxonomy.WIDE;
-        boolean zoneFits = sameZone || p.zone() == IdeaTaxonomy.WIDE || n.profile().zone() == IdeaTaxonomy.WIDE;
+        boolean sameZone = p.zone().equals(n.profile().zone()) && !IdeaTaxonomy.isWide(p.zone());
+        boolean zoneFits = sameZone || IdeaTaxonomy.isWide(p.zone()) || IdeaTaxonomy.isWide(n.profile().zone());
         boolean linked = text >= 0.25
                 || (specific >= 1 && (zoneFits || text >= 0.1))
                 || (shared.size() >= 2 && zoneFits);

@@ -14,7 +14,8 @@ export interface IdeaMap { zones: IdeaLabel[]; cells: IdeaCell[]; clusters: Idea
 export const ZONE_SHORT: Record<string, string> = {
   KW_STATION: "광운대역", KW_UNIV: "광운대 앞", SEOKGYE: "석계역", YEONGCHUK: "영축산", GYEONGCHUN: "숲길",
   STREAM: "하천", FACILITY: "복지시설", HOMES: "주거 골목", WIDE: "동 전역",
+  WOLGYE_23: "월계2·3동", GONGNEUNG: "공릉동", SANGGYE: "상계동", JUNGGYE: "중계동", HAGYE: "하계동", NOWON: "노원구",
 };
 export const TOPIC_SHORT: Record<string, string> = { CARE: "돌봄", COMMERCE: "상권", SAFETY: "안전", ENVIRONMENT: "환경", YOUTH: "청년", NEIGHBOR: "이웃" };
 
-export const ORIGIN_LABELS: Record<string, string> = { STUDENT: "학생 프로젝트", POLICY: "구·시 사업", RESIDENT: "주민 제안", PLEDGE: "선거 공약" };
+export const ORIGIN_LABELS: Record<string, string> = { STUDENT: "학생 프로젝트", POLICY: "구·시 사업", RESIDENT: "주민 제안", PLEDGE: "선거 공약", ORDINANCE: "조례", COUNCIL: "의회 기록" };

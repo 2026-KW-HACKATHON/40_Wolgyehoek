@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { knowledgeGraph } from "@/lib/queries";
 import { KnowledgeExplorer } from "@/components/KnowledgeExplorer";
 import { ProblemRow } from "@/components/ProblemRow";
-import { buildProblems } from "@/lib/domain/problems";
+import { PRECEDENTS, buildProblems } from "@/lib/domain/problems";
 import { inputCls } from "@/components/ui";
 
 export default async function Home() {
@@ -24,6 +24,7 @@ export default async function Home() {
       <p className="text-right">
         <span className="tnum block text-[56px] font-black leading-none tracking-[-0.04em] text-primary">{graph.links.length.toLocaleString(locale, { useGrouping: locale !== "ko" })}</span>
         <span className="mt-2 block text-sm font-bold text-muted-foreground">{t.explore.linksLabel}</span>
+        {graph.kinds && <span className="tnum mt-1 block text-xs font-semibold text-[var(--text-4)]">{t.explore.kinds(graph.kinds.POLICY, graph.kinds.ADMIN, graph.kinds.ATTEMPT, PRECEDENTS.length)}</span>}
       </p>
     </header>
 

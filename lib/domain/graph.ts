@@ -12,7 +12,7 @@ export interface GraphNode {
 }
 export interface GraphLink { source: string; target: string; type: string }
 export interface Signal { kind: SignalKind; label: string; title: string; detail: string; score: number; focus: string[] }
-export interface KnowledgeGraph { nodes: GraphNode[]; links: GraphLink[]; signals: Signal[]; types: Record<GraphNodeType, string>; ideas: number }
+export interface KnowledgeGraph { nodes: GraphNode[]; links: GraphLink[]; signals: Signal[]; types: Record<GraphNodeType, string>; ideas: number; kinds?: Record<"POLICY" | "ADMIN" | "ATTEMPT", number> }
 
 export const NODE_COLORS: Record<GraphNodeType, string> = {
   IDEA: "#d9dbe0", NEED: "#ff6f0f", PLACE: "#ffb38a", ACTOR: "#4cb3ff", BENEFICIARY: "#3ddc97", BARRIER: "#ff4d4f", SOURCE: "#8a8f99",
