@@ -2,9 +2,9 @@
 
 import { getT } from "@/lib/i18n/server";
 import { pick } from "@/lib/i18n/messages/common";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import { api, ApiError } from "@/lib/api";
+import { api, ApiError, PUBLIC_DATA_TAG } from "@/lib/api";
 import type { Draft } from "@/lib/domain/draft";
 import type { IdeaCheck } from "@/lib/domain/ideas";
 import { cardInput, conclusionInput, opinionInput, validatePrice } from "@/lib/domain/validation";
@@ -17,7 +17,7 @@ const localizedMessage = async (message: string) => {
   return prefix ? t.system.errors[prefix] + message.slice(prefix.length) : pick(t.system.errors, message, message);
 };
 const errorMessage = async (e: unknown) => { const { t } = await getT(); return e instanceof ApiError ? localizedMessage(e.message) : t.system.requestFailed; };
-const refresh = (id?: string) => { revalidatePath("/", "layout"); if (id) revalidatePath(`/cards/${id}`); };
+const refresh = (id?: string) => { updateTag(PUBLIC_DATA_TAG); revalidatePath("/", "layout"); if (id) revalidatePath(`/cards/${id}`); };
 
 export async function createDraft(text: string) {
   const { t } = await getT();

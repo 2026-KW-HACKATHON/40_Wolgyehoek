@@ -8,15 +8,18 @@ export class ApiError extends Error {
 export const springUrl = (path: string) => `${process.env.SPRING_API_URL ?? "http://localhost:8080"}${path}`;
 export const deviceCookie = (value: string | undefined) => value && /^d_[0-9a-f]{16}$/.test(value) ? `dn_device=${value}` : null;
 
-export async function api<T>(path: string, options: { method?: string; body?: unknown } = {}): Promise<T> {
-  const device = (await cookies()).get("dn_device")?.value;
+export const PUBLIC_DATA_TAG = "public-data";
+
+// shared: 기기와 무관한 공개 조회를 5분간 공유 캐시한다. 쓰기 액션이 PUBLIC_DATA_TAG를 비운다.
+export async function api<T>(path: string, options: { method?: string; body?: unknown; shared?: boolean } = {}): Promise<T> {
   const headers: Record<string, string> = { "content-type": "application/json" };
-  const cookie = deviceCookie(device);
+  const cookie = options.shared ? null : deviceCookie((await cookies()).get("dn_device")?.value);
   if (cookie) headers.cookie = cookie;
   let response: Response;
   try {
     response = await fetch(springUrl(path), {
-      method: options.method ?? "GET", headers, cache: "no-store",
+      method: options.method ?? "GET", headers,
+      ...(options.shared ? { next: { revalidate: 300, tags: [PUBLIC_DATA_TAG] } } : { cache: "no-store" as const }),
       body: options.body === undefined ? undefined : JSON.stringify(options.body),
       signal: AbortSignal.timeout(15000),
     });

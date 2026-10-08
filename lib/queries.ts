@@ -30,7 +30,7 @@ const summary = (s: RawSummary): CardSummary => ({ ...s, card: card(s.card), sta
 
 export async function listCards(opts: { q?: string; tab?: "open" | "done" | "all" }) {
   const query = new URLSearchParams({ q: opts.q ?? "", tab: opts.tab ?? "all" });
-  return (await api<RawSummary[]>(`/api/views/cards?${query}`)).map(summary);
+  return (await api<RawSummary[]>(`/api/views/cards?${query}`, { shared: true })).map(summary);
 }
 export async function getCard(id: string) {
   try {
@@ -50,11 +50,11 @@ export async function myActivity() {
   const a = await api<{ mine: RawSummary[]; joined: RawSummary[]; notices: Notice[] }>("/api/views/me");
   return { mine: a.mine.map(summary), joined: a.joined.map(summary), notices: a.notices.map(n => ({ ...n, kind: NOTICE_KINDS[n.kind.toUpperCase()] ?? "restart", createdAt: date(n.createdAt), readAt: n.readAt ? date(n.readAt) : null })) };
 }
-export const ideaMap = () => api<IdeaMap>("/api/ideas/map");
+export const ideaMap = () => api<IdeaMap>("/api/ideas/map", { shared: true });
 export const relatedIdeas = (id: string) => api<IdeaCheck>(`/api/ideas/${encodeURIComponent(id)}/related`);
 export async function unreadCount() { return (await api<{ count: number }>("/api/me/notices/unread-count")).count; }
 export async function openFlags() {
   const flags = await api<{ id: string; targetType: string; targetId: string; reason: string; createdAt: Date }[]>("/api/operator/flags");
   return flags.map(f => ({ ...f, targetType: f.targetType.toLowerCase(), createdAt: date(f.createdAt) }));
 }
-export async function knowledgeGraph() { return api<KnowledgeGraph>("/api/ideas/graph"); }
+export async function knowledgeGraph() { return api<KnowledgeGraph>("/api/ideas/graph", { shared: true }); }
