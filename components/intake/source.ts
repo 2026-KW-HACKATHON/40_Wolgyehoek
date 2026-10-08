@@ -1,3 +1,6 @@
+import type { Locale } from "@/lib/i18n/config";
+import { intake } from "@/lib/i18n/messages/intake";
+
 export const FILE_LIMIT = 5 * 1024 * 1024;
 export const TEXT_LIMIT = 6000;
 
@@ -27,10 +30,11 @@ export function extractPageText(html: string) {
   return [title, description, clean(body)].filter(Boolean).join("\n\n").slice(0, TEXT_LIMIT);
 }
 
-export async function readIntakeFile(file: File): Promise<string> {
-  if (file.size > FILE_LIMIT) throw new Error("파일은 5MB 이하로 올려 주세요.");
+export async function readIntakeFile(file: File, locale: Locale = "ko"): Promise<string> {
+  const t = { intake: intake[locale] };
+  if (file.size > FILE_LIMIT) throw new Error(t.intake.fileSizeError);
   const extension = file.name.split(".").pop()?.toLowerCase();
-  if (!["txt", "md", "pdf"].includes(extension ?? "")) throw new Error("TXT, MD, PDF 파일을 올려 주세요.");
+  if (!["txt", "md", "pdf"].includes(extension ?? "")) throw new Error(t.intake.fileTypeError);
   let text: string;
   if (extension === "pdf") {
     const { extractText } = await import("unpdf");
@@ -38,6 +42,6 @@ export async function readIntakeFile(file: File): Promise<string> {
   } else {
     text = await file.text();
   }
-  if (text.trim().length < 10) throw new Error("읽을 수 있는 텍스트가 부족해요. 스캔 PDF는 텍스트로 옮겨 주세요.");
+  if (text.trim().length < 10) throw new Error(t.intake.fileTextError);
   return text.trim().slice(0, TEXT_LIMIT);
 }

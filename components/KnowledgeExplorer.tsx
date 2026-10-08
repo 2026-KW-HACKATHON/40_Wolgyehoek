@@ -1,4 +1,7 @@
 "use client";
+import { useI18n } from "@/lib/i18n/client";
+import { pick } from "@/lib/i18n/messages/common";
+import { graphNodeLabel, placeLabel, needLabel, signalText } from "@/lib/i18n/messages/explore";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -13,6 +16,7 @@ const TYPE_ORDER: GraphNodeType[] = ["NEED", "PLACE", "ACTOR", "BENEFICIARY", "B
 const HEIGHT = 600;
 
 export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
+  const { t, locale } = useI18n();
   const box = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [focus, setFocus] = useState<string[]>([]);
@@ -52,7 +56,7 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
   }, [focus, ideas, neighbors]);
 
   const select = (ids: string[], label: string | null = null) => { setFocus(ids); setTitle(label); };
-  const pickSignal = (s: Signal) => { select(s.focus, s.title); box.current?.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  const pickSignal = (s: Signal) => { select(s.focus, signalText(s, locale, t.common).title); box.current?.scrollIntoView({ behavior: "smooth", block: "start" }); };
   const toggle = (t: GraphNodeType) => setVisible((v) => { const n = new Set(v); if (n.has(t)) n.delete(t); else n.add(t); return n; });
 
   const main = focus.length ? byId.get(focus[0]) : undefined;
@@ -64,14 +68,14 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
       {width > 0 && <GraphCanvas nodes={graph.nodes} links={graph.links} width={width} height={HEIGHT}
         focus={focus[0] ?? null} highlight={highlight} visible={visible} onSelect={(id) => select(id ? [id] : [])} />}
       <div className="pointer-events-none absolute inset-x-0 top-0 flex gap-1.5 overflow-x-auto p-3 [scrollbar-width:none]">
-        {TYPE_ORDER.map((t) => <button key={t} type="button" onClick={() => toggle(t)} aria-pressed={visible.has(t)}
+        {TYPE_ORDER.map((type) => <button key={type} type="button" onClick={() => toggle(type)} aria-pressed={visible.has(type)}
           className={cn("pointer-events-auto flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold backdrop-blur transition-opacity",
-            visible.has(t) ? "bg-white/12 text-white" : "bg-white/5 text-white/35")}>
-          <span className="size-2 rounded-full" style={{ background: NODE_COLORS[t] }} />{graph.types[t]}
+            visible.has(type) ? "bg-white/12 text-white" : "bg-white/5 text-white/35")}>
+          <span className="size-2 rounded-full" style={{ background: NODE_COLORS[type] }} />{pick(t.common.nodeTypes, type, graph.types[type])}
         </button>)}
       </div>
-      <p className="pointer-events-none absolute bottom-3 left-4 text-[11px] font-semibold text-white/45 tnum">{graph.ideas}개 시도 · {graph.links.length}개 연결</p>
-      {focus.length > 0 && <button type="button" onClick={() => select([])} aria-label="선택 해제" className="absolute bottom-3 right-3 flex size-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur"><X className="size-4" /></button>}
+      <p className="pointer-events-none absolute bottom-3 left-4 text-[11px] font-semibold text-white/45 tnum">{t.explore.graphCounts(graph.ideas.toLocaleString(locale, { useGrouping: locale !== "ko" }), graph.links.length.toLocaleString(locale, { useGrouping: locale !== "ko" }))}</p>
+      {focus.length > 0 && <button type="button" onClick={() => select([])} aria-label={t.explore.clearSelection} className="absolute bottom-3 right-3 flex size-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur"><X className="size-4" /></button>}
     </div>
 
     <aside className="space-y-6 lg:max-h-[600px] lg:overflow-y-auto lg:pr-1">
@@ -80,19 +84,19 @@ export function KnowledgeExplorer({ graph }: { graph: KnowledgeGraph }) {
       signals={graph.signals.filter((s) => focus.every((f) => s.focus.includes(f)) && s.focus.length > 0)} onPick={select} />}
 
     <section>
-      <h2 className="mb-1 text-lg font-extrabold tracking-tight">기회</h2>
+      <h2 className="mb-1 text-lg font-extrabold tracking-tight">{t.explore.opportunities}</h2>
       <ul className="divide-y divide-border">{ranked.map((s, i) => <li key={i}>
         <button type="button" onClick={() => pickSignal(s)} className="flex w-full items-center gap-3 py-3 text-left">
-          <span className="w-[68px] shrink-0 rounded-full px-2 py-1 text-center text-[11px] font-extrabold text-white" style={{ background: SIGNAL_COLORS[s.kind] }}>{s.label}</span>
-          <span className="min-w-0 flex-1"><span className="block truncate text-[15px] font-bold">{s.title}</span><span className="block truncate text-xs text-muted-foreground">{s.detail}</span></span>
+          <span title={pick(t.common.signals, s.kind, s.label)} className={cn("w-[68px] shrink-0 rounded-full px-2 py-1 text-center text-[11px] font-extrabold text-white", locale === "en" && "truncate")} style={{ background: SIGNAL_COLORS[s.kind] }}>{pick(t.common.signals, s.kind, s.label)}</span>
+          <span className="min-w-0 flex-1"><span className="block truncate text-[15px] font-bold">{signalText(s, locale, t.common).title}</span><span className="block truncate text-xs text-muted-foreground">{signalText(s, locale, t.common).detail}</span></span>
           <ChevronRight className="size-4 shrink-0 text-[var(--text-4)]" />
         </button>
       </li>)}</ul>
       {blanks.length > 0 && <div className="mt-3 rounded-2xl border border-dashed border-border p-4">
-        <p className="text-xs font-bold text-muted-foreground">아직 아무도 시도하지 않은 문제</p>
-        <div className="mt-2 flex flex-wrap gap-1.5">{blanks.map((b) => <Link key={b.title} href="/new" className="rounded-full bg-muted px-3 py-1.5 text-[13px] font-bold hover:bg-[var(--muted-hover)]">{b.title}</Link>)}</div>
+        <p className="text-xs font-bold text-muted-foreground">{t.explore.untouchedProblems}</p>
+        <div className="mt-2 flex flex-wrap gap-1.5">{blanks.map((b) => <Link key={b.title} href="/new" className="rounded-full bg-muted px-3 py-1.5 text-[13px] font-bold hover:bg-[var(--muted-hover)]">{needLabel(b.title, t.common)}</Link>)}</div>
       </div>}
-      <p className="mt-3 text-[11px] text-[var(--text-4)]">공개 기록과 동네서랍 반응으로 계산한 신호예요 · 시장 규모가 아니에요</p>
+      <p className="mt-3 text-[11px] text-[var(--text-4)]">{t.explore.signalHint}</p>
     </section>
     </aside>
   </div>;
@@ -102,6 +106,7 @@ function Insight({ node, title, pair, ideas, hubs, signals, onPick }: {
   node: GraphNode; title: string | null; pair: GraphNode[] | null; ideas: GraphNode[]; hubs: GraphNode[]; signals: Signal[];
   onPick: (ids: string[], label?: string | null) => void;
 }) {
+  const { t, locale } = useI18n();
   const s = pair ? null : node.stats;
   const picked = [node, ...(pair ?? [])];
   const needKey = picked.find((p) => p.type === "NEED")?.id.slice(5);
@@ -109,46 +114,46 @@ function Insight({ node, title, pair, ideas, hubs, signals, onPick }: {
   const problemHref = needKey && placeKey ? `/problems/${needKey}.${placeKey}` : needKey ? `/problems?need=${needKey}` : placeKey ? `/report?place=${placeKey}` : null;
   const grouped = (["NEED", "PLACE", "ACTOR", "BENEFICIARY", "BARRIER", "SOURCE"] as GraphNodeType[])
     .map((t) => ({ t, list: hubs.filter((h) => h.type === t) })).filter((g) => g.list.length);
-  const counts = s ? [["시도", s.attempts], ["시행", s.going], ["멈춤", s.stopped], ["검증 중", s.live], ["미확인", s.unknown], ["반응", s.demand]].filter(([, v], i) => i === 0 || Number(v) > 0) as [string, number][] : [];
+  const counts = s ? [[t.explore.attempts, s.attempts], [t.explore.going, s.going], [t.explore.stopped, s.stopped], [t.explore.testing, s.live], [t.explore.unknown, s.unknown], [t.explore.responses, s.demand]].filter(([, v], i) => i === 0 || Number(v) > 0) as [string, number][] : [];
 
   return <section className="rounded-[22px] bg-muted p-5">
     <p className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground">
-      {pair ? pair.map((p) => <span key={p.id} className="flex items-center gap-1"><span className="size-2 rounded-full" style={{ background: nodeColor(p) }} />{p.label}</span>)
-        : <><span className="size-2 rounded-full" style={{ background: nodeColor(node) }} />{node.type === "IDEA" ? (node.state ? STATE_LABELS[node.state] : "") : node.sub || ""}</>}
+      {pair ? pair.map((p) => <span key={p.id} className="flex items-center gap-1"><span className="size-2 rounded-full" style={{ background: nodeColor(p) }} />{graphNodeLabel(p, t.common)}</span>)
+        : <><span className="size-2 rounded-full" style={{ background: nodeColor(node) }} />{node.type === "IDEA" ? (node.state ? pick(t.common.ideaStates, node.state, STATE_LABELS[node.state]) : "") : pick(t.common.topics, node.sub, pick(t.explore.actorKinds, node.sub, node.sub)) || ""}</>}
     </p>
-    <h3 className="mt-1 text-[20px] font-extrabold leading-snug tracking-tight">{title ?? node.label}</h3>
-    {node.type === "IDEA" && !pair && <p className="mt-1 text-sm text-muted-foreground tnum">{node.year} · {node.sub}</p>}
-    {problemHref && <Link href={problemHref} className="mt-3 inline-flex items-center gap-0.5 rounded-full bg-foreground px-4 py-2 text-sm font-bold text-background">{needKey && placeKey ? "문제 보기" : needKey ? "이 니즈의 문제 보기" : "지역 리포트 보기"}<ChevronRight className="size-4" /></Link>}
+    <h3 className="mt-1 text-[20px] font-extrabold leading-snug tracking-tight">{title ?? graphNodeLabel(node, t.common)}</h3>
+    {node.type === "IDEA" && !pair && <p className="mt-1 text-sm text-muted-foreground tnum">{node.year} · {placeLabel(node.sub, t.common)}</p>}
+    {problemHref && <Link href={problemHref} className="mt-3 inline-flex items-center gap-0.5 rounded-full bg-foreground px-4 py-2 text-sm font-bold text-background">{needKey && placeKey ? t.explore.viewProblem : needKey ? t.explore.viewNeed : t.explore.viewReport}<ChevronRight className="size-4" /></Link>}
 
-    {counts.length > 0 && <div className="mt-4 flex gap-5">{counts.map(([k, v]) => <div key={k}><p className="text-[22px] font-black leading-none tnum">{v}</p><p className="mt-1 text-[11px] font-semibold text-muted-foreground">{k}</p></div>)}</div>}
+    {counts.length > 0 && <div className="mt-4 flex gap-5">{counts.map(([k, v]) => <div key={k}><p className="text-[22px] font-black leading-none tnum">{v.toLocaleString(locale, { useGrouping: locale !== "ko" })}</p><p className="mt-1 text-[11px] font-semibold text-muted-foreground">{k}</p></div>)}</div>}
     {s && s.attempts > 0 && <div aria-hidden="true" className="mt-3 flex h-1.5 overflow-hidden rounded-full bg-background">
       <span className="bg-primary" style={{ width: `${(s.going / s.attempts) * 100}%` }} />
       <span className="bg-[#ffd0b0]" style={{ width: `${((s.live + s.unknown) / s.attempts) * 100}%` }} />
       <span className="bg-[var(--text-4)]" style={{ width: `${(s.stopped / s.attempts) * 100}%` }} />
     </div>}
-    {s && s.reasons.length > 0 && <div className="mt-3 flex flex-wrap gap-1.5">{s.reasons.map((r) => <span key={r.tag} className="rounded-full bg-background px-2.5 py-1 text-xs font-bold">{r.tag}<span className="ml-1 text-[var(--nope)]">{r.count}</span></span>)}</div>}
+    {s && s.reasons.length > 0 && <div className="mt-3 flex flex-wrap gap-1.5">{s.reasons.map((r) => <span key={r.tag} className="rounded-full bg-background px-2.5 py-1 text-xs font-bold">{pick(t.common.barriers, r.tag, r.tag)}<span className="ml-1 text-[var(--nope)]">{r.count}</span></span>)}</div>}
 
     {signals.length > 0 && <ul className="mt-4 space-y-1.5">{signals.slice(0, 3).map((g, i) => <li key={i} className="flex items-start gap-2 text-sm">
-      <span className="mt-1.5 size-2 shrink-0 rounded-full" style={{ background: SIGNAL_COLORS[g.kind] }} /><span><b>{g.label}</b> · {g.detail}</span>
+      <span className="mt-1.5 size-2 shrink-0 rounded-full" style={{ background: SIGNAL_COLORS[g.kind] }} /><span><b>{pick(t.common.signals, g.kind, g.label)}</b> · {signalText(g, locale, t.common).detail}</span>
     </li>)}</ul>}
 
-    {grouped.length > 0 && <div className="mt-4 space-y-2">{grouped.map(({ t, list }) => <div key={t} className="flex flex-wrap gap-1.5">
+    {grouped.length > 0 && <div className="mt-4 space-y-2">{grouped.map(({ t: type, list }) => <div key={type} className="flex flex-wrap gap-1.5">
       {list.slice(0, 8).map((h) => <button key={h.id} type="button" onClick={() => onPick([h.id])} className="flex items-center gap-1.5 rounded-full bg-background px-2.5 py-1 text-xs font-bold hover:bg-[var(--muted-hover)]">
-        <span className="size-2 rounded-full" style={{ background: nodeColor(h) }} />{h.label}
+        <span className="size-2 rounded-full" style={{ background: nodeColor(h) }} />{graphNodeLabel(h, t.common)}
       </button>)}
     </div>)}</div>}
 
     {node.type === "IDEA" && !pair && <div className="mt-4 flex items-center gap-3">
-      {node.href && <Link href={node.href} className="rounded-full bg-primary px-4 py-2 text-sm font-bold text-white">카드 보기</Link>}
-      {node.sourceUrl && <a href={node.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 text-xs text-muted-foreground">출처<ArrowUpRight className="size-3" /></a>}
+      {node.href && <Link href={node.href} className="rounded-full bg-primary px-4 py-2 text-sm font-bold text-white">{t.explore.viewCard}</Link>}
+      {node.sourceUrl && <a href={node.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 text-xs text-muted-foreground">{t.common.source}<ArrowUpRight className="size-3" /></a>}
     </div>}
-    {node.type === "SOURCE" && node.sourceUrl && <a href={node.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-0.5 text-sm font-bold text-primary">원문 보기<ArrowUpRight className="size-3.5" /></a>}
+    {node.type === "SOURCE" && node.sourceUrl && <a href={node.sourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-0.5 text-sm font-bold text-primary">{t.explore.viewOriginal}<ArrowUpRight className="size-3.5" /></a>}
 
     {ideas.length > 0 && <ul className="mt-4 divide-y divide-border border-t border-border">{ideas.slice(0, 8).map((i) => <li key={i.id}>
       <button type="button" onClick={() => onPick([i.id])} className="flex w-full items-center gap-3 py-2.5 text-left text-sm">
         <span className="w-9 shrink-0 text-xs font-bold text-[var(--text-4)] tnum">{i.year}</span>
         <span className="min-w-0 flex-1 truncate font-semibold">{i.label}</span>
-        <span className="shrink-0 text-xs text-muted-foreground">{i.state ? STATE_LABELS[i.state] : ""}</span>
+        <span className="shrink-0 text-xs text-muted-foreground">{i.state ? pick(t.common.ideaStates, i.state, STATE_LABELS[i.state]) : ""}</span>
       </button>
     </li>)}</ul>}
   </section>;

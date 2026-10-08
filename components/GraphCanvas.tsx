@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "@/lib/i18n/client";
+import { graphNodeLabel } from "@/lib/i18n/messages/explore";
 import { useEffect, useMemo, useRef } from "react";
 import ForceGraph3D, { type ForceGraphMethods, type LinkObject, type NodeObject } from "react-force-graph-3d";
 import SpriteText from "three-spritetext";
@@ -16,6 +18,7 @@ export default function GraphCanvas({ nodes, links, width, height, focus, highli
   nodes: GraphNode[]; links: GraphLink[]; width: number; height: number;
   focus: string | null; highlight: Set<string>; visible: Set<GraphNodeType>; onSelect: (id: string | null) => void;
 }) {
+  const { t } = useI18n();
   const fg = useRef<ForceGraphMethods<N, L> | undefined>(undefined);
   const fitted = useRef(false);
   const data = useMemo(() => ({ nodes: nodes.map((n) => ({ ...n })), links: links.map((l) => ({ ...l })) }), [nodes, links]);
@@ -55,7 +58,7 @@ export default function GraphCanvas({ nodes, links, width, height, focus, highli
     nodeResolution={12}
     nodeVal={(n) => nodeSize(n as GraphNode)}
     nodeColor={(n) => (on(String(n.id)) ? nodeColor(n as GraphNode) : DIM)}
-    nodeLabel={(n) => (n as GraphNode).label}
+    nodeLabel={(n) => graphNodeLabel(n as GraphNode, t.common)}
     nodeVisibility={(n) => visible.has((n as GraphNode).type)}
     nodeThreeObjectExtend
     nodeThreeObject={(n) => {
@@ -63,7 +66,7 @@ export default function GraphCanvas({ nodes, links, width, height, focus, highli
       const id = String(node.id);
       const lit = highlight.size > 0 && highlight.has(id) && (node.type !== "IDEA" || id === focus);
       if (highlight.size > 0 ? !lit : !LABELED.includes(node.type)) return null as never;
-      const sprite = new SpriteText(node.label, LABEL_SIZE[node.type] ?? 6, "#ffffff");
+      const sprite = new SpriteText(graphNodeLabel(node, t.common), LABEL_SIZE[node.type] ?? 6, "#ffffff");
       sprite.fontFace = "-apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif";
       sprite.fontWeight = node.type === "NEED" ? "800" : "600";
       sprite.center.set(0.5, -0.9);

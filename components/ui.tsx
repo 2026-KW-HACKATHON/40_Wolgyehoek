@@ -1,24 +1,11 @@
 import Link from "next/link";
 import { Button } from "./ui/Button";
-import { Badge, type BadgeProps } from "./ui/Badge";
-import { DISCLAIMER, STATUS_LABELS, type CardStatus } from "@/lib/domain/types";
+import { Badge } from "./ui/Badge";
+import { messages } from "@/lib/i18n/messages";
+import type { Locale } from "@/lib/i18n/config";
+export { StatusBadge, Disclaimer } from "./ui/Localized";
 
-const STATUS_VARIANT: Record<CardStatus, BadgeProps["variant"]> = {
-  open: "info", closed: "outline", go: "success", hold: "warning", stop: "destructive", stale: "default",
-};
-export function StatusBadge({ status }: { status: CardStatus }) {
-  return <Badge variant={STATUS_VARIANT[status]} className="shrink-0 px-2 py-0.5 text-[11px] font-bold">{STATUS_LABELS[status]}</Badge>;
-}
 export function Pill({ children }: { children: React.ReactNode }) { return <Badge className="px-2 py-0.5 text-[11px] font-bold">{children}</Badge>; }
-
-export function Disclaimer({ total }: { total?: number }) {
-  return (
-    <p className="text-xs leading-5 text-ink-3">
-      {typeof total === "number" && <span className="tnum mr-2 text-ink">참여 {total}명</span>}
-      {DISCLAIMER}
-    </p>
-  );
-}
 
 export function ButtonLink({ href, children, variant = "primary" }: { href: string; children: React.ReactNode; variant?: "primary" | "secondary" }) {
   return <Button asChild variant={variant === "primary" ? "default" : "soft"} className="h-12 px-6 text-[15px]"><Link href={href}>{children}</Link></Button>;
@@ -52,6 +39,6 @@ export function fmtDate(d: Date) {
   return `${p.month}.${p.day}`;
 }
 
-export function fmtWon(n: number) {
-  return `${n.toLocaleString("ko-KR")}원`;
+export function fmtWon(n: number, locale: Locale = "ko") {
+  return messages[locale].system.won(n);
 }

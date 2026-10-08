@@ -11,6 +11,10 @@ vi.mock("node:dns/promises", () => ({ lookup: vi.fn() }));
 vi.mock("@/app/actions", () => ({ publishCard: vi.fn(async () => ({ ok: true })) }));
 vi.mock("@/lib/api", () => ({ api: vi.fn(), ApiError: class extends Error {} }));
 vi.mock("@/lib/queries", () => ({ knowledgeGraph: vi.fn() }));
+vi.mock("@/lib/i18n/server", async () => {
+  const { messages } = await import("@/lib/i18n/messages");
+  return { getLocale: async () => "ko", getT: async () => ({ locale: "ko", t: messages.ko }) };
+});
 
 const lookupAll = vi.mocked(lookup as (hostname: string, options: { all: true }) => Promise<LookupAddress[]>);
 const idea = "월계1동 홀몸 어르신 안부를 매일 확인하는 서비스";

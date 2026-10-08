@@ -1,5 +1,6 @@
 "use server";
 
+import { getT } from "@/lib/i18n/server";
 import { lookup } from "node:dns/promises";
 import type { LookupAddress } from "node:dns";
 import { isIP } from "node:net";
@@ -76,24 +77,25 @@ async function fetchSource(raw: string) {
 }
 
 export async function analyzeIntake(input: { mode: "text" | "url" | "file"; text: string; source: string; place: string }) {
+  const { locale, t } = await getT();
   let text = String(input.text ?? "").trim();
   let source = input.mode === "file" ? String(input.source ?? "").trim().slice(0, 200) : "";
   if (input.mode === "url") {
-    if (text.length > 2000) return { ok: false as const, error: "URL을 다시 확인해 주세요." };
+    if (text.length > 2000) return { ok: false as const, error: t.intake.urlError };
     try {
       source = new URL(text).href;
       text = await fetchSource(source);
-    } catch { return { ok: false as const, error: "페이지를 읽지 못했어요. 공개 기사·회의록 URL을 확인하거나 본문을 직접 붙여 주세요." }; }
+    } catch { return { ok: false as const, error: t.intake.pageError }; }
   }
-  if (text.length < 10 || text.length > TEXT_LIMIT) return { ok: false as const, error: "아이디어를 10~6000자로 적어 주세요." };
+  if (text.length < 10 || text.length > TEXT_LIMIT) return { ok: false as const, error: t.intake.ideaLengthError };
   const warnings: string[] = [];
   let draft: Draft;
   try {
-    const result = await api<Draft>("/api/assist/draft", { method: "POST", body: { text: text.slice(0, 2000) } });
+    const result = await api<Draft>("/api/assist/draft", { method: "POST", body: { text: text.slice(0, 2000), locale } });
     draft = { ...result, source: result.source.toLowerCase() as Draft["source"] };
   } catch {
     draft = draftFromText(text);
-    warnings.push("초안 도우미에 연결하지 못해 입력에서 초안을 만들었어요.");
+    warnings.push(t.intake.draftWarning);
   }
   if (!draft.place.trim() || (draft.source === "rule" && draft.place === "월계1동" && !/월계/.test(text))) {
     draft.place = input.place.trim().slice(0, 100) || draft.place;
@@ -102,7 +104,7 @@ export async function analyzeIntake(input: { mode: "text" | "url" | "file"; text
   try {
     check = await api<IdeaCheck>("/api/ideas/check", { method: "POST", body: { title: draft.title, body: text.slice(0, 2000), place: draft.place } });
   } catch (error) {
-    warnings.push(error instanceof ApiError ? `선례 조회: ${error.message}` : "선례를 조회하지 못했어요.");
+    warnings.push(error instanceof ApiError ? t.intake.precedentLookupError(error.message) : t.intake.precedentsWarning);
   }
   const needs = check?.concepts.map((c) => c.key) ?? [];
   let local: Problem[] = [];
@@ -114,16 +116,25 @@ export async function analyzeIntake(input: { mode: "text" | "url" | "file"; text
         for (const p of elsewhere(problems, { need: { key: need, label: "" }, place: check.zone }).local) seen.set(p.id, p);
       }
       local = [...seen.values()];
-    } catch { warnings.push("다른 장소의 시도를 조회하지 못했어요."); }
+    } catch { warnings.push(t.intake.localWarning); }
+  }
+  if (draft.source === "rule") {
+    draft = {
+      ...draft,
+      target: draft.target.split(", ").map((target) => t.intake.ruleLabels[target] || target).join(", "),
+      place: !text.includes(draft.place) && !input.place.trim() ? t.intake.ruleLabels[draft.place] || draft.place : draft.place,
+      effect: t.intake.ruleLabels[draft.effect] || draft.effect,
+    };
   }
   return { ok: true as const, text, source, draft, check, precedents: precedentsFor(needs), local, warning: warnings.join(" ") || null };
 }
 
 export async function publishIntake(state: ActionState, form: FormData): Promise<ActionState> {
+  const { t } = await getT();
   const source = String(form.get("intakeSource") ?? "").trim().slice(0, 2000);
   const body = String(form.get("body") ?? "").trim();
-  const withSource = source && !body.endsWith(`출처: ${source}`) ? `${body}\n\n출처: ${source}` : body;
-  if (withSource.length > 2000) return { ok: false, error: "조사 메모와 출처를 포함해 내용을 2000자 이하로 줄여 주세요." };
+  const withSource = source && !body.endsWith(`${t.intake.source}: ${source}`) ? `${body}\n\n${t.intake.source}: ${source}` : body;
+  if (withSource.length > 2000) return { ok: false, error: t.intake.bodyLengthError };
   form.set("body", withSource);
   return publishCard(state, form);
 }
