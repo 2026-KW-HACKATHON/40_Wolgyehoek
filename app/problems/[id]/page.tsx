@@ -10,6 +10,7 @@ import { buildProblems, elsewhere } from "@/lib/domain/problems";
 import { OPINION_KINDS } from "@/lib/domain/opinions";
 import { OpinionForm } from "@/app/cards/[id]/panels";
 import { cn } from "@/lib/utils";
+import { InstitutionResponses } from "@/app/org/responses";
 
 const STATE_TONE: Record<string, string> = { GOING: "bg-[var(--brand-soft)] text-primary", STOPPED: "bg-foreground text-background", LIVE: "bg-muted text-foreground", UNKNOWN: "bg-muted text-muted-foreground" };
 
@@ -30,8 +31,11 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
   const other = elsewhere(problems, p);
   const known = new Map(cards.map((s) => [s.card.id, s]));
   const withOpinions = p.attempts.filter((a) => (known.get(a.id)?.opinionCount ?? 0) > 0).slice(0, 6);
-  const details = await Promise.all(withOpinions.map((a) => getCard(a.id)));
-  const opinions = details.flatMap((d, i) => (d?.opinions ?? []).filter((o) => !o.hidden).map((o) => ({ ...o, attempt: withOpinions[i] })));
+  const linkedAttempts = p.attempts.filter(a => a.href);
+  const details = await Promise.all(linkedAttempts.map(a => getCard(a.id)));
+  const detailById = new Map(linkedAttempts.map((a, i) => [a.id, details[i]]));
+  const opinions = withOpinions.flatMap(a => (detailById.get(a.id)?.opinions ?? []).filter(o => !o.hidden).map(o => ({ ...o, attempt: a })));
+  const institutionAttempts = linkedAttempts.filter(a => (detailById.get(a.id)?.institutionResponses.length ?? 0) > 0);
   const num = (n: number) => n.toLocaleString(locale, { useGrouping: locale !== "ko" });
   const years = p.since && p.until ? (p.since === p.until ? `${p.since}` : `${p.since}–${p.until}`) : "";
 
@@ -81,6 +85,14 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
               </div>
             </li>)}
           </ol>
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-xl font-extrabold tracking-tight">{t.org.title}</h2>
+          {institutionAttempts.length ? <div className="space-y-4">{institutionAttempts.map(a => <div key={a.id}>
+            {a.href && <Link href={a.href} className="mb-2 block text-sm font-bold hover:text-primary">{a.title}</Link>}
+            <InstitutionResponses responses={detailById.get(a.id)?.institutionResponses ?? []} />
+          </div>)}</div> : <p className="text-sm text-muted-foreground">{t.org.empty}</p>}
         </section>
 
         <section>

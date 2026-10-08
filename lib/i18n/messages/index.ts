@@ -8,8 +8,9 @@ import { intake } from "./intake";
 import { card } from "./card";
 import { me } from "./me";
 import { system } from "./system";
+import { org } from "./org";
 
-const all = { common, shell, connect, explore, problems, report, intake, card, me, system };
+const all = { common, shell, connect, explore, problems, report, intake, card, me, system, org };
 type All = typeof all;
 
 const build = <L extends "ko" | "en">(l: L) =>

@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCard, knowledgeGraph, relatedIdeas } from "@/lib/queries";
+import { getCard, knowledgeGraph, relatedIdeas, myInstitution } from "@/lib/queries";
+import { InstitutionResponses } from "@/app/org/responses";
+import { InstitutionResponseForm } from "@/app/org/forms";
 import { buildProblems } from "@/lib/domain/problems";
 import { OPINION_KINDS } from "@/lib/domain/opinions";
 import { IdeaLineage } from "@/components/IdeaLineage";
@@ -23,7 +25,7 @@ import { ConclusionForm, FlagForm, OpinionForm, OwnerControls, ReactionPanel, Re
 export default async function CardPage({ params }: { params: Promise<{ id: string }> }) {
   const { locale, t } = await getT();
   const { id } = await params;
-  const [d, me] = await Promise.all([getCard(id), currentDevice()]);
+  const [d, me, institution] = await Promise.all([getCard(id), currentDevice(), myInstitution()]);
   if (!d || (d.card.hidden && !me?.isOperator)) notFound();
   const [insight, lineage, graph] = await Promise.all([getCreditInsight(id), relatedIdeas(id), knowledgeGraph()]);
   const problems = buildProblems(graph).filter((p) => p.attempts.some((a) => a.id === id));
@@ -99,6 +101,14 @@ export default async function CardPage({ params }: { params: Promise<{ id: strin
       </section>
 
       <IdeaLineage check={lineage} mode="detail" />
+
+      <section>
+        <SectionTitle sub={d.institutionResponses.length}>{t.org.title}</SectionTitle>
+        <InstitutionResponses responses={d.institutionResponses} />
+        {institution
+          ? <InstitutionResponseForm cardId={card.id} name={institution.name} existing={d.institutionResponses.find(r => r.institutionName === institution.name)} />
+          : <Link href="/org" className="mt-3 inline-flex min-h-11 items-center text-sm font-bold text-primary">{t.org.invitation}</Link>}
+      </section>
 
       <section>
         <SectionTitle sub={d.opinions.filter((o) => !o.hidden).length}>{t.card.opinions}</SectionTitle>

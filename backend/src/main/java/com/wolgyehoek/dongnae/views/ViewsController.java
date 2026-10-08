@@ -8,6 +8,7 @@ import com.wolgyehoek.dongnae.notice.*;
 import com.wolgyehoek.dongnae.opinion.*;
 import com.wolgyehoek.dongnae.reaction.*;
 import com.wolgyehoek.dongnae.report.*;
+import com.wolgyehoek.dongnae.institution.InstitutionService;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,13 +30,15 @@ public class ViewsController {
     private final com.wolgyehoek.dongnae.credits.CreditService credits;
     private final MediaService media;
     private final NamedParameterJdbcTemplate sql;
+    private final InstitutionService institutions;
 
     public ViewsController(CardRepository cards, ReactionRepository reactions, OpinionRepository opinions,
                            ConclusionRepository conclusions, DeviceService devices, ReportService reports, NoticeService notices, com.wolgyehoek.dongnae.credits.CreditService credits, MediaService media,
-                           NamedParameterJdbcTemplate sql) {
+                           NamedParameterJdbcTemplate sql, InstitutionService institutions) {
         this.cards = cards; this.reactions = reactions; this.opinions = opinions;
         this.conclusions = conclusions; this.devices = devices; this.reports = reports; this.notices = notices; this.credits = credits; this.media = media;
         this.sql = sql;
+        this.institutions = institutions;
     }
 
     public record CardView(String id, String title, String body, String target, String place, String effect,
@@ -45,7 +48,8 @@ public class ViewsController {
                            String problem, String topic, String origin, String sourceTitle, String sourceUrl, Integer sourceYear) {}
     public record Summary(CardView card, CardStatus status, int reactionCount, int opinionCount, ConclusionResponse latest) {}
     public record Detail(Summary summary, ReportViewResponse validation, List<OpinionResponse> opinions,
-                         List<ConclusionResponse> conclusions, CardView parent, List<CardView> children) {}
+                         List<ConclusionResponse> conclusions, CardView parent, List<CardView> children,
+                         List<InstitutionService.Response> institutionResponses) {}
     public record Activity(List<Summary> mine, List<Summary> joined, List<NoticeResponse> notices) {}
 
     private CardView view(Card c) {
@@ -111,7 +115,8 @@ public class ViewsController {
         var children = cards.findByParentId(id).stream().filter(child -> !child.isHidden()).map(this::view).toList();
         return new Detail(summary(c), reports.view(id, me),
                 opinions.findByCardIdAndHiddenFalseOrderByCreatedAtDesc(id).stream().map(OpinionResponse::from).toList(),
-                conclusions.findByCardIdOrderByCreatedAtDesc(id).stream().map(ConclusionResponse::from).toList(), parent, children);
+                conclusions.findByCardIdOrderByCreatedAtDesc(id).stream().map(ConclusionResponse::from).toList(), parent, children,
+                institutions.responses(id));
     }
 
     @GetMapping("/me")

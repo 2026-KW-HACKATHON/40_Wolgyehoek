@@ -14,6 +14,8 @@ export interface Card {
 }
 export interface Conclusion { id: string; decision: Decision; reasonTags: string[]; reason: string; createdAt: Date }
 export interface Opinion { id: string; stance: Stance; body: string; condition: string; authorName: string; createdAt: Date; hidden: boolean }
+export type InstitutionStance = "EMPATHY" | "SUPPORT" | "PARTNER";
+export interface InstitutionResponse { institutionName: string; stance: InstitutionStance; comment: string; createdAt: Date }
 export interface CardSummary { card: Card; status: CardStatus; reactionCount: number; opinionCount: number; latest: Conclusion | null }
 export type NoticeKindView = "conclusion" | "restart" | "success" | "schedule";
 export interface Notice { id: string; kind: NoticeKindView; cardId: string; cardTitle: string; createdAt: Date; readAt: Date | null }
@@ -34,12 +36,13 @@ export async function listCards(opts: { q?: string; tab?: "open" | "done" | "all
 }
 export async function getCard(id: string) {
   try {
-    const d = await api<{ summary: RawSummary; validation: RawValidation; opinions: Opinion[]; conclusions: Conclusion[]; parent: Card | null; children: Card[] }>(`/api/views/cards/${encodeURIComponent(id)}`);
+    const d = await api<{ summary: RawSummary; validation: RawValidation; opinions: Opinion[]; conclusions: Conclusion[]; parent: Card | null; children: Card[]; institutionResponses: InstitutionResponse[] }>(`/api/views/cards/${encodeURIComponent(id)}`);
     const r = d.validation.report;
     const report: Report | null = r ? { ...r.reactions, opinions: r.opinions, respondents: { resident: r.reactions.respondents.resident, work_study: r.reactions.respondents.workStudy, visitor: r.reactions.respondents.visitor } } : null;
     return { ...summary(d.summary), canManage: d.validation.canManage, mine: d.validation.myReaction, stepCounts: d.validation.stepCounts, report,
       opinions: d.opinions.map(o => ({ ...o, stance: o.stance.toLowerCase() as Stance, createdAt: date(o.createdAt), hidden: false })),
-      conclusions: d.conclusions.map(conclusion), parent: d.parent ? card(d.parent) : null, children: d.children.map(card) };
+      conclusions: d.conclusions.map(conclusion), parent: d.parent ? card(d.parent) : null, children: d.children.map(card),
+      institutionResponses: d.institutionResponses.map(r => ({ ...r, createdAt: date(r.createdAt) })) };
   } catch (e) {
     if (e instanceof ApiError && e.status === 404) return null;
     throw e;
@@ -58,3 +61,4 @@ export async function openFlags() {
   return flags.map(f => ({ ...f, targetType: f.targetType.toLowerCase(), createdAt: date(f.createdAt) }));
 }
 export async function knowledgeGraph() { return api<KnowledgeGraph>("/api/ideas/graph", { shared: true }); }
+export const myInstitution = () => api<{ name: string } | null>("/api/me/institution");

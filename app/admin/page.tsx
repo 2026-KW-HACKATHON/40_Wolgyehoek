@@ -6,7 +6,8 @@ import { currentDevice } from "@/lib/device";
 import { openFlags } from "@/lib/queries";
 import { moderate } from "@/app/actions";
 import { SectionTitle, fmtDate } from "@/components/ui";
-import { OperatorForm } from "./operator-form";
+import { OperatorForm, CreateInstitutionForm } from "./operator-form";
+import { api } from "@/lib/api";
 
 export default async function AdminPage() { const { t } = await getT();
   const me = await currentDevice();
@@ -18,10 +19,16 @@ export default async function AdminPage() { const { t } = await getT();
       </div>
     );
   }
-  const flags = await openFlags();
+  const [flags, institutions] = await Promise.all([openFlags(), api<{ id: string; name: string }[]>("/api/operator/institutions")]);
   return (
     <div className="space-y-6 px-4 pb-8 pt-2">
       <h1 className="text-[28px] font-extrabold tracking-[-0.04em]">{t.system.operations}</h1>
+      <section className="space-y-4">
+        <SectionTitle sub={institutions.length}>{t.org.adminTitle}</SectionTitle>
+        <CreateInstitutionForm />
+        {institutions.length ? <ul className="divide-y divide-border">{institutions.map(i => <li key={i.id} className="break-words py-3 text-sm font-semibold">{i.name}</li>)}</ul>
+          : <p className="text-sm text-muted-foreground">{t.org.noInstitutions}</p>}
+      </section>
       <section>
         <SectionTitle sub={flags.length}>{t.system.flags}</SectionTitle>
         {flags.length === 0 ? (
