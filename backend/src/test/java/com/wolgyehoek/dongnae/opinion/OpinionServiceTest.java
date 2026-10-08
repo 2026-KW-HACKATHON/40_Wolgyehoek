@@ -60,12 +60,14 @@ class OpinionServiceTest {
     }
 
     @Test
-    void 기간이_끝난_카드에는_의견을_남길_수_없다() {
+    void 기간이_끝난_시도에도_의견을_남길_수_있다() {
         Card card = saveCard(Instant.now().minus(1, ChronoUnit.DAYS));
 
-        assertThatThrownBy(() -> opinionService.create(card.getId(), AUTHOR,
-                new CreateOpinionRequest(Stance.PRO, "늦은 의견", null)))
-                .isInstanceOf(BadRequestException.class);
+        OpinionResponse response = opinionService.create(card.getId(), AUTHOR,
+                new CreateOpinionRequest(Stance.CON, "운영 주체가 없어 멈췄어요", null));
+
+        assertThat(response.body()).isEqualTo("운영 주체가 없어 멈췄어요");
+        assertThat(opinionService.list(card.getId())).hasSize(1);
     }
 
     @Test

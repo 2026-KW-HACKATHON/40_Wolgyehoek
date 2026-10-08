@@ -3,14 +3,12 @@ package com.wolgyehoek.dongnae.opinion;
 import com.wolgyehoek.dongnae.card.Card;
 import com.wolgyehoek.dongnae.card.CardNotFoundException;
 import com.wolgyehoek.dongnae.card.CardRepository;
-import com.wolgyehoek.dongnae.card.CardStatus;
 import com.wolgyehoek.dongnae.common.BadRequestException;
 import com.wolgyehoek.dongnae.common.Ids;
 import com.wolgyehoek.dongnae.device.DeviceInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -31,10 +29,6 @@ public class OpinionService {
 
         if (card.isHidden()) {
             throw new CardNotFoundException(cardId);
-        }
-
-        if (card.status(Instant.now()) != CardStatus.OPEN) {
-            throw new BadRequestException("검증 기간이 끝난 카드에는 의견을 남길 수 없어요.");
         }
 
         String condition = (request.stance() == Stance.CONDITIONAL) ? clean(request.condition()) : "";
